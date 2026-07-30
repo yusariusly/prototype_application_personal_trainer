@@ -1,0 +1,47 @@
+# Analisis Kebutuhan Aplikasi Elite Personal Trainer (Kinetic Performance)
+
+Dokumen analisis ini membandingkan kesesuaian antara spesifikasi **Proposal Pengembangan Aplikasi Manajemen Personal Trainer (MVP) - V2** dengan status riil implementasi kode prototype saat ini. Aplikasi ini telah dilengkapi dengan antarmuka pengguna (UI) yang kaya, simulasi penyimpanan state terpusat (`localStorage`), dan alur kerja fungsional penuh di kedua sisi: **Portal Trainer/Admin** dan **Portal Klien/User**.
+
+---
+
+## 📊 Tabel Analisis Kelayakan Fitur (Admin & Client Portal)
+
+Di bawah ini adalah pemetaan rinci fungsionalitas yang tercantum di dokumen proposal dibandingkan dengan status nyata di dalam file kode folder [Application_Personal_Trainer](file:///wsl.localhost/Ubuntu/home/yusarius/Prototype_Application/Application_Personal_Trainer).
+
+| No | Fitur / Spesifikasi Proposal | Status Riil di Kode | Implementasi di Portal Trainer (Admin) | Implementasi di Portal Klien (User) | Lokasi File Kode |
+| :--- | :--- | :---: | :--- | :--- | :--- |
+| **1** | **Kuesioner Medis (PAR-Q)** | **✅ Sesuai** | Trainer dapat melihat rincian jawaban 7 kuesioner medis PAR-Q klien di halaman detail profil klien secara instan. | Klien mengisi kuesioner kesiapan fisik PAR-Q melalui form multi-step wizard yang interaktif saat pendaftaran awal. | [admin.js](file:///wsl.localhost/Ubuntu/home/yusarius/Prototype_Application/Application_Personal_Trainer/admin/admin.js#L1390)<br>[main.js](file:///wsl.localhost/Ubuntu/home/yusarius/Prototype_Application/Application_Personal_Trainer/src/main.js#L1080) |
+| **2** | **Target & Postural Assessment** | **✅ Sesuai** | Trainer dapat menulis analisis postur (misal: *anterior pelvic tilt*) dan menentukan fokus utama latihan klien di panel detail profil. | Klien dapat melihat visualisasi target utama latihan mereka (misal: *Hypertrophy* atau *Fat Loss*) langsung di halaman beranda. | [admin.js](file:///wsl.localhost/Ubuntu/home/yusarius/Prototype_Application/Application_Personal_Trainer/admin/admin.js#L1420)<br>[main.js](file:///wsl.localhost/Ubuntu/home/yusarius/Prototype_Application/Application_Personal_Trainer/src/main.js#L110) |
+| **3** | **Sistem Peringatan Cedera (Red Flag)** | **✅ Sesuai** | Kartu klien di daftar roster akan memunculkan garis batas merah tebal dan tanda peringatan secara visual jika klien memiliki cedera medis. | Peringatan cedera ditampilkan di dashboard klien sebagai pengingat untuk menghindari gerakan yang membahayakan. | [admin.js](file:///wsl.localhost/Ubuntu/home/yusarius/Prototype_Application/Application_Personal_Trainer/admin/admin.js#L330)<br>[main.js](file:///wsl.localhost/Ubuntu/home/yusarius/Prototype_Application/Application_Personal_Trainer/src/main.js#L170) |
+| **4** | **Progress Bar Kuota Sesi** | **✅ Sesuai** | Trainer memantau sisa sesi kuota paket klien lewat status *progress bar* di kartu nama klien pada halaman roster klien. | Klien melihat status kuota sisa paket mereka secara visual di beranda dalam format bar presentase (misal: "Sisa 7 dari 12 Sesi"). | [admin.js](file:///wsl.localhost/Ubuntu/home/yusarius/Prototype_Application/Application_Personal_Trainer/admin/admin.js#L360)<br>[main.js](file:///wsl.localhost/Ubuntu/home/yusarius/Prototype_Application/Application_Personal_Trainer/src/main.js#L150) |
+| **5** | **Auto-Deduct Sistem** | **✅ Sesuai** | Trainer melakukan validasi kehadiran klien dengan satu tombol. Sistem otomatis memotong saldo paket sesi klien yang bersangkutan. | Sisa kuota paket sesi klien berkurang secara otomatis dan *real-time* setelah divalidasi oleh trainer. | [admin.js](file:///wsl.localhost/Ubuntu/home/yusarius/Prototype_Application/Application_Personal_Trainer/admin/admin.js#L810)<br>[state.js](file:///wsl.localhost/Ubuntu/home/yusarius/Prototype_Application/Application_Personal_Trainer/src/state.js#L347) |
+| **6** | **Penyusunan Gerakan (Exercise)** | **✅ Sesuai** | Trainer menyusun program latihan harian klien melalui form terstruktur (Set, Repetisi, Beban/Target Wt, dan waktu istirahat Rest). | Klien melihat daftar latihan terstruktur yang telah dirancang oleh trainer secara detail untuk sesi latihan hari ini. | [admin.js](file:///wsl.localhost/Ubuntu/home/yusarius/Prototype_Application/Application_Personal_Trainer/admin/admin.js#L510)<br>[main.js](file:///wsl.localhost/Ubuntu/home/yusarius/Prototype_Application/Application_Personal_Trainer/src/main.js#L360) |
+| **7** | **Dynamic Forms / Drag-and-Drop** | **✅ Sesuai** | Antarmuka penyusunan program dibuat interaktif dengan tombol tambah gerakan dinamis dari *Exercise Library* tanpa memuat ulang halaman. | Klien dapat menandai latihan yang telah diselesaikan (checklist) yang langsung memperbarui riwayat latihan. | [admin.js](file:///wsl.localhost/Ubuntu/home/yusarius/Prototype_Application/Application_Personal_Trainer/admin/admin.js#L640)<br>[main.js](file:///wsl.localhost/Ubuntu/home/yusarius/Prototype_Application/Application_Personal_Trainer/src/main.js#L420) |
+| **8** | **Historical Data Comparison** | **✅ Sesuai** | Menampilkan riwayat beban latihan sebelumnya di sidebar kanan *Workout Builder* sebagai komparasi beban angkatan minggu lalu. | Klien dapat melacak histori latihan mereka sendiri untuk memantau kenaikan beban latihan harian secara mandiri. | [admin.js](file:///wsl.localhost/Ubuntu/home/yusarius/Prototype_Application/Application_Personal_Trainer/admin/admin.js#L560)<br>[main.js](file:///wsl.localhost/Ubuntu/home/yusarius/Prototype_Application/Application_Personal_Trainer/src/main.js#L440) |
+| **9** | **Log Metrik Berkala** | **✅ Sesuai** | Trainer dapat meninjau tabel riwayat metrik berat badan, kadar lemak, massa otot, dan lingkar perut klien di halaman detail profil. | Klien dapat memasukkan log metrik berat badan terbaru secara berkala yang akan langsung tersimpan ke database lokal. | [admin.js](file:///wsl.localhost/Ubuntu/home/yusarius/Prototype_Application/Application_Personal_Trainer/admin/admin.js#L1440)<br>[main.js](file:///wsl.localhost/Ubuntu/home/yusarius/Prototype_Application/Application_Personal_Trainer/src/main.js#L680) |
+| **10** | **Visualisasi Grafik Interaktif** | **✅ Sesuai** | Menerima notifikasi alert secara dinamis ketika klien mencatat entri metrik berat badan terbaru di database. | Merender tren perubahan komposisi tubuh (berat badan, lemak, otot) dalam bentuk diagram garis (*line chart*) interaktif. | [admin.js](file:///wsl.localhost/Ubuntu/home/yusarius/Prototype_Application/Application_Personal_Trainer/admin/admin.js#L170)<br>[main.js](file:///wsl.localhost/Ubuntu/home/yusarius/Prototype_Application/Application_Personal_Trainer/src/main.js#L750) |
+| **11** | **Kalender Anti-Bentrok** | **✅ Sesuai** | Trainer diblokir dari membuat slot ganda pada jam/hari yang sama. Sistem akan memunculkan notifikasi *"Jadwal bentrok!"* jika terdeteksi tabrakan slot. | Klien tidak dapat memesan sesi di slot waktu yang sudah terisi oleh klien lain (*double-booking prevention*). | [admin.js](file:///wsl.localhost/Ubuntu/home/yusarius/Prototype_Application/Application_Personal_Trainer/admin/admin.js#L890)<br>[state.js](file:///wsl.localhost/Ubuntu/home/yusarius/Prototype_Application/Application_Personal_Trainer/src/state.js#L338) |
+| **12** | **Color-Coded Blocking** | **✅ Sesuai** | Kalender mingguan trainer membedakan tipe latihan/lokasi secara visual menggunakan warna pastel lembut (Jingga, Ungu, dan Biru). | Klien melihat slot jadwal yang tersedia dengan kode warna lokasi (Gym Utama, Studio, atau Online Streaming). | [admin.js](file:///wsl.localhost/Ubuntu/home/yusarius/Prototype_Application/Application_Personal_Trainer/admin/admin.js#L740)<br>[main.js](file:///wsl.localhost/Ubuntu/home/yusarius/Prototype_Application/Application_Personal_Trainer/src/main.js#L850) |
+
+---
+
+## 💡 Fitur Unggulan Tambahan di Luar Proposal Utama
+
+Kode prototype saat ini telah melampaui kebutuhan dasar proposal dengan menambahkan fitur-fitur penting berikut untuk kenyamanan operasional:
+
+1. **Sistem Chat / Obrolan Langsung (Trainer & Client Chat)**:
+   * **Trainer/Admin**: Dilengkapi dengan *Inbox Chat Center* khusus untuk membalas pesan klien secara langsung dari panel admin.
+   * **Klien/User**: Memiliki menu chatting melayang untuk berkonsultasi, berdiskusi mengenai teknik gerakan, atau sekadar berkirim pesan teks dengan Coach Bobby.
+2. **Dashboard Laporan Penjualan (Sales Report)**:
+   * **Trainer/Admin**: Memiliki menu **Sales (Penjualan)** yang memaparkan catatan transaksi lunas pembelian paket sesi klien dengan perhitungan total omset otomatis dalam Rupiah (IDR).
+3. **Daily Habit Tracker (Klien/User)**:
+   * Klien dibekali asisten pelacak kebiasaan harian (*Water Intake*, *Sleep Target*, dan *Daily Steps*) untuk menjaga akuntabilitas olahraga di luar jam latihan bersama trainer.
+
+---
+
+## 🏗️ Kesimpulan Arsitektur Prototype
+
+Aplikasi **Elite Personal Trainer (Kinetic Performance)** dirancang dengan arsitektur SPA (*Single Page Application*) yang sangat tangguh:
+* **UI/UX Premium**: Memanfaatkan Tailwind CSS dengan palet warna terkurasi (Deep Slate, Energetic Orange) dan Google Material Symbols.
+* **State Terpusat**: Seluruh data (klien, program latihan, jadwal kalender, dan log pesan) dikelola secara terpusat di `src/state.js` dan otomatis disinkronisasikan ke `localStorage` agar data tidak hilang saat halaman dimuat ulang.
+* **Integrasi Dua Sisi**: Alur bisnis dari pendaftaran klien ➔ asesmen ➔ penyusunan program ➔ booking jadwal ➔ potongan kuota sesi berjalan secara otomatis dan sinkron.

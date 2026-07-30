@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html class="h-full bg-background" lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Elite Trainer - Client Portal</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+    <!-- Chart.js for premium progress visualizations -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script id="tailwind-config">
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#a73b00",
+                        "primary-container": "#ff5f05",
+                        "on-primary-container": "#531900",
+                        "secondary": "#585e6f",
+                        "background": "#f8f9ff",
+                        "surface": "#ffffff",
+                        "surface-container": "#e5eeff",
+                        "surface-container-low": "#eff4ff",
+                        "surface-container-high": "#dce9ff",
+                        "surface-container-highest": "#d3e4fe",
+                        "surface-container-lowest": "#ffffff",
+                        "on-surface": "#0b1c30",
+                        "on-surface-variant": "#5b4137",
+                        "outline-variant": "#e4bfb1",
+                        "tertiary-container": "#00a1c5",
+                        "error-container": "#ffdad6",
+                        "error": "#ba1a1a"
+                    },
+                    fontFamily: {
+                        "headline": ["Montserrat"],
+                        "body": ["Inter"]
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .elevation-1 {
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+        }
+        .elevation-2 {
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+        }
+        .pb-safe {
+            padding-bottom: env(safe-area-inset-bottom);
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f8f9ff;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body class="h-full font-body antialiased flex flex-col text-on-surface">
+
+    <!-- Top Navigation (Desktop) -->
+    <header class="bg-surface border-b border-slate-200 h-[72px] shrink-0 sticky top-0 z-40 hidden md:flex items-center px-[40px]">
+        <div class="max-w-[1440px] mx-auto w-full flex justify-between items-center">
+            <div class="flex items-center gap-8">
+                <div class="text-2xl font-headline font-extrabold text-primary flex items-center gap-2">
+                    <span>Kinetic Performance</span>
+                </div>
+                <nav class="flex h-[72px] items-center gap-1">
+                    <button onclick="navigateTo('home')" id="nav-home" class="h-full px-4 text-sm font-headline font-semibold text-primary border-b-2 border-primary transition-all">Today</button>
+                    <button onclick="navigateTo('workout')" id="nav-workout" class="h-full px-4 text-sm font-headline font-semibold text-secondary hover:text-primary transition-all">Workouts</button>
+                    <button onclick="navigateTo('progress')" id="nav-progress" class="h-full px-4 text-sm font-headline font-semibold text-secondary hover:text-primary transition-all">Progress</button>
+                    <button onclick="navigateTo('booking')" id="nav-booking" class="h-full px-4 text-sm font-headline font-semibold text-secondary hover:text-primary transition-all">Schedule</button>
+                    <button onclick="navigateTo('chat')" id="nav-chat" class="h-full px-4 text-sm font-headline font-semibold text-secondary hover:text-primary transition-all">Messages</button>
+                </nav>
+            </div>
+            
+            <div class="flex items-center gap-4">
+                <div class="relative pl-4 border-l border-slate-200">
+                    <button onclick="window.toggleProfileDropdown()" class="flex items-center gap-2 hover:bg-slate-50 py-1.5 px-2.5 rounded-lg transition-colors focus:outline-none">
+                        <img id="user-avatar" class="w-8 h-8 rounded-full object-cover border border-slate-200" src="" alt="Avatar">
+                        <span id="user-name" class="text-xs font-bold text-slate-700">Marcus Reid</span>
+                        <span class="material-symbols-outlined text-[16px] text-slate-400">keyboard_arrow_down</span>
+                    </button>
+
+                    <!-- Dropdown Content (Hidden by default) -->
+                    <div id="profile-dropdown" class="hidden absolute right-0 mt-2 w-48 bg-white border border-slate-200 rounded-xl shadow-xl z-50 py-1 font-body text-xs text-left">
+                        <button onclick="navigateTo('progress')" class="w-full flex items-center gap-2 px-4 py-2.5 hover:bg-slate-50 text-slate-700 font-semibold transition-colors text-left">
+                            <span class="material-symbols-outlined text-[16px] text-slate-400">settings</span> Profile Settings
+                        </button>
+                        <hr class="border-slate-100 my-1">
+                        <button onclick="handleLogout()" class="w-full flex items-center gap-2 px-4 py-2.5 hover:bg-slate-50 text-red-600 font-bold transition-colors text-left">
+                            <span class="material-symbols-outlined text-[16px]">logout</span> Logout
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Mobile Title Bar -->
+    <header class="bg-surface border-b border-slate-200 h-[60px] shrink-0 sticky top-0 z-40 flex md:hidden items-center justify-between px-4">
+        <div class="text-lg font-headline font-extrabold text-primary flex items-center gap-1.5">
+            <span>Kinetic Performance</span>
+        </div>
+        <div class="flex items-center gap-3">
+            <img id="user-avatar-mobile" class="w-7 h-7 rounded-full object-cover border border-slate-200" src="" alt="Avatar">
+            <button onclick="handleLogout()" class="text-slate-400 hover:text-primary">
+                <span class="material-symbols-outlined text-[20px]">logout</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Canvas -->
+    <main class="flex-grow overflow-y-auto pb-[80px] md:pb-12">
+        <div id="view-container" class="max-w-[1440px] mx-auto px-4 md:px-[40px] py-6 w-full flex flex-col gap-6">
+            <!-- Render views dynamically here -->
+        </div>
+    </main>
+
+    <!-- Bottom Navigation (Mobile Only) -->
+    <nav class="md:hidden bg-surface fixed bottom-0 w-full z-50 pb-safe border-t border-slate-200 flex justify-around items-center h-16">
+        <button onclick="navigateTo('home')" id="mobile-nav-home" class="flex flex-col items-center justify-center text-primary p-2">
+            <span class="material-symbols-outlined text-[22px]">dashboard</span>
+            <span class="text-[10px] font-medium mt-0.5">Today</span>
+        </button>
+        <button onclick="navigateTo('workout')" id="mobile-nav-workout" class="flex flex-col items-center justify-center text-secondary p-2">
+            <span class="material-symbols-outlined text-[22px]">fitness_center</span>
+            <span class="text-[10px] font-medium mt-0.5">Workouts</span>
+        </button>
+        <button onclick="navigateTo('progress')" id="mobile-nav-progress" class="flex flex-col items-center justify-center text-secondary p-2">
+            <span class="material-symbols-outlined text-[22px]">monitoring</span>
+            <span class="text-[10px] font-medium mt-0.5">Progress</span>
+        </button>
+        <button onclick="navigateTo('booking')" id="mobile-nav-booking" class="flex flex-col items-center justify-center text-secondary p-2">
+            <span class="material-symbols-outlined text-[22px]">calendar_today</span>
+            <span class="text-[10px] font-medium mt-0.5">Schedule</span>
+        </button>
+        <button onclick="navigateTo('chat')" id="mobile-nav-chat" class="flex flex-col items-center justify-center text-secondary p-2">
+            <span class="material-symbols-outlined text-[22px]">chat_bubble</span>
+            <span class="text-[10px] font-medium mt-0.5">Messages</span>
+        </button>
+    </nav>
+
+    <!-- Global Toast Alert Container -->
+    <div id="toast-container" class="fixed top-4 right-4 z-50 flex flex-col gap-2 pointer-events-none"></div>
+
+    <!-- Modals Containers -->
+    <div id="modal-root"></div>
+
+    <script type="module" src="/src/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html class="h-full bg-background" lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Elite Trainer - Practitioner Dashboard</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+    <!-- Chart.js for premium trainer metrics -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script id="tailwind-config">
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#a73b00",
+                        "primary-container": "#ff5f05",
+                        "on-primary-container": "#531900",
+                        "secondary": "#585e6f",
+                        "background": "#f8f9ff",
+                        "surface": "#ffffff",
+                        "surface-container-low": "#eff4ff",
+                        "surface-container-high": "#dce9ff",
+                        "surface-container-highest": "#d3e4fe",
+                        "surface-container-lowest": "#ffffff",
+                        "on-surface": "#0b1c30",
+                        "on-surface-variant": "#5b4137",
+                        "outline": "#8f7065",
+                        "outline-variant": "#e4bfb1",
+                        "tertiary-container": "#00a1c5",
+                        "error-container": "#ffdad6",
+                        "error": "#ba1a1a"
+                    },
+                    fontFamily: {
+                        "headline": ["Montserrat"],
+                        "body": ["Inter"]
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .elevation-1 {
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+        }
+        .elevation-2 {
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+        }
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f8f9ff;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body class="h-full font-body antialiased flex flex-col text-on-surface bg-background">
+
+    <header class="h-[72px] bg-white border-b border-slate-200 shrink-0 z-40 sticky top-0 px-8 flex items-center">
+        <div class="max-w-[1440px] mx-auto w-full flex justify-between items-center">
+            <div class="flex items-center gap-8">
+                <div class="text-2xl font-headline font-extrabold text-primary flex items-center gap-2">
+                    <span>Kinetic Performance</span>
+                </div>
+                
+                <nav class="flex h-[72px] items-center gap-1">
+                    <button onclick="navigateTo('dashboard')" id="nav-dashboard" class="h-full px-4 text-sm font-headline font-semibold text-primary border-b-2 border-primary transition-all">Dashboard</button>
+                    <button onclick="navigateTo('clients')" id="nav-clients" class="h-full px-4 text-sm font-headline font-semibold text-secondary hover:text-primary transition-all">Clients</button>
+                    <button onclick="navigateTo('calendar')" id="nav-calendar" class="h-full px-4 text-sm font-headline font-semibold text-secondary hover:text-primary transition-all">Schedule</button>
+                    <button onclick="navigateTo('builder')" id="nav-builder" class="h-full px-4 text-sm font-headline font-semibold text-secondary hover:text-primary transition-all">Workouts</button>
+                    <button onclick="navigateTo('packages')" id="nav-packages" class="h-full px-4 text-sm font-headline font-semibold text-secondary hover:text-primary transition-all">Sales</button>
+                    <button onclick="navigateTo('messages')" id="nav-messages" class="h-full px-4 text-sm font-headline font-semibold text-secondary hover:text-primary transition-all">Messages</button>
+                </nav>
+            </div>
+            
+            <div class="flex items-center gap-4">
+                <!-- Toolbar icons -->
+                <button class="text-slate-400 hover:text-slate-600">
+                    <span class="material-symbols-outlined text-[20px]">notifications</span>
+                </button>
+
+                <!-- Active User Profile Link with Dropdown -->
+                <div class="relative pl-4 border-l border-slate-200">
+                    <button onclick="window.toggleProfileDropdown()" class="flex items-center gap-2 hover:bg-slate-50 py-1.5 px-2.5 rounded-lg transition-colors focus:outline-none">
+                        <img class="w-8 h-8 rounded-full object-cover border border-slate-200" src="https://images.unsplash.com/photo-1568602471122-7832951cc4c5?auto=format&fit=crop&w=100&q=80" alt="Trainer">
+                        <span class="text-xs font-bold text-slate-700">Coach Bobby</span>
+                        <span class="material-symbols-outlined text-[16px] text-slate-400">keyboard_arrow_down</span>
+                    </button>
+
+                    <!-- Dropdown Content (Hidden by default) -->
+                    <div id="profile-dropdown" class="hidden absolute right-0 mt-2 w-48 bg-white border border-slate-200 rounded-xl shadow-xl z-50 py-1 font-body text-xs text-left">
+                        <button onclick="navigateTo('dashboard')" class="w-full flex items-center gap-2 px-4 py-2.5 hover:bg-slate-50 text-slate-700 font-semibold transition-colors text-left">
+                            <span class="material-symbols-outlined text-[16px] text-slate-400">settings</span> Pengaturan PT
+                        </button>
+                        <hr class="border-slate-100 my-1">
+                        <button onclick="handleLogout()" class="w-full flex items-center gap-2 px-4 py-2.5 hover:bg-slate-50 text-red-600 font-bold transition-colors text-left">
+                            <span class="material-symbols-outlined text-[16px]">logout</span> Logout
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main View Window -->
+    <main class="flex-grow overflow-hidden flex flex-col">
+        <!-- Scrollable Dashboard Content Canvas -->
+        <div id="admin-view-container" class="flex-grow overflow-y-auto p-8 flex flex-col gap-6 max-w-[1440px] mx-auto w-full">
+            <!-- Render admin screens dynamically -->
+        </div>
+    </main>
+
+    <!-- Global Toast Alert Container -->
+    <div id="toast-container" class="fixed top-4 right-4 z-50 flex flex-col gap-2 pointer-events-none"></div>
+
+    <!-- Modals Container -->
+    <div id="modal-root"></div>
+
+    <script type="module" src="./admin.js"></script>
+</body>
+</html>

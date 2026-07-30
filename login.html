@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html class="light h-full" lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Elite Trainer - Portal Login</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script id="tailwind-config">
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#a73b00",
+                        "primary-container": "#ff5f05",
+                        "background": "#f8f9ff",
+                        "surface": "#ffffff",
+                        "on-background": "#0b1c30"
+                    },
+                    fontFamily: {
+                        "headline": ["Montserrat"],
+                        "body": ["Inter"]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-background text-on-background font-body min-h-screen flex items-center justify-center p-4">
+
+    <!-- Card Container -->
+    <div class="bg-white max-w-md w-full rounded-2xl p-8 border border-slate-100 shadow-2xl flex flex-col items-center">
+        <!-- Logo -->
+        <div class="flex items-center gap-2 mb-6">
+            <span class="material-symbols-outlined text-primary text-4xl" style="font-variation-settings: 'FILL' 1;">fitness_center</span>
+            <div class="flex flex-col">
+                <span class="text-2xl font-headline font-extrabold tracking-tight text-primary leading-none">ELITE TRAINER</span>
+                <span class="text-[9px] uppercase tracking-widest text-[#585e6f] font-bold mt-1">Management Assistant Portal</span>
+            </div>
+        </div>
+
+        <h2 class="text-xl font-headline font-bold text-center mb-1">Welcome Back</h2>
+        <p class="text-xs text-slate-500 text-center mb-6">Sign in to access your dashboard, workouts, and tools.</p>
+
+        <!-- Login Form Wrapper -->
+        <div id="login-form-wrapper" class="w-full">
+            <!-- Gateway Toggle Roles -->
+            <div class="flex bg-slate-100 rounded-lg p-1 w-full mb-6">
+                <button onclick="setRole('client')" id="btn-role-client" class="flex-1 text-center py-2 text-xs font-semibold rounded-md bg-white text-primary shadow-sm transition-all duration-200">
+                    Client Portal
+                </button>
+                <button onclick="setRole('trainer')" id="btn-role-trainer" class="flex-1 text-center py-2 text-xs font-semibold rounded-md text-slate-600 hover:text-slate-900 transition-all duration-200">
+                    Trainer Portal
+                </button>
+            </div>
+
+            <form onsubmit="handleLogin(event)" class="w-full space-y-4">
+                <div>
+                    <label class="block text-xs font-bold text-slate-600 uppercase tracking-wider mb-1">Email Address</label>
+                    <input type="email" id="login-email" required placeholder="m.reid@email.com" value="m.reid@email.com" class="w-full rounded-xl border-slate-200 text-xs px-3 py-2.5 focus:border-primary focus:ring-primary bg-slate-50 outline-none transition-colors">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-600 uppercase tracking-wider mb-1">Password</label>
+                    <input type="password" id="login-pass" required placeholder="••••••••" value="admin123" class="w-full rounded-xl border-slate-200 text-xs px-3 py-2.5 focus:border-primary focus:ring-primary bg-slate-50 outline-none transition-colors">
+                </div>
+                
+                <div class="text-red-500 text-[10px] font-semibold hidden text-center" id="error-message">
+                    Invalid credentials. Please try again.
+                </div>
+
+                <!-- Demo helper credentials -->
+                <div class="bg-slate-50 rounded-xl p-3 text-[10px] text-slate-500 space-y-1 w-full border border-slate-100">
+                    <span class="font-bold text-slate-700">Quick Credentials (Demo):</span>
+                    <div id="demo-creds">
+                        <div>• Client: <span class="font-mono text-primary">m.reid@email.com</span> / <span class="font-mono">admin123</span></div>
+                        <div>• Alternative Client: <span class="font-mono text-primary">eleanor.v@example.com</span> / <span class="font-mono">admin123</span></div>
+                    </div>
+                </div>
+
+                <button type="submit" class="w-full bg-primary hover:bg-[#8f3200] text-white font-bold text-xs py-3 rounded-xl transition-all shadow-md mt-2 flex items-center justify-center gap-1">
+                    <span class="material-symbols-outlined text-[16px]">lock_open</span> Sign In
+                </button>
+            </form>
+            
+            <div class="text-center text-xs text-slate-500 mt-5" id="register-link-container">
+                Don't have an account? <a href="#" onclick="showRegisterForm(event)" class="text-primary font-bold hover:underline">Register New Account</a>
+            </div>
+        </div>
+
+        <!-- Registration Form Wrapper (PAR-Q Multi-step wizard) -->
+        <div id="register-form-wrapper" class="w-full hidden">
+            <h3 class="text-md font-headline font-bold text-slate-800 text-center mb-1" id="reg-step-title">Client Registration</h3>
+            <p class="text-[10px] text-slate-500 text-center mb-4" id="reg-step-subtitle">Step 1 of 3: Account & Personal Info</p>
+            
+            <!-- Step Indicators -->
+            <div class="flex gap-1.5 mb-6 justify-center">
+                <span class="w-8 h-1 rounded bg-primary" id="reg-indicator-1"></span>
+                <span class="w-8 h-1 rounded bg-slate-100" id="reg-indicator-2"></span>
+                <span class="w-8 h-1 rounded bg-slate-100" id="reg-indicator-3"></span>
+            </div>
+
+            <form id="register-wizard-form" class="space-y-4" onsubmit="handleRegisterSubmit(event)">
+                <!-- Step 1: Account details -->
+                <div id="reg-step-1-inputs" class="space-y-4">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-600 uppercase tracking-wider mb-1">Full Name</label>
+                        <input type="text" id="reg-name" required placeholder="John Doe" class="w-full rounded-xl border-slate-200 text-xs px-3 py-2.5 focus:border-primary focus:ring-primary bg-slate-50 outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-600 uppercase tracking-wider mb-1">Email Address</label>
+                        <input type="email" id="reg-email" required placeholder="johndoe@email.com" class="w-full rounded-xl border-slate-200 text-xs px-3 py-2.5 focus:border-primary focus:ring-primary bg-slate-50 outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-600 uppercase tracking-wider mb-1">Phone Number</label>
+                        <input type="text" id="reg-phone" required placeholder="+62 812-xxxx-xxxx" class="w-full rounded-xl border-slate-200 text-xs px-3 py-2.5 focus:border-primary focus:ring-primary bg-slate-50 outline-none">
+                    </div>
+                    
+                    <button type="button" onclick="navigateRegStep(1)" class="w-full bg-primary hover:bg-[#8f3200] text-white font-bold text-xs py-3 rounded-xl transition-all shadow-md mt-2 flex items-center justify-center gap-1">
+                        Continue <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+                    </button>
+                </div>
+
+                <!-- Step 2: PAR-Q Questionnaire -->
+                <div id="reg-step-2-inputs" class="space-y-4 hidden text-xs">
+                    <div class="bg-slate-50 border border-slate-100 rounded-xl p-4 space-y-4 max-h-64 overflow-y-auto">
+                        <h4 class="font-bold text-slate-800 text-[10px] uppercase border-b pb-1.5 flex items-center gap-1"><span class="material-symbols-outlined text-primary text-[14px]">medical_information</span> PAR-Q Physical Readiness Questionnaire</h4>
+                        
+                        <div class="flex justify-between items-start gap-4">
+                            <span>1. Has your doctor ever said that you have a heart condition and that you should only do physical activity recommended by a doctor?</span>
+                            <select id="reg-parq-q1" class="bg-white border rounded text-[10px] py-0.5 px-1.5 focus:border-primary outline-none"><option value="no">No</option><option value="yes">Yes</option></select>
+                        </div>
+                        <div class="flex justify-between items-start gap-4">
+                            <span>2. Do you feel pain in your chest when you do physical activity?</span>
+                            <select id="reg-parq-q2" class="bg-white border rounded text-[10px] py-0.5 px-1.5 focus:border-primary outline-none"><option value="no">No</option><option value="yes">Yes</option></select>
+                        </div>
+                        <div class="flex justify-between items-start gap-4">
+                            <span>3. In the past month, have you had chest pain when you were not doing physical activity?</span>
+                            <select id="reg-parq-q3" class="bg-white border rounded text-[10px] py-0.5 px-1.5 focus:border-primary outline-none"><option value="no">No</option><option value="yes">Yes</option></select>
+                        </div>
+                        <div class="flex justify-between items-start gap-4">
+                            <span>4. Do you lose your balance because of dizziness or do you ever lose consciousness?</span>
+                            <select id="reg-parq-q4" class="bg-white border rounded text-[10px] py-0.5 px-1.5 focus:border-primary outline-none"><option value="no">No</option><option value="yes">Yes</option></select>
+                        </div>
+                        <div class="flex justify-between items-start gap-4">
+                            <span>5. Do you have a bone or joint problem that could be made worse by a change in your physical activity?</span>
+                            <select id="reg-parq-q5" class="bg-white border rounded text-[10px] py-0.5 px-1.5 focus:border-primary outline-none"><option value="no">No</option><option value="yes">Yes</option></select>
+                        </div>
+                        
+                        <div class="pt-2 border-t border-slate-200">
+                            <label class="block font-bold text-slate-600 mb-1 text-[9px] uppercase">Other Injury Notes (If Any)</label>
+                            <textarea id="reg-injury-notes" placeholder="e.g. ACL Knee surgery 1 year ago..." class="w-full rounded border-slate-200 text-[10px] p-2 bg-white outline-none focus:border-primary"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="flex gap-2">
+                        <button type="button" onclick="navigateRegStep(-1)" class="flex-1 border border-slate-200 text-slate-600 font-bold text-xs py-2.5 rounded-xl hover:bg-slate-50 transition-colors">Back</button>
+                        <button type="button" onclick="navigateRegStep(1)" class="flex-1 bg-primary hover:bg-[#8f3200] text-white font-bold text-xs py-2.5 rounded-xl transition-all shadow-md">Continue</button>
+                    </div>
+                </div>
+
+                <!-- Step 3: Exercise Goals -->
+                <div id="reg-step-3-inputs" class="space-y-4 hidden">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-600 uppercase tracking-wider mb-1">Primary Training Goal</label>
+                        <select id="reg-focus" class="w-full rounded-xl border-slate-200 text-xs px-3 py-2.5 focus:border-primary focus:ring-primary bg-slate-50 outline-none font-bold text-slate-800">
+                            <option value="Hypertrophy / Muscle Building">Hypertrophy / Muscle Building</option>
+                            <option value="Fat Loss / Endurance">Fat Loss / Endurance</option>
+                            <option value="Sports Performance">Sports Performance</option>
+                            <option value="Mobility / Rehabilitation">Mobility / Rehabilitation</option>
+                        </select>
+                    </div>
+
+                    <div class="flex gap-2">
+                        <button type="button" onclick="navigateRegStep(-1)" class="flex-1 border border-slate-200 text-slate-600 font-bold text-xs py-2.5 rounded-xl hover:bg-slate-50 transition-colors">Back</button>
+                        <button type="submit" class="flex-1 bg-primary hover:bg-[#8f3200] text-white font-bold text-xs py-2.5 rounded-xl transition-all shadow-md">Register & Sign In</button>
+                    </div>
+                </div>
+            </form>
+
+            <div class="text-center text-xs text-slate-500 mt-5">
+                Already have an account? <a href="#" onclick="showLoginForm(event)" class="text-primary font-bold hover:underline">Sign In</a>
+            </div>
+        </div>
+       <script type="module">
+        import { saveClient, getClients, getPrograms, saveState } from './src/state.js';
+        window.saveClient = saveClient;
+        window.getClients = getClients;
+        window.getPrograms = getPrograms;
+        window.saveState = saveState;
+    </script>
+
+    <script>
+        let currentRole = 'client';
+        let regStep = 1;
+
+        window.showRegisterForm = function(e) {
+            if (e) e.preventDefault();
+            document.getElementById('login-form-wrapper').classList.add('hidden');
+            document.getElementById('register-form-wrapper').classList.remove('hidden');
+            regStep = 1;
+            renderRegStep();
+        };
+
+        window.showLoginForm = function(e) {
+            if (e) e.preventDefault();
+            document.getElementById('register-form-wrapper').classList.add('hidden');
+            document.getElementById('login-form-wrapper').classList.remove('hidden');
+        };
+
+        window.navigateRegStep = function(amount) {
+            // Validate step 1 if proceeding
+            if (amount > 0 && regStep === 1) {
+                const name = document.getElementById('reg-name').value.trim();
+                const email = document.getElementById('reg-email').value.trim();
+                const phone = document.getElementById('reg-phone').value.trim();
+                if (!name || !email || !phone) {
+                    alert('Please fill in all personal information fields!');
+                    return;
+                }
+            }
+            regStep = Math.max(1, Math.min(3, regStep + amount));
+            renderRegStep();
+        };
+
+        function renderRegStep() {
+            // Update Title/Subtitle
+            const titles = {
+                1: 'Step 1 of 3: Account & Personal Info',
+                2: 'Step 2 of 3: Medical Questionnaire (PAR-Q)',
+                3: 'Step 3 of 3: Primary Training Goal'
+            };
+            document.getElementById('reg-step-subtitle').innerText = titles[regStep];
+
+            // Hide/Show Inputs
+            document.getElementById('reg-step-1-inputs').classList.add('hidden');
+            document.getElementById('reg-step-2-inputs').classList.add('hidden');
+            document.getElementById('reg-step-3-inputs').classList.add('hidden');
+            document.getElementById(`reg-step-${regStep}-inputs`).classList.remove('hidden');
+
+            // Stepper Indicator dots
+            for (let i = 1; i <= 3; i++) {
+                const dot = document.getElementById(`reg-indicator-${i}`);
+                if (i <= regStep) {
+                    dot.className = "w-8 h-1 rounded bg-primary";
+                } else {
+                    dot.className = "w-8 h-1 rounded bg-slate-100";
+                }
+            }
+        }
+
+        window.handleRegisterSubmit = function(e) {
+            e.preventDefault();
+
+            const name = document.getElementById('reg-name').value.trim();
+            const email = document.getElementById('reg-email').value.trim();
+            const phone = document.getElementById('reg-phone').value.trim();
+            
+            const q1 = document.getElementById('reg-parq-q1').value;
+            const q2 = document.getElementById('reg-parq-q2').value;
+            const q3 = document.getElementById('reg-parq-q3').value;
+            const q4 = document.getElementById('reg-parq-q4').value;
+            const q5 = document.getElementById('reg-parq-q5').value;
+            const injuryNotes = document.getElementById('reg-injury-notes').value.trim();
+            const focus = document.getElementById('reg-focus').value;
+
+            const newClientId = `client-${Date.now()}`;
+            
+            const newClient = {
+                id: newClientId,
+                name: name,
+                email: email,
+                phone: phone,
+                avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=150&q=80',
+                joinedDate: new Date().toLocaleDateString('id-ID', { day: '2-digit', month: 'long', year: 'numeric' }),
+                status: 'Active',
+                package: {
+                    name: 'Paket Pemula (3 Sesi)',
+                    total: 3,
+                    remaining: 3
+                },
+                assessment: {
+                    hasInjury: q1 === 'yes' || q2 === 'yes' || q3 === 'yes' || q4 === 'yes' || q5 === 'yes' || injuryNotes !== '',
+                    injuryNotes: injuryNotes,
+                    medicalCleared: true,
+                    parq: { q1, q2, q3, q4, q5, q6: 'no', q7: 'no' },
+                    postural: {
+                        focus: focus,
+                        analysis: 'Registrasi mandiri oleh Klien baru.'
+                    }
+                },
+                bodyProgress: [
+                    { date: 'Awal', weight: 70.0, bodyFat: 24.0, muscleMass: 28.0, waist: 85 }
+                ],
+                photos: [],
+                habits: {
+                    water: { current: 0, target: 3.0 },
+                    sleep: { current: 0, target: 8.0 },
+                    steps: { current: 0, target: 10000 },
+                    completedToday: []
+                }
+            };
+
+            const programs = window.getPrograms();
+            programs[newClientId] = {
+                focus: focus,
+                mesocycle: 'Fase 1: Kondisi Awal',
+                exercises: []
+            };
+
+            window.saveClient(newClient);
+            window.saveState();
+
+            // Set login context to new client and redirect
+            localStorage.setItem('elite_pt_role', 'client');
+            localStorage.setItem('elite_pt_client_id', newClientId);
+            
+            window.location.href = './index.html';
+        };
+
+        window.setRole = function(role) {
+            currentRole = role;
+            const btnClient = document.getElementById('btn-role-client');
+            const btnTrainer = document.getElementById('btn-role-trainer');
+            const emailInput = document.getElementById('login-email');
+            const demoCreds = document.getElementById('demo-creds');
+
+            if (role === 'client') {
+                btnClient.classList.add('bg-white', 'text-primary', 'shadow-sm');
+                btnClient.classList.remove('text-slate-600');
+                btnTrainer.classList.remove('bg-white', 'text-primary', 'shadow-sm');
+                btnTrainer.classList.add('text-slate-600');
+                
+                emailInput.value = 'm.reid@email.com';
+                emailInput.placeholder = 'm.reid@email.com';
+                demoCreds.innerHTML = `
+                    <div>• Client: <span class="font-mono text-primary">m.reid@email.com</span> / <span class="font-mono">admin123</span></div>
+                    <div>• Alternative Client: <span class="font-mono text-primary">eleanor.v@example.com</span> / <span class="font-mono">admin123</span></div>
+                `;
+            } else {
+                btnTrainer.classList.add('bg-white', 'text-primary', 'shadow-sm');
+                btnTrainer.classList.remove('text-slate-600');
+                btnClient.classList.remove('bg-white', 'text-primary', 'shadow-sm');
+                btnClient.classList.add('text-slate-600');
+
+                emailInput.value = 'trainer@elite.com';
+                emailInput.placeholder = 'trainer@elite.com';
+                demoCreds.innerHTML = `
+                    <div>• Trainer: <span class="font-mono text-primary">trainer@elite.com</span> / <span class="font-mono">admin123</span></div>
+                `;
+            }
+        }
+
+        window.handleLogin = function(e) {
+            e.preventDefault();
+            const email = document.getElementById('login-email').value;
+            const pass = document.getElementById('login-pass').value;
+            const errorMsg = document.getElementById('error-message');
+
+            errorMsg.classList.add('hidden');
+
+            if (currentRole === 'client') {
+                // Scan localstorage clients dynamically
+                const clients = window.getClients() || [];
+                const client = clients.find(c => c.email === email);
+                if (client && pass === 'admin123') {
+                    localStorage.setItem('elite_pt_role', 'client');
+                    localStorage.setItem('elite_pt_client_id', client.id);
+                    window.location.href = './index.html';
+                } else {
+                    errorMsg.classList.remove('hidden');
+                }
+            } else {
+                if (email === 'trainer@elite.com' && pass === 'admin123') {
+                    localStorage.setItem('elite_pt_role', 'trainer');
+                    window.location.href = './admin/index.html';
+                } else {
+                    errorMsg.classList.remove('hidden');
+                }
+            }
+        }
+    </script>
+</body>
+</html>
