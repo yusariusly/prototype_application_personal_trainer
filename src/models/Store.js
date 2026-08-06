@@ -1,9 +1,8 @@
-// State Management for Elite Personal Trainer Management App
-
+// Core Store for Elite Personal Trainer Management App
 const tenantId = 'elite_pt';
-const STATE_KEY = `${tenantId}_app_state`;
+export const STATE_KEY = `${tenantId}_app_state`;
 
-const DEFAULT_CLIENTS = [
+export const DEFAULT_CLIENTS = [
   {
     id: 'client-1',
     name: 'Marcus Reid',
@@ -124,7 +123,7 @@ const DEFAULT_CLIENTS = [
   }
 ];
 
-const DEFAULT_PROGRAMS = {
+export const DEFAULT_PROGRAMS = {
   'client-1': {
     focus: 'Leg Day - Hypertrophy',
     mesocycle: 'Phase 1: Hypertrophy & Muscle Building',
@@ -220,7 +219,7 @@ const DEFAULT_PROGRAMS = {
   }
 };
 
-const DEFAULT_SCHEDULE = [
+export const DEFAULT_SCHEDULE = [
   {
     id: 'sched-1',
     clientId: 'client-1',
@@ -259,7 +258,7 @@ const DEFAULT_SCHEDULE = [
   }
 ];
 
-const DEFAULT_EXERCISE_LIBRARY = [
+export const DEFAULT_EXERCISE_LIBRARY = [
   { name: 'Barbell Squats', category: 'Legs' },
   { name: 'Romanian Deadlifts', category: 'Hamstrings' },
   { name: 'Leg Press', category: 'Legs' },
@@ -274,7 +273,7 @@ const DEFAULT_EXERCISE_LIBRARY = [
   { name: 'Plank', category: 'Core' }
 ];
 
-const DEFAULT_MESSAGES = [
+export const DEFAULT_MESSAGES = [
   {
     id: 'msg-1',
     clientId: 'client-1',
@@ -291,20 +290,19 @@ const DEFAULT_MESSAGES = [
   }
 ];
 
-let state = {
+export let state = {
   clients: [...DEFAULT_CLIENTS],
   programs: { ...DEFAULT_PROGRAMS },
   schedule: [...DEFAULT_SCHEDULE],
   exerciseLibrary: [...DEFAULT_EXERCISE_LIBRARY],
   messages: [...DEFAULT_MESSAGES],
-  activeClientId: 'client-1', // Default client log in
+  activeClientId: 'client-1',
   activeTrainerName: 'Coach Bobby'
 };
 
 function sanitizeStateToEnglish(st) {
   if (!st) return;
 
-  // Sanitize Clients
   if (Array.isArray(st.clients)) {
     st.clients.forEach(c => {
       if (c.package && c.package.name) {
@@ -330,7 +328,6 @@ function sanitizeStateToEnglish(st) {
     });
   }
 
-  // Sanitize Schedule
   if (Array.isArray(st.schedule)) {
     st.schedule.forEach(s => {
       if (s.type === 'Kelas Studio') s.type = 'Studio Class';
@@ -341,7 +338,6 @@ function sanitizeStateToEnglish(st) {
     });
   }
 
-  // Sanitize Messages
   if (Array.isArray(st.messages)) {
     st.messages.forEach(m => {
       if (m.text.includes('Halo Marcus!') || m.text.includes('gue siapin')) {
@@ -353,7 +349,6 @@ function sanitizeStateToEnglish(st) {
     });
   }
 
-  // Sanitize Programs
   if (st.programs) {
     Object.keys(st.programs).forEach(k => {
       const p = st.programs[k];
@@ -369,7 +364,6 @@ export function loadState() {
   if (saved) {
     try {
       const parsed = JSON.parse(saved);
-      // Deep merge fallback fields to ensure stability
       state = {
         clients: parsed.clients || [...DEFAULT_CLIENTS],
         programs: parsed.programs || { ...DEFAULT_PROGRAMS },
@@ -379,7 +373,6 @@ export function loadState() {
         activeClientId: parsed.activeClientId || 'client-1',
         activeTrainerName: parsed.activeTrainerName || 'Coach Bobby'
       };
-      // Automatically sanitize any older cached Indonesian state strings to English
       sanitizeStateToEnglish(state);
       saveState();
     } catch (e) {
@@ -388,125 +381,11 @@ export function loadState() {
   } else {
     saveState();
   }
-  window.AdminState = {
-    getClients,
-    saveClient,
-    getPrograms,
-    updateProgram,
-    getSchedule,
-    addSchedule,
-    validateSession,
-    getExerciseLibrary,
-    addExerciseToLibrary,
-    getMessages,
-    addMessage,
-    getActiveClient,
-    setActiveClient,
-    saveState
-  };
 }
 
 export function saveState() {
   localStorage.setItem(STATE_KEY, JSON.stringify(state));
 }
 
-// State Helper Getters and Setters
-export function getClients() {
-  return state.clients;
-}
-
-export function getActiveClient() {
-  return state.clients.find(c => c.id === state.activeClientId) || state.clients[0];
-}
-
-export function setActiveClient(id) {
-  state.activeClientId = id;
-  saveState();
-}
-
-export function saveClient(client) {
-  const idx = state.clients.findIndex(c => c.id === client.id);
-  if (idx > -1) {
-    state.clients[idx] = client;
-  } else {
-    state.clients.push(client);
-  }
-  saveState();
-}
-
-export function getPrograms() {
-  return state.programs;
-}
-
-export function updateProgram(clientId, program) {
-  state.programs[clientId] = program;
-  saveState();
-}
-
-export function getSchedule() {
-  return state.schedule;
-}
-
-export function addSchedule(item) {
-  // Anti-Bentrok: check for existing slots at same date and time
-  const isConflict = state.schedule.some(s => s.date === item.date && s.time === item.time);
-  if (isConflict) {
-    throw new Error('Schedule conflict! Another training session is already scheduled at the same date and time.');
-  }
-
-  state.schedule.push({
-    id: `sched-${Date.now()}`,
-    validated: false,
-    ...item
-  });
-  saveState();
-  return true;
-}
-
-export function validateSession(scheduleId) {
-  const item = state.schedule.find(s => s.id === scheduleId);
-  if (item && !item.validated) {
-    item.validated = true;
-    item.status = 'Confirmed';
-    
-    // Deduct session from client package
-    const client = state.clients.find(c => c.id === item.clientId);
-    if (client && client.package && client.package.remaining > 0) {
-      client.package.remaining--;
-    }
-    saveState();
-    return true;
-  }
-  return false;
-}
-
-export function getExerciseLibrary() {
-  return state.exerciseLibrary;
-}
-
-export function addExerciseToLibrary(name, category) {
-  if (!state.exerciseLibrary.some(ex => ex.name.toLowerCase() === name.toLowerCase())) {
-    state.exerciseLibrary.push({ name, category });
-    saveState();
-  }
-}
-
-export function getMessages(clientId) {
-  return state.messages.filter(m => m.clientId === clientId);
-}
-
-export function addMessage(clientId, sender, text) {
-  const newMsg = {
-    id: `msg-${Date.now()}`,
-    clientId,
-    sender,
-    text,
-    time: new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false })
-  };
-  state.messages.push(newMsg);
-  saveState();
-  return newMsg;
-}
-
-// Initial load trigger
+// Initial load
 loadState();

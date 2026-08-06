@@ -187,7 +187,10 @@
             </div>
         </div>
        <script type="module">
-        import { saveClient, getClients, getPrograms, saveState } from './src/state.js';
+        import { getClients } from './src/models/ClientModel.js';
+        import { getPrograms } from './src/models/ProgramModel.js';
+        import { saveState } from './src/models/Store.js';
+        import { saveClient } from './src/models/ClientModel.js';
         window.saveClient = saveClient;
         window.getClients = getClients;
         window.getPrograms = getPrograms;
