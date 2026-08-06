@@ -1,6 +1,7 @@
 import { getClients } from '../../src/models/ClientModel.js';
 import { saveState } from '../../src/models/Store.js';
 import { saveClient } from '../../src/models/ClientModel.js';
+import { getNutrition, updateNutrition } from '../../src/models/NutritionModel.js';
 
 export function renderClientDetailView(container, activeClientDetailId) {
   const clients = getClients();
@@ -14,6 +15,7 @@ export function renderClientDetailView(container, activeClientDetailId) {
     `;
     return;
   }
+  const nutrition = getNutrition(client.id);
 
   const progressRows = client.bodyProgress.map(bp => `
     <tr class="border-b border-slate-100 last:border-0 text-slate-700">
@@ -114,6 +116,16 @@ export function renderClientDetailView(container, activeClientDetailId) {
 
         <!-- Right Side: Goals & Photos -->
         <div class="lg:col-span-6 space-y-6">
+          <div class="bg-green-50 border border-green-100 p-4 rounded-xl flex justify-between items-center shadow-sm">
+            <div>
+               <h3 class="text-xs font-bold text-slate-800 uppercase tracking-wider mb-1">Overall Compliance Rate</h3>
+               <p class="text-[10px] text-slate-500 font-medium">Diet & Workout Adherence (Last 30 Days)</p>
+            </div>
+            <div class="text-3xl font-headline font-extrabold text-green-700">
+               88%
+            </div>
+          </div>
+          
           <div>
             <h3 class="text-xs font-bold text-slate-800 uppercase tracking-wider border-b border-slate-100 pb-2 mb-3">Goals & Posture Analysis</h3>
             <form id="edit-client-posture-form" class="space-y-4" onsubmit="window.saveClientPosture(event, '${client.id}')">
@@ -141,6 +153,39 @@ export function renderClientDetailView(container, activeClientDetailId) {
             <div class="grid grid-cols-2 gap-4">
               ${photoHTML}
             </div>
+          </div>
+          
+          <div>
+            <h3 class="text-xs font-bold text-slate-800 uppercase tracking-wider border-b border-slate-100 pb-2 mb-3">Nutrition Targets</h3>
+            <form id="edit-client-nutrition-form" class="space-y-4" onsubmit="window.saveClientNutrition(event, '${client.id}')">
+              <div class="grid grid-cols-2 gap-4">
+                  <div>
+                    <label class="text-slate-400 font-semibold block mb-1">Target Calories (kcal):</label>
+                    <input type="number" id="edit-nut-cal" value="${nutrition.targets.calories}" class="w-full bg-slate-50 border border-slate-200 rounded-lg py-2 px-3 text-xs outline-none focus:bg-white font-bold text-slate-800">
+                  </div>
+                  <div>
+                    <label class="text-slate-400 font-semibold block mb-1">Est. TDEE (kcal):</label>
+                    <input type="number" id="edit-nut-tdee" value="${nutrition.tdee}" class="w-full bg-slate-50 border border-slate-200 rounded-lg py-2 px-3 text-xs outline-none focus:bg-white font-bold text-slate-800">
+                  </div>
+              </div>
+              <div class="grid grid-cols-3 gap-4">
+                  <div>
+                    <label class="text-slate-400 font-semibold block mb-1">Protein (g):</label>
+                    <input type="number" id="edit-nut-pro" value="${nutrition.targets.protein}" class="w-full bg-slate-50 border border-slate-200 rounded-lg py-2 px-3 text-xs outline-none focus:bg-white font-bold text-slate-800">
+                  </div>
+                  <div>
+                    <label class="text-slate-400 font-semibold block mb-1">Carbs (g):</label>
+                    <input type="number" id="edit-nut-carb" value="${nutrition.targets.carbs}" class="w-full bg-slate-50 border border-slate-200 rounded-lg py-2 px-3 text-xs outline-none focus:bg-white font-bold text-slate-800">
+                  </div>
+                  <div>
+                    <label class="text-slate-400 font-semibold block mb-1">Fat (g):</label>
+                    <input type="number" id="edit-nut-fat" value="${nutrition.targets.fat}" class="w-full bg-slate-50 border border-slate-200 rounded-lg py-2 px-3 text-xs outline-none focus:bg-white font-bold text-slate-800">
+                  </div>
+              </div>
+              <button type="submit" class="bg-primary text-white text-[10px] font-bold font-headline py-2 px-4 rounded-lg hover:bg-[#8f3200] transition-colors shadow-sm focus:outline-none">
+                Save Nutrition Targets
+              </button>
+            </form>
           </div>
         </div>
 
@@ -186,6 +231,21 @@ export function setupClientDetailGlobalHandlers(renderView, showToast) {
   
     saveClient(client);
     renderView();
-    showToast('Postural assessment & training goals updated successfully!', 'success');
+    if(showToast) showToast('Client posture updated', 'success');
+  };
+
+  window.saveClientNutrition = function(event, clientId) {
+    event.preventDefault();
+    const nutrition = getNutrition(clientId);
+    nutrition.tdee = parseInt(document.getElementById('edit-nut-tdee').value);
+    nutrition.targets.calories = parseInt(document.getElementById('edit-nut-cal').value);
+    nutrition.targets.protein = parseInt(document.getElementById('edit-nut-pro').value);
+    nutrition.targets.carbs = parseInt(document.getElementById('edit-nut-carb').value);
+    nutrition.targets.fat = parseInt(document.getElementById('edit-nut-fat').value);
+    
+    updateNutrition(clientId, nutrition);
+    
+    renderView();
+    if(showToast) showToast('Nutrition targets updated', 'success');
   };
 }

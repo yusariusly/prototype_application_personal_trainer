@@ -24,7 +24,7 @@ export function updateHeaderSelection(activeTab) {
 export function setupAdminAppGlobalHandlers(renderView) {
   window.handleLogout = function() {
     localStorage.removeItem('elite_pt_role');
-    window.location.href = '../login.html';
+    window.location.href = '../index.html';
   };
 
   window.closeModal = function() {
@@ -78,6 +78,14 @@ export function setupAdminAppGlobalHandlers(renderView) {
     }
   };
 
+  window.toggleLanguage = function(e) {
+    if (e) e.stopPropagation();
+    const isEn = localStorage.getItem('elite_pt_lang') !== 'id';
+    localStorage.setItem('elite_pt_lang', isEn ? 'id' : 'en');
+    updateLanguageIndicator();
+    if(window.renderView) window.renderView();
+  };
+
   document.addEventListener('click', (e) => {
     const drop = document.getElementById('profile-dropdown');
     if (drop && !drop.classList.contains('hidden')) {
@@ -102,6 +110,24 @@ export function setupAdminAppGlobalHandlers(renderView) {
     currentOnboardingStep = Math.max(1, currentOnboardingStep + amount);
     renderOnboardingModal(renderView);
   };
+
+  updateLanguageIndicator();
+}
+
+function updateLanguageIndicator() {
+  const isId = localStorage.getItem('elite_pt_lang') === 'id';
+  const langEl = document.getElementById('lang-indicator');
+  if (langEl) langEl.textContent = isId ? 'ID' : 'EN';
+  
+  // Basic Nav Translations
+  const navKeys = ['dashboard', 'clients', 'calendar', 'builder', 'packages', 'messages'];
+  const textEn = ['Dashboard', 'Clients', 'Schedule', 'Workouts', 'Sales', 'Messages'];
+  const textId = ['Dasbor', 'Klien', 'Jadwal', 'Latihan', 'Penjualan', 'Obrolan'];
+  
+  navKeys.forEach((key, index) => {
+    const el = document.getElementById(`nav-${key}`);
+    if (el) el.textContent = isId ? textId[index] : textEn[index];
+  });
 }
 
 function renderOnboardingModal(renderView) {

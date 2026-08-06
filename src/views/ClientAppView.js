@@ -13,10 +13,26 @@ export function setupUserHeader() {
   if (userAvatarEl) userAvatarEl.src = avatar;
   if (userAvatarElMobile) userAvatarElMobile.src = avatar;
   if (userNameEl) userNameEl.textContent = name;
+  const isId = localStorage.getItem('elite_pt_lang') === 'id';
+  const langEl = document.getElementById('lang-indicator');
+  if (langEl) langEl.textContent = isId ? 'ID' : 'EN';
+  
+  // Basic Nav Translations
+  const navKeys = ['home', 'workout', 'nutrition', 'progress', 'booking', 'chat'];
+  const textEn = ['Today', 'Workouts', 'Nutrition', 'Progress', 'Schedule', 'Messages'];
+  const textId = ['Beranda', 'Latihan', 'Nutrisi', 'Progres', 'Jadwal', 'Obrolan'];
+  
+  navKeys.forEach((key, index) => {
+    const el = document.getElementById(`nav-${key}`);
+    if (el) el.textContent = isId ? textId[index] : textEn[index];
+    
+    const mobEl = document.getElementById(`mobile-nav-${key}`);
+    if (mobEl && mobEl.children[1]) mobEl.children[1].textContent = isId ? textId[index] : textEn[index];
+  });
 }
 
 export function updateNavIndicators(activeTab) {
-  const tabs = ['home', 'workout', 'progress', 'booking', 'chat'];
+  const tabs = ['home', 'workout', 'nutrition', 'progress', 'booking', 'chat'];
   tabs.forEach(t => {
     const el = document.getElementById(`nav-${t}`);
     const mobEl = document.getElementById(`mobile-nav-${t}`);
@@ -43,7 +59,7 @@ export function setupAppGlobalHandlers(renderView) {
   window.handleLogout = function() {
     localStorage.removeItem('elite_pt_role');
     localStorage.removeItem('elite_pt_client_id');
-    window.location.href = './login.html';
+    window.location.href = './index.html';
   };
 
   window.closeModal = function() {
@@ -95,6 +111,14 @@ export function setupAppGlobalHandlers(renderView) {
     if (drop) {
       drop.classList.toggle('hidden');
     }
+  };
+
+  window.toggleLanguage = function(e) {
+    if (e) e.stopPropagation();
+    const isEn = localStorage.getItem('elite_pt_lang') !== 'id';
+    localStorage.setItem('elite_pt_lang', isEn ? 'id' : 'en');
+    setupUserHeader();
+    if(window.renderView) window.renderView();
   };
 
   document.addEventListener('click', (e) => {

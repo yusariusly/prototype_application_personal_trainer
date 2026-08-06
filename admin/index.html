@@ -4,6 +4,17 @@
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <title>Elite Trainer - Practitioner Dashboard</title>
+    <!-- PWA Manifest & Meta -->
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#a73b00">
+    <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/2964/2964096.png">
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/service-worker.js');
+            });
+        }
+    </script>
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -99,8 +110,14 @@
 
                     <!-- Dropdown Content (Hidden by default) -->
                     <div id="profile-dropdown" class="hidden absolute right-0 mt-2 w-48 bg-white border border-slate-200 rounded-xl shadow-xl z-50 py-1 font-body text-xs text-left">
-                        <button onclick="navigateTo('dashboard')" class="w-full flex items-center gap-2 px-4 py-2.5 hover:bg-slate-50 text-slate-700 font-semibold transition-colors text-left">
-                            <span class="material-symbols-outlined text-[16px] text-slate-400">settings</span> Pengaturan PT
+                        <button class="w-full flex items-center gap-2 px-4 py-2.5 hover:bg-slate-50 text-slate-700 font-semibold transition-colors text-left">
+                            <span class="material-symbols-outlined text-[16px] text-slate-400">settings</span> Studio Settings
+                        </button>
+                        <button onclick="window.toggleLanguage()" class="w-full flex items-center justify-between px-4 py-2.5 hover:bg-slate-50 text-slate-700 font-semibold transition-colors text-left">
+                            <div class="flex items-center gap-2">
+                                <span class="material-symbols-outlined text-[16px] text-slate-400">language</span> Language
+                            </div>
+                            <span id="lang-indicator" class="bg-primary/10 text-primary px-1.5 py-0.5 rounded text-[9px] font-bold">EN</span>
                         </button>
                         <hr class="border-slate-100 my-1">
                         <button onclick="handleLogout()" class="w-full flex items-center gap-2 px-4 py-2.5 hover:bg-slate-50 text-red-600 font-bold transition-colors text-left">

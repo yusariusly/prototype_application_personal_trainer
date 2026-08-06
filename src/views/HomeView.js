@@ -91,6 +91,36 @@ export function renderHomeView(container, client) {
         </div>
       ` : ''}
     </div>
+    <!-- Gamification Widget -->
+    <article class="bg-gradient-to-r from-[#00677f] to-primary rounded-xl p-5 flex flex-col md:flex-row justify-between items-center gap-4 text-white shadow-md">
+      <div class="flex items-center gap-4">
+        <div class="w-14 h-14 bg-white/20 rounded-full flex items-center justify-center backdrop-blur-sm border border-white/30 shrink-0">
+          <span class="material-symbols-outlined text-[32px] text-yellow-300" style="font-variation-settings: 'FILL' 1;">military_tech</span>
+        </div>
+        <div class="flex-grow w-full md:w-auto">
+          <h3 class="text-[10px] font-bold uppercase tracking-wider text-white/80">Current Rank</h3>
+          <div class="text-xl font-headline font-extrabold flex items-baseline gap-2">
+            Elite Spartan <span class="text-xs font-medium text-white/70">Level 12</span>
+          </div>
+          <div class="w-full bg-white/20 h-1.5 rounded-full mt-2 overflow-hidden">
+             <div class="h-full bg-yellow-400 rounded-full" style="width: 75%"></div>
+          </div>
+          <p class="text-[9px] mt-1 text-white/70">450 pts to next rank</p>
+        </div>
+      </div>
+      <div class="flex gap-2 shrink-0">
+        <div class="bg-white/10 rounded-lg px-3 py-2 text-center border border-white/20 backdrop-blur-sm min-w-[70px]">
+          <span class="material-symbols-outlined text-yellow-300 text-[18px]" style="font-variation-settings: 'FILL' 1;">local_fire_department</span>
+          <div class="text-sm font-bold mt-0.5">14 Day</div>
+          <div class="text-[8px] uppercase">Streak</div>
+        </div>
+        <div class="bg-white/10 rounded-lg px-3 py-2 text-center border border-white/20 backdrop-blur-sm min-w-[70px]">
+          <span class="material-symbols-outlined text-green-300 text-[18px]" style="font-variation-settings: 'FILL' 1;">star</span>
+          <div class="text-sm font-bold mt-0.5">1,250</div>
+          <div class="text-[8px] uppercase">Total Pts</div>
+        </div>
+      </div>
+    </article>
 
     <!-- Package Session Quota Widget -->
     <article class="bg-white rounded-xl border border-slate-200 p-6 flex flex-col md:flex-row justify-between items-center gap-6 shadow-sm">

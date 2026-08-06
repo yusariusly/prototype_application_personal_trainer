@@ -178,10 +178,20 @@ export function renderDashboardView(container) {
         <div class="bg-white rounded-xl p-6 border border-slate-200 shadow-sm flex items-center justify-between border-l-4 border-l-primary">
           <div>
             <span class="text-slate-400 font-bold text-[10px] tracking-wider block">Pending Assessments</span>
-            <span class="text-4xl font-headline font-extrabold text-primary mt-1 block">${pendingAssessmentsCount}</span>
+            <span class="text-4xl font-headline font-extrabold text-[#0b1c30] mt-1 block">${pendingAssessmentsCount}</span>
           </div>
-          <div class="w-12 h-12 rounded-full bg-error-container flex items-center justify-center text-primary">
-            <span class="material-symbols-outlined">assignment</span>
+          <div class="w-12 h-12 rounded-full bg-[#eff4ff] flex items-center justify-center text-primary">
+            <span class="material-symbols-outlined">assignment_late</span>
+          </div>
+        </div>
+
+        <div class="bg-white rounded-xl p-6 border border-slate-200 shadow-sm flex items-center justify-between">
+          <div>
+            <span class="text-slate-400 font-bold text-[10px] tracking-wider block">Avg Compliance Rate</span>
+            <span class="text-4xl font-headline font-extrabold text-green-600 mt-1 block">82%</span>
+          </div>
+          <div class="w-12 h-12 rounded-full bg-green-50 flex items-center justify-center text-green-600">
+            <span class="material-symbols-outlined">monitoring</span>
           </div>
         </div>
       </div>

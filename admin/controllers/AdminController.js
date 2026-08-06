@@ -9,7 +9,7 @@ import { updateHeaderSelection, setupAdminAppGlobalHandlers } from '../views/Adm
 
 // Redirect to login if not logged in as trainer
 if (localStorage.getItem('elite_pt_role') !== 'trainer') {
-  window.location.href = '../login.html';
+  window.location.href = '../index.html';
 }
 
 window.activeTab = 'dashboard';

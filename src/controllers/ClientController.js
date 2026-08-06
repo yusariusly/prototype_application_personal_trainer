@@ -1,6 +1,7 @@
 import { getActiveClient } from '../models/ClientModel.js';
 import { renderHomeView } from '../views/HomeView.js';
 import { renderWorkoutView, setupWorkoutGlobalHandlers } from '../views/WorkoutView.js';
+import { renderNutritionView, setupNutritionGlobalHandlers } from '../views/NutritionView.js';
 import { renderProgressView, setupProgressGlobalHandlers } from '../views/ProgressView.js';
 import { renderBookingView, setupBookingGlobalHandlers } from '../views/BookingView.js';
 import { renderChatView } from '../views/ChatView.js';
@@ -10,7 +11,7 @@ window.activeTab = 'home';
 
 // Check Authentication
 if (localStorage.getItem('elite_pt_role') !== 'client') {
-  window.location.href = './login.html';
+  window.location.href = './index.html';
 }
 
 function renderView() {
@@ -23,6 +24,8 @@ function renderView() {
     renderHomeView(container, client);
   } else if (window.activeTab === 'workout') {
     renderWorkoutView(container, client);
+  } else if (window.activeTab === 'nutrition') {
+    renderNutritionView(container, client);
   } else if (window.activeTab === 'progress') {
     renderProgressView(container, client);
   } else if (window.activeTab === 'booking') {
@@ -47,6 +50,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Setup Global handlers
   setupAppGlobalHandlers(renderView);
   setupWorkoutGlobalHandlers(renderView, window.showToast, window.closeModal);
+  setupNutritionGlobalHandlers(renderView, window.showToast, window.closeModal);
   setupProgressGlobalHandlers(renderView, window.showToast, window.closeModal);
   setupBookingGlobalHandlers(renderView, window.showToast, window.closeModal);
   
