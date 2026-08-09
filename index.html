@@ -235,18 +235,68 @@
     </section>
 
     <!-- Footer -->
-    <footer class="bg-white border-t border-slate-200 py-12">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-6">
-            <div class="flex items-center gap-2">
-                <span class="material-symbols-outlined text-primary text-2xl" style="font-variation-settings: 'FILL' 1;">fitness_center</span>
-                <span class="text-lg font-headline font-extrabold tracking-tight text-slate-900 leading-none">ELITE TRAINER</span>
+    <footer class="bg-slate-900 pt-20 pb-10 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
+                <!-- Brand -->
+                <div class="lg:col-span-1">
+                    <div class="flex items-center gap-2 mb-6">
+                        <span class="material-symbols-outlined text-primary text-3xl" style="font-variation-settings: 'FILL' 1;">fitness_center</span>
+                        <span class="text-xl font-headline font-extrabold tracking-tight text-white leading-none">ELITE TRAINER</span>
+                    </div>
+                    <p class="text-slate-400 text-sm leading-relaxed mb-6">
+                        The ultimate platform for fitness professionals and dedicated clients to track progress, monitor habits, and achieve elite results together.
+                    </p>
+                    <div class="flex gap-4">
+                        <a href="#" class="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center text-slate-400 hover:bg-primary hover:text-white transition-all"><span class="material-symbols-outlined text-[18px]">link</span></a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center text-slate-400 hover:bg-primary hover:text-white transition-all"><span class="material-symbols-outlined text-[18px]">mail</span></a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center text-slate-400 hover:bg-primary hover:text-white transition-all"><span class="material-symbols-outlined text-[18px]">share</span></a>
+                    </div>
+                </div>
+
+                <!-- Quick Links -->
+                <div>
+                    <h4 class="text-white font-headline font-bold mb-6 uppercase tracking-wider text-sm">Platform</h4>
+                    <ul class="space-y-4">
+                        <li><a href="#features" class="text-slate-400 hover:text-primary transition-colors text-sm font-medium">Features</a></li>
+                        <li><a href="#about" class="text-slate-400 hover:text-primary transition-colors text-sm font-medium">About Us</a></li>
+                        <li><a href="./login.html" class="text-slate-400 hover:text-primary transition-colors text-sm font-medium">Client Portal</a></li>
+                        <li><a href="./login.html" class="text-slate-400 hover:text-primary transition-colors text-sm font-medium">Trainer Portal</a></li>
+                    </ul>
+                </div>
+
+                <!-- Resources -->
+                <div>
+                    <h4 class="text-white font-headline font-bold mb-6 uppercase tracking-wider text-sm">Resources</h4>
+                    <ul class="space-y-4">
+                        <li><a href="#" class="text-slate-400 hover:text-primary transition-colors text-sm font-medium">Help Center</a></li>
+                        <li><a href="#" class="text-slate-400 hover:text-primary transition-colors text-sm font-medium">Workout Guides</a></li>
+                        <li><a href="#" class="text-slate-400 hover:text-primary transition-colors text-sm font-medium">Nutrition Tips</a></li>
+                        <li><a href="#" class="text-slate-400 hover:text-primary transition-colors text-sm font-medium">Community</a></li>
+                    </ul>
+                </div>
+
+                <!-- Legal / Newsletter -->
+                <div>
+                    <h4 class="text-white font-headline font-bold mb-6 uppercase tracking-wider text-sm">Stay Updated</h4>
+                    <p class="text-slate-400 text-sm mb-4 font-medium">Subscribe to our newsletter for the latest fitness tips and platform updates.</p>
+                    <form class="flex gap-2">
+                        <input type="email" placeholder="Enter your email" class="w-full bg-slate-800 border-none rounded-xl text-sm text-white px-4 py-2.5 focus:ring-2 focus:ring-primary outline-none placeholder:text-slate-500 font-medium">
+                        <button type="submit" class="bg-primary hover:bg-[#8f3200] text-white px-4 py-2.5 rounded-xl transition-colors flex items-center justify-center">
+                            <span class="material-symbols-outlined text-[18px]">send</span>
+                        </button>
+                    </form>
+                </div>
             </div>
-            <p class="text-sm text-slate-500 font-medium">
-                &copy; <span id="current-year"></span> Elite Trainer. All rights reserved.
-            </p>
-            <div class="flex gap-4">
-                <a href="#" class="text-slate-400 hover:text-primary transition-colors"><span class="material-symbols-outlined">code</span></a>
-                <a href="#" class="text-slate-400 hover:text-primary transition-colors"><span class="material-symbols-outlined">share</span></a>
+
+            <div class="pt-8 border-t border-slate-800 flex flex-col md:flex-row justify-between items-center gap-4">
+                <p class="text-sm text-slate-500 font-medium">
+                    &copy; <span id="current-year"></span> Elite Trainer. All rights reserved.
+                </p>
+                <div class="flex gap-6">
+                    <a href="#" class="text-sm text-slate-500 hover:text-slate-300 transition-colors font-medium">Privacy Policy</a>
+                    <a href="#" class="text-sm text-slate-500 hover:text-slate-300 transition-colors font-medium">Terms of Service</a>
+                </div>
             </div>
         </div>
     </footer>
