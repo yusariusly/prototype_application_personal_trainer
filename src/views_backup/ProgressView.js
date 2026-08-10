@@ -8,48 +8,52 @@ export function renderProgressView(container, client) {
   const lastProgress = client.bodyProgress[client.bodyProgress.length - 1];
 
   container.innerHTML = `
-<div class="flex justify-between items-center">
-<div>
-<h1 class="text-2xl md:text-3xl font-headline font-extrabold text-[#0b1c30]" data-i18n="progress_title">Physical Progress Chart</h1>
-<p class="text-xs text-slate-500 mt-1" data-i18n="progress_sub">Track your body composition progress week by week.</p>
-</div>
-<button class="bg-primary text-white text-xs font-bold font-headline px-4 py-3 rounded-lg flex items-center gap-1.5 shadow-md hover:bg-primary-container transition-all" data-i18n="btn_log_new_metrics" onclick="window.openAddProgressModal()">
-<span class="material-symbols-outlined text-[18px]" data-i18n="add">add</span> Log New Metrics
+    <div class="flex justify-between items-center">
+      <div>
+        <h1 data-i18n="progress_title" class="text-2xl md:text-3xl font-headline font-extrabold text-[#0b1c30]">Physical Progress Chart</h1>
+        <p data-i18n="progress_sub" class="text-xs text-slate-500 mt-1">Track your body composition progress week by week.</p>
+      </div>
+      <button onclick="window.openAddProgressModal()" data-i18n="btn_log_new_metrics" class="bg-primary text-white text-xs font-bold font-headline px-4 py-3 rounded-lg flex items-center gap-1.5 shadow-md hover:bg-primary-container transition-all">
+        <span class="material-symbols-outlined text-[18px]">add</span> Log New Metrics
       </button>
-</div>
-<!-- Weight highlight card -->
-<div class="bg-white rounded-xl border border-slate-200 p-5 shadow-sm border-l-4 border-l-primary max-w-sm">
-<span class="text-slate-400 font-bold text-[9px] uppercase tracking-wider block" data-i18n="latest_body_weight">Latest Body Weight</span>
-<span class="text-2xl font-headline font-extrabold text-[#0b1c30] mt-1 block">${lastProgress.weight} kg</span>
-</div>
-<div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
-<!-- Chart Card -->
-<div class="lg:col-span-8 flex flex-col gap-6">
-<div class="bg-white rounded-xl border border-slate-200 p-6 shadow-sm">
-<h3 class="font-headline font-bold text-sm text-slate-800 mb-4 flex items-center gap-2" data-i18n="trend_title">
-<span class="material-symbols-outlined text-primary text-[20px]" data-i18n="show_chart">show_chart</span>
-            Body Weight &amp; Body Fat % Trend
+    </div>
+
+    <!-- Weight highlight card -->
+      <div class="bg-white rounded-xl border border-slate-200 p-5 shadow-sm border-l-4 border-l-primary max-w-sm">
+      <span data-i18n="latest_body_weight" class="text-slate-400 font-bold text-[9px] uppercase tracking-wider block">Latest Body Weight</span>
+      <span class="text-2xl font-headline font-extrabold text-[#0b1c30] mt-1 block">${lastProgress.weight} kg</span>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+      
+      <!-- Chart Card -->
+      <div class="lg:col-span-8 flex flex-col gap-6">
+        <div class="bg-white rounded-xl border border-slate-200 p-6 shadow-sm">
+          <h3 data-i18n="trend_title" class="font-headline font-bold text-sm text-slate-800 mb-4 flex items-center gap-2">
+            <span class="material-symbols-outlined text-primary text-[20px]">show_chart</span>
+            Body Weight & Body Fat % Trend
           </h3>
-<div class="h-64 md:h-80 w-full relative">
-<canvas class="w-full h-full" id="progress-chart"></canvas>
-</div>
-</div>
-<!-- Metric logs listing -->
-<div class="bg-white rounded-xl border border-slate-200 p-6 shadow-sm">
-<h3 class="font-headline font-bold text-sm text-slate-800 mb-4" data-i18n="metrics_history_title">Metrics History Log</h3>
-<div class="overflow-x-auto">
-<table class="w-full text-left text-xs border-collapse">
-<thead>
-<tr class="border-b border-slate-100 text-slate-400 font-bold uppercase bg-slate-50/50">
-<th class="py-3 px-3" data-i18n="table_date">Date</th>
-<th class="py-3 px-3 text-right" data-i18n="table_weight">Weight</th>
-<th class="py-3 px-3 text-right" data-i18n="table_bodyfat">Body Fat %</th>
-<th class="py-3 px-3 text-right" data-i18n="table_muscle">Muscle Mass</th>
-<th class="py-3 px-3 text-right" data-i18n="table_waist">Waist Size</th>
-</tr>
-</thead>
-<tbody class="divide-y divide-slate-50 text-slate-700">
-                ${[...client.bodyProgress].reverse().map(log =&gt; </tbody></table></div></div></div></div>`
+          <div class="h-64 md:h-80 w-full relative">
+            <canvas id="progress-chart" class="w-full h-full"></canvas>
+          </div>
+        </div>
+
+        <!-- Metric logs listing -->
+        <div class="bg-white rounded-xl border border-slate-200 p-6 shadow-sm">
+          <h3 data-i18n="metrics_history_title" class="font-headline font-bold text-sm text-slate-800 mb-4">Metrics History Log</h3>
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-xs border-collapse">
+              <thead>
+                <tr class="border-b border-slate-100 text-slate-400 font-bold uppercase bg-slate-50/50">
+                  <th class="py-3 px-3" data-i18n="table_date">Date</th>
+                  <th class="py-3 px-3 text-right" data-i18n="table_weight">Weight</th>
+                  <th class="py-3 px-3 text-right" data-i18n="table_bodyfat">Body Fat %</th>
+                  <th class="py-3 px-3 text-right" data-i18n="table_muscle">Muscle Mass</th>
+                  <th class="py-3 px-3 text-right" data-i18n="table_waist">Waist Size</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-50 text-slate-700">
+                ${[...client.bodyProgress].reverse().map(log => `
                   <tr>
                     <td class="py-3 px-3 font-medium">${log.date}</td>
                     <td class="py-3 px-3 text-right font-semibold font-headline text-slate-800">${log.weight} kg</td>
@@ -78,17 +82,19 @@ export function renderProgressView(container, client) {
                 </div>
               </div>
             `).join('')}
-          
+          </div>
+        </section>
+      </div>
 
+    </div>
 
-
-<!-- Floating Action Button for Adding Data -->
-<div class="fixed bottom-20 right-6 md:bottom-10 md:right-10 z-40">
-<button class="bg-primary text-white hover:bg-[#8f3200] font-headline text-xs font-bold py-3.5 px-6 rounded-full shadow-2xl flex items-center gap-1.5 transition-transform active:scale-95 duration-100" data-i18n="fab_add_data" onclick="window.openAddProgressModal()">
-<span class="material-symbols-outlined text-[18px]" data-i18n="add">add</span> Add Data
+    <!-- Floating Action Button for Adding Data -->
+      <div class="fixed bottom-20 right-6 md:bottom-10 md:right-10 z-40">
+      <button onclick="window.openAddProgressModal()" data-i18n="fab_add_data" class="bg-primary text-white hover:bg-[#8f3200] font-headline text-xs font-bold py-3.5 px-6 rounded-full shadow-2xl flex items-center gap-1.5 transition-transform active:scale-95 duration-100">
+        <span class="material-symbols-outlined text-[18px]">add</span> Add Data
       </button>
-</div>
-`;
+    </div>
+  `;
 
   // translate DOM after render
   translateDOM();

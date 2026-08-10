@@ -1,30 +1,31 @@
 <!DOCTYPE html>
+
 <html class="h-full bg-background" lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <title>Elite Trainer - Client Portal</title>
-    <!-- PWA Manifest & Meta -->
-    <link rel="manifest" href="/manifest.json">
-    <meta name="theme-color" content="#a73b00">
-    <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/2964/2964096.png">
-    <script>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title data-i18n="elite_trainer_client_portal">Elite Trainer - Client Portal</title>
+<!-- PWA Manifest & Meta -->
+<link href="/manifest.json" rel="manifest"/>
+<meta content="#a73b00" name="theme-color"/>
+<link href="https://cdn-icons-png.flaticon.com/512/2964/2964096.png" rel="apple-touch-icon"/>
+<script>
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
                 navigator.serviceWorker.register('/service-worker.js');
             });
         }
     </script>
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
-    <!-- Chart.js for premium progress visualizations -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    <script id="tailwind-config">
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Chart.js for premium progress visualizations -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
         tailwind.config = {
             theme: {
                 extend: {
@@ -55,7 +56,7 @@
             }
         }
     </script>
-    <style>
+<style>
         .elevation-1 {
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
         }
@@ -80,108 +81,99 @@
     </style>
 </head>
 <body class="h-full font-body antialiased flex flex-col text-on-surface">
-
-    <!-- Top Navigation (Desktop) -->
-    <header class="bg-surface border-b border-slate-200 h-[72px] shrink-0 sticky top-0 z-40 hidden md:flex items-center px-[40px]">
-        <div class="max-w-[1440px] mx-auto w-full flex justify-between items-center">
-            <div class="flex items-center gap-8">
-                <div class="text-2xl font-headline font-extrabold text-primary flex items-center gap-2">
-                    <span>Kinetic Performance</span>
-                </div>
-                <nav class="flex h-[72px] items-center gap-1">
-                    <button onclick="navigateTo('home')" id="nav-home" class="h-full px-4 text-sm font-headline font-semibold text-primary border-b-2 border-primary transition-all">Today</button>
-                    <button onclick="navigateTo('workout')" id="nav-workout" class="h-full px-4 text-sm font-headline font-semibold text-secondary hover:text-primary transition-all">Workouts</button>
-                    <button onclick="navigateTo('nutrition')" id="nav-nutrition" class="h-full px-4 text-sm font-headline font-semibold text-secondary hover:text-primary transition-all">Nutrition</button>
-                    <button onclick="navigateTo('progress')" id="nav-progress" class="h-full px-4 text-sm font-headline font-semibold text-secondary hover:text-primary transition-all">Progress</button>
-                    <button onclick="navigateTo('booking')" id="nav-booking" class="h-full px-4 text-sm font-headline font-semibold text-secondary hover:text-primary transition-all">Schedule</button>
-                    <button onclick="navigateTo('chat')" id="nav-chat" class="h-full px-4 text-sm font-headline font-semibold text-secondary hover:text-primary transition-all">Messages</button>
-                </nav>
-            </div>
-            
-            <div class="flex items-center gap-4">
-                <div class="relative pl-4 border-l border-slate-200">
-                    <button onclick="window.toggleProfileDropdown()" class="flex items-center gap-2 hover:bg-slate-50 py-1.5 px-2.5 rounded-lg transition-colors focus:outline-none">
-                        <img id="user-avatar" class="w-8 h-8 rounded-full object-cover border border-slate-200" src="" alt="Avatar">
-                        <span id="user-name" class="text-xs font-bold text-slate-700">Marcus Reid</span>
-                        <span class="material-symbols-outlined text-[16px] text-slate-400">keyboard_arrow_down</span>
-                    </button>
-
-                    <!-- Dropdown Content (Hidden by default) -->
-                    <div id="profile-dropdown" class="hidden absolute right-0 mt-2 w-48 bg-white border border-slate-200 rounded-xl shadow-xl z-50 py-1 font-body text-xs text-left">
-                        <button onclick="navigateTo('progress')" class="w-full flex items-center gap-2 px-4 py-2.5 hover:bg-slate-50 text-slate-700 font-semibold transition-colors text-left">
-                            <span class="material-symbols-outlined text-[16px] text-slate-400">settings</span> Profile Settings
+<!-- Top Navigation (Desktop) -->
+<header class="bg-surface border-b border-slate-200 h-[72px] shrink-0 sticky top-0 z-40 hidden md:flex items-center px-[40px]">
+<div class="max-w-[1440px] mx-auto w-full flex justify-between items-center">
+<div class="flex items-center gap-8">
+<div class="text-2xl font-headline font-extrabold text-primary flex items-center gap-2">
+<span data-i18n="kinetic_performance">Kinetic Performance</span>
+</div>
+<nav class="flex h-[72px] items-center gap-1">
+<button class="h-full px-4 text-sm font-headline font-semibold text-primary border-b-2 border-primary transition-all" id="nav-home" onclick="navigateTo('home')">Today</button>
+<button class="h-full px-4 text-sm font-headline font-semibold text-secondary hover:text-primary transition-all" id="nav-workout" onclick="navigateTo('workout')">Workouts</button>
+<button class="h-full px-4 text-sm font-headline font-semibold text-secondary hover:text-primary transition-all" id="nav-nutrition" onclick="navigateTo('nutrition')">Nutrition</button>
+<button class="h-full px-4 text-sm font-headline font-semibold text-secondary hover:text-primary transition-all" id="nav-progress" onclick="navigateTo('progress')">Progress</button>
+<button class="h-full px-4 text-sm font-headline font-semibold text-secondary hover:text-primary transition-all" id="nav-booking" onclick="navigateTo('booking')">Schedule</button>
+<button class="h-full px-4 text-sm font-headline font-semibold text-secondary hover:text-primary transition-all" id="nav-chat" onclick="navigateTo('chat')">Messages</button>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative pl-4 border-l border-slate-200">
+<button class="flex items-center gap-2 hover:bg-slate-50 py-1.5 px-2.5 rounded-lg transition-colors focus:outline-none" onclick="window.toggleProfileDropdown()">
+<img alt="Avatar" class="w-8 h-8 rounded-full object-cover border border-slate-200" id="user-avatar" src=""/>
+<span class="text-xs font-bold text-slate-700" id="user-name">Marcus Reid</span>
+<span class="material-symbols-outlined text-[16px] text-slate-400" data-i18n="keyboard_arrow_down">keyboard_arrow_down</span>
+</button>
+<!-- Dropdown Content (Hidden by default) -->
+<div class="hidden absolute right-0 mt-2 w-48 bg-white border border-slate-200 rounded-xl shadow-xl z-50 py-1 font-body text-xs text-left" id="profile-dropdown">
+<button class="w-full flex items-center gap-2 px-4 py-2.5 hover:bg-slate-50 text-slate-700 font-semibold transition-colors text-left" onclick="navigateTo('progress')">
+<span class="material-symbols-outlined text-[16px] text-slate-400" data-i18n="settings">settings</span> Profile Settings
                         </button>
-                        <button onclick="window.toggleLanguage()" class="w-full flex items-center justify-between px-4 py-2.5 hover:bg-slate-50 text-slate-700 font-semibold transition-colors text-left">
-                            <div class="flex items-center gap-2">
-                                <span class="material-symbols-outlined text-[16px] text-slate-400">language</span> Language
+<button class="w-full flex items-center justify-between px-4 py-2.5 hover:bg-slate-50 text-slate-700 font-semibold transition-colors text-left" onclick="window.toggleLanguage()">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px] text-slate-400" data-i18n="language">language</span> Language
                             </div>
-                            <span id="lang-indicator" class="bg-primary/10 text-primary px-1.5 py-0.5 rounded text-[9px] font-bold">EN</span>
+<span class="bg-primary/10 text-primary px-1.5 py-0.5 rounded text-[9px] font-bold" id="lang-indicator">EN</span>
+</button>
+<hr class="border-slate-100 my-1"/>
+<button class="w-full flex items-center gap-2 px-4 py-2.5 hover:bg-slate-50 text-red-600 font-bold transition-colors text-left" onclick="handleLogout()">
+<span class="material-symbols-outlined text-[16px]" data-i18n="logout">logout</span> Logout
                         </button>
-                        <hr class="border-slate-100 my-1">
-                        <button onclick="handleLogout()" class="w-full flex items-center gap-2 px-4 py-2.5 hover:bg-slate-50 text-red-600 font-bold transition-colors text-left">
-                            <span class="material-symbols-outlined text-[16px]">logout</span> Logout
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </header>
-
-    <!-- Top Mobile Title Bar -->
-    <header class="bg-surface border-b border-slate-200 h-[60px] shrink-0 sticky top-0 z-40 flex md:hidden items-center justify-between px-4">
-        <div class="text-lg font-headline font-extrabold text-primary flex items-center gap-1.5">
-            <span>Kinetic Performance</span>
-        </div>
-        <div class="flex items-center gap-3">
-            <img id="user-avatar-mobile" class="w-7 h-7 rounded-full object-cover border border-slate-200" src="" alt="Avatar">
-            <button onclick="handleLogout()" class="text-slate-400 hover:text-primary">
-                <span class="material-symbols-outlined text-[20px]">logout</span>
-            </button>
-        </div>
-    </header>
-
-    <!-- Main Canvas -->
-    <main class="flex-grow overflow-y-auto pb-[80px] md:pb-12">
-        <div id="view-container" class="max-w-[1440px] mx-auto px-4 md:px-[40px] py-6 w-full flex flex-col gap-6">
-            <!-- Render views dynamically here -->
-        </div>
-    </main>
-
-    <!-- Bottom Navigation (Mobile Only) -->
-    <nav class="md:hidden bg-surface fixed bottom-0 w-full z-50 pb-safe border-t border-slate-200 flex justify-around items-center h-16">
-        <button onclick="navigateTo('home')" id="mobile-nav-home" class="flex flex-col items-center justify-center text-primary p-2">
-            <span class="material-symbols-outlined text-[22px]">dashboard</span>
-            <span class="text-[10px] font-medium mt-0.5">Today</span>
-        </button>
-        <button onclick="navigateTo('workout')" id="mobile-nav-workout" class="flex flex-col items-center justify-center text-secondary p-2">
-            <span class="material-symbols-outlined text-[22px]">fitness_center</span>
-            <span class="text-[10px] font-medium mt-0.5">Workouts</span>
-        </button>
-        <button onclick="navigateTo('nutrition')" id="mobile-nav-nutrition" class="flex flex-col items-center justify-center text-secondary p-2">
-            <span class="material-symbols-outlined text-[22px]">restaurant</span>
-            <span class="text-[10px] font-medium mt-0.5">Nutrition</span>
-        </button>
-        <button onclick="navigateTo('progress')" id="mobile-nav-progress" class="flex flex-col items-center justify-center text-secondary p-2">
-            <span class="material-symbols-outlined text-[22px]">monitoring</span>
-            <span class="text-[10px] font-medium mt-0.5">Progress</span>
-        </button>
-        <button onclick="navigateTo('booking')" id="mobile-nav-booking" class="flex flex-col items-center justify-center text-secondary p-2">
-            <span class="material-symbols-outlined text-[22px]">calendar_today</span>
-            <span class="text-[10px] font-medium mt-0.5">Schedule</span>
-        </button>
-        <button onclick="navigateTo('chat')" id="mobile-nav-chat" class="flex flex-col items-center justify-center text-secondary p-2">
-            <span class="material-symbols-outlined text-[22px]">chat_bubble</span>
-            <span class="text-[10px] font-medium mt-0.5">Messages</span>
-        </button>
-    </nav>
-
-    <!-- Global Toast Alert Container -->
-    <div id="toast-container" class="fixed top-4 right-4 z-50 flex flex-col gap-2 pointer-events-none"></div>
-
-    <!-- Modals Containers -->
-    <div id="modal-root"></div>
-
-    <!-- Initialize Client Application Controller -->
-    <script type="module" src="./src/controllers/ClientController.js"></script>
+</div>
+</div>
+</div>
+</div>
+</header>
+<!-- Top Mobile Title Bar -->
+<header class="bg-surface border-b border-slate-200 h-[60px] shrink-0 sticky top-0 z-40 flex md:hidden items-center justify-between px-4">
+<div class="text-lg font-headline font-extrabold text-primary flex items-center gap-1.5">
+<span data-i18n="kinetic_performance">Kinetic Performance</span>
+</div>
+<div class="flex items-center gap-3">
+<img alt="Avatar" class="w-7 h-7 rounded-full object-cover border border-slate-200" id="user-avatar-mobile" src=""/>
+<button class="text-slate-400 hover:text-primary" onclick="handleLogout()">
+<span class="material-symbols-outlined text-[20px]" data-i18n="logout">logout</span>
+</button>
+</div>
+</header>
+<!-- Main Canvas -->
+<main class="flex-grow overflow-y-auto pb-[80px] md:pb-12">
+<div class="max-w-[1440px] mx-auto px-4 md:px-[40px] py-6 w-full flex flex-col gap-6" id="view-container">
+<!-- Render views dynamically here -->
+</div>
+</main>
+<!-- Bottom Navigation (Mobile Only) -->
+<nav class="md:hidden bg-surface fixed bottom-0 w-full z-50 pb-safe border-t border-slate-200 flex justify-around items-center h-16">
+<button class="flex flex-col items-center justify-center text-primary p-2" id="mobile-nav-home" onclick="navigateTo('home')">
+<span class="material-symbols-outlined text-[22px]" data-i18n="dashboard">dashboard</span>
+<span class="text-[10px] font-medium mt-0.5" data-i18n="today">Today</span>
+</button>
+<button class="flex flex-col items-center justify-center text-secondary p-2" id="mobile-nav-workout" onclick="navigateTo('workout')">
+<span class="material-symbols-outlined text-[22px]" data-i18n="fitness_center">fitness_center</span>
+<span class="text-[10px] font-medium mt-0.5" data-i18n="admin_nav_workouts">Workouts</span>
+</button>
+<button class="flex flex-col items-center justify-center text-secondary p-2" id="mobile-nav-nutrition" onclick="navigateTo('nutrition')">
+<span class="material-symbols-outlined text-[22px]" data-i18n="restaurant">restaurant</span>
+<span class="text-[10px] font-medium mt-0.5" data-i18n="nutrition">Nutrition</span>
+</button>
+<button class="flex flex-col items-center justify-center text-secondary p-2" id="mobile-nav-progress" onclick="navigateTo('progress')">
+<span class="material-symbols-outlined text-[22px]" data-i18n="monitoring">monitoring</span>
+<span class="text-[10px] font-medium mt-0.5" data-i18n="progress">Progress</span>
+</button>
+<button class="flex flex-col items-center justify-center text-secondary p-2" id="mobile-nav-booking" onclick="navigateTo('booking')">
+<span class="material-symbols-outlined text-[22px]" data-i18n="calendar_today">calendar_today</span>
+<span class="text-[10px] font-medium mt-0.5" data-i18n="admin_nav_schedule">Schedule</span>
+</button>
+<button class="flex flex-col items-center justify-center text-secondary p-2" id="mobile-nav-chat" onclick="navigateTo('chat')">
+<span class="material-symbols-outlined text-[22px]" data-i18n="chat_bubble">chat_bubble</span>
+<span class="text-[10px] font-medium mt-0.5" data-i18n="admin_nav_messages">Messages</span>
+</button>
+</nav>
+<!-- Global Toast Alert Container -->
+<div class="fixed top-4 right-4 z-50 flex flex-col gap-2 pointer-events-none" id="toast-container"></div>
+<!-- Modals Containers -->
+<div id="modal-root"></div>
+<!-- Initialize Client Application Controller -->
+<script src="./src/controllers/ClientController.js" type="module"></script>
 </body>
 </html>

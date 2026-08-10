@@ -4,35 +4,38 @@ export function renderCalendarView(container) {
   const schedule = getSchedule();
 
   container.innerHTML = `
-<div class="flex justify-between items-center mb-6">
-<div>
-<h1 class="text-3xl font-headline font-extrabold text-[#0b1c30]" data-i18n="training_schedule">Training Schedule</h1>
-<p class="text-sm text-slate-500 mt-1" data-i18n="manage_weekly_slots_and_valida">Manage weekly slots and validate client session attendance.</p>
-</div>
-<button class="bg-primary hover:bg-[#8f3200] text-white text-xs font-bold font-headline px-5 py-3.5 rounded-lg flex items-center gap-1.5 shadow-md transition-all" onclick="window.openCreateScheduleModal()">
-<span class="material-symbols-outlined text-[18px]" data-i18n="add">add</span> + Add New Schedule
+    <div class="flex justify-between items-center mb-6">
+      <div>
+        <h1 class="text-3xl font-headline font-extrabold text-[#0b1c30]">Training Schedule</h1>
+        <p class="text-sm text-slate-500 mt-1">Manage weekly slots and validate client session attendance.</p>
+      </div>
+      <button onclick="window.openCreateScheduleModal()" class="bg-primary hover:bg-[#8f3200] text-white text-xs font-bold font-headline px-5 py-3.5 rounded-lg flex items-center gap-1.5 shadow-md transition-all">
+        <span class="material-symbols-outlined text-[18px]">add</span> + Add New Schedule
       </button>
-</div>
-<div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
-<!-- Calendar Matrix Grid -->
-<div class="lg:col-span-8">
-<div class="bg-white rounded-xl border border-slate-200 p-6 shadow-sm">
-<div class="flex justify-between items-center mb-4 pb-2 border-b border-slate-100">
-<h3 class="font-headline font-bold text-sm text-slate-800" data-i18n="monthly_calendar">Monthly Calendar</h3>
-<span class="text-xs font-bold text-slate-400 uppercase tracking-wider" data-i18n="july_2026">July 2026</span>
-</div>
-<div class="grid grid-cols-7 gap-2 text-center text-xs font-bold border-b border-slate-100 pb-2 text-slate-400 uppercase">
-<span data-i18n="sun">Sun</span><span data-i18n="mon">Mon</span><span data-i18n="tue">Tue</span><span data-i18n="wed">Wed</span><span data-i18n="thu">Thu</span><span data-i18n="fri">Fri</span><span data-i18n="sat">Sat</span>
-</div>
-<div class="grid grid-cols-7 gap-2 text-center text-xs mt-3">
-            ${Array.from({ length: 31 }).map((_, i) =&gt; {
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+      
+      <!-- Calendar Matrix Grid -->
+      <div class="lg:col-span-8">
+        <div class="bg-white rounded-xl border border-slate-200 p-6 shadow-sm">
+          <div class="flex justify-between items-center mb-4 pb-2 border-b border-slate-100">
+            <h3 class="font-headline font-bold text-sm text-slate-800">Monthly Calendar</h3>
+            <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">July 2026</span>
+          </div>
+
+          <div class="grid grid-cols-7 gap-2 text-center text-xs font-bold border-b border-slate-100 pb-2 text-slate-400 uppercase">
+            <span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span>
+          </div>
+          <div class="grid grid-cols-7 gap-2 text-center text-xs mt-3">
+            ${Array.from({ length: 31 }).map((_, i) => {
               const dayNum = i + 1;
               const dateStr = new Date();
               dateStr.setDate(dayNum);
               const dateIso = dateStr.toISOString().split('T')[0];
               
-              const daySessions = schedule.filter(s =&gt; s.date === dateIso);
-              return </div></div></div></div>`
+              const daySessions = schedule.filter(s => s.date === dateIso);
+              return `
                 <div class="min-h-24 p-1.5 border border-slate-100 hover:bg-slate-50/50 rounded-lg flex flex-col justify-between">
                   <span class="font-bold text-slate-400 self-start text-[10px]">${dayNum}</span>
                   <div class="flex flex-col gap-1.5 w-full mt-1.5">
@@ -65,15 +68,15 @@ export function renderCalendarView(container) {
       <!-- Legend sidebar -->
       <div class="lg:col-span-4 flex flex-col gap-6">
         <section class="bg-white rounded-xl border border-slate-200 p-6 shadow-sm flex flex-col gap-4">
-          <h3 data-i18n="session_status_legend" class="font-headline font-bold text-sm text-slate-800 border-b border-slate-100 pb-2">Session Status Legend</h3>
+          <h3 class="font-headline font-bold text-sm text-slate-800 border-b border-slate-100 pb-2">Session Status Legend</h3>
           <div class="space-y-3 text-xs">
             <div class="flex items-center gap-2">
               <span class="w-3.5 h-3.5 rounded bg-green-100 border border-green-300 block"></span> 
-              <span data-i18n="confirmed_attended_deducted" class="font-medium text-slate-700">Confirmed (Attended & Deducted)</span>
+              <span class="font-medium text-slate-700">Confirmed (Attended & Deducted)</span>
             </div>
             <div class="flex items-center gap-2">
               <span class="w-3.5 h-3.5 rounded bg-amber-100 border border-amber-300 block"></span> 
-              <span data-i18n="pending_trainer_validation" class="font-medium text-slate-700">Pending Trainer Validation</span>
+              <span class="font-medium text-slate-700">Pending Trainer Validation</span>
             </div>
           </div>
         </section>
@@ -92,20 +95,20 @@ export function setupCalendarGlobalHandlers(renderView, showToast, closeModal) {
     modalRoot.innerHTML = `
       <div class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
         <div class="bg-white w-full max-w-md rounded-xl p-6 border border-slate-100 shadow-2xl relative">
-          <h2 data-i18n="attendance_validation_details" class="text-lg font-headline font-bold text-slate-800 mb-2">Attendance Validation Details</h2>
-          <p data-i18n="validate_attendance_to_deduct" class="text-xs text-slate-500 mb-4">Validate attendance to deduct 1 session from client package.</p>
+          <h2 class="text-lg font-headline font-bold text-slate-800 mb-2">Attendance Validation Details</h2>
+          <p class="text-xs text-slate-500 mb-4">Validate attendance to deduct 1 session from client package.</p>
           
           <div class="bg-slate-50 border border-slate-100 rounded-xl p-4 space-y-2.5 text-xs mb-6 text-slate-700">
-            <div class="flex justify-between"><span data-i18n="client_name">Client Name:</span> <span class="font-bold text-slate-800">${sched.clientName}</span></div>
-            <div class="flex justify-between"><span data-i18n="session_time">Session Time:</span> <span class="font-bold text-slate-800">${sched.date} @ ${sched.time}</span></div>
-            <div class="flex justify-between"><span data-i18n="workout_type">Workout Type:</span> <span class="font-bold text-[#00677f]">${sched.type}</span></div>
-            <div class="flex justify-between border-t border-slate-200/60 pt-2.5"><span data-i18n="attendance_status">Attendance Status:</span> <span class="font-bold uppercase ${sched.validated ? 'text-green-600' : 'text-amber-500'}">${sched.validated ? 'Validated' : 'Pending Validation'}</span></div>
+            <div class="flex justify-between"><span>Client Name:</span> <span class="font-bold text-slate-800">${sched.clientName}</span></div>
+            <div class="flex justify-between"><span>Session Time:</span> <span class="font-bold text-slate-800">${sched.date} @ ${sched.time}</span></div>
+            <div class="flex justify-between"><span>Workout Type:</span> <span class="font-bold text-[#00677f]">${sched.type}</span></div>
+            <div class="flex justify-between border-t border-slate-200/60 pt-2.5"><span>Attendance Status:</span> <span class="font-bold uppercase ${sched.validated ? 'text-green-600' : 'text-amber-500'}">${sched.validated ? 'Validated' : 'Pending Validation'}</span></div>
           </div>
   
           <div class="flex gap-3">
-            <button data-i18n="back" onclick="window.closeModal()" class="flex-1 border border-slate-200 text-slate-600 py-2.5 text-xs font-bold rounded-lg hover:bg-slate-50 transition-colors">Back</button>
+            <button onclick="window.closeModal()" class="flex-1 border border-slate-200 text-slate-600 py-2.5 text-xs font-bold rounded-lg hover:bg-slate-50 transition-colors">Back</button>
             ${!sched.validated ? `
-              <button data-i18n="validate_attendance" onclick="window.validateSessionProcess('${sched.id}')" class="flex-1 bg-primary text-white py-2.5 text-xs font-bold rounded-lg hover:bg-[#8f3200] transition-colors">Validate Attendance</button>
+              <button onclick="window.validateSessionProcess('${sched.id}')" class="flex-1 bg-primary text-white py-2.5 text-xs font-bold rounded-lg hover:bg-[#8f3200] transition-colors">Validate Attendance</button>
             ` : ''}
           </div>
         </div>
@@ -129,12 +132,12 @@ export function setupCalendarGlobalHandlers(renderView, showToast, closeModal) {
     modalRoot.innerHTML = `
       <div class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
         <div class="bg-white w-full max-w-md rounded-xl p-6 border border-slate-100 shadow-2xl relative">
-          <h2 data-i18n="create_schedule_slot" class="text-lg font-headline font-bold text-slate-800 mb-2">Create Schedule Slot</h2>
-          <p data-i18n="create_a_scheduled_training_sl" class="text-xs text-slate-500 mb-4">Create a scheduled training slot for your active clients.</p>
+          <h2 class="text-lg font-headline font-bold text-slate-800 mb-2">Create Schedule Slot</h2>
+          <p class="text-xs text-slate-500 mb-4">Create a scheduled training slot for your active clients.</p>
   
           <form id="create-sched-form" class="space-y-4">
             <div>
-              <label data-i18n="select_client" class="block text-xs font-bold text-slate-600 mb-1">Select Client</label>
+              <label class="block text-xs font-bold text-slate-600 mb-1">Select Client</label>
               <select id="sched-client-id" class="w-full bg-slate-50 border border-slate-200 rounded-lg py-2 px-3 text-xs outline-none">
                 ${clients.map(c => `<option value="${c.id}">${c.name}</option>`).join('')}
               </select>
@@ -142,27 +145,27 @@ export function setupCalendarGlobalHandlers(renderView, showToast, closeModal) {
   
             <div class="grid grid-cols-2 gap-4">
               <div>
-                <label data-i18n="date" class="block text-xs font-bold text-slate-600 mb-1">Date</label>
+                <label class="block text-xs font-bold text-slate-600 mb-1">Date</label>
                 <input type="date" id="sched-date" required class="w-full bg-slate-50 border border-slate-200 rounded-lg py-2 px-3 text-xs outline-none">
               </div>
               <div>
-                <label data-i18n="start_time" class="block text-xs font-bold text-slate-600 mb-1">Start Time</label>
+                <label class="block text-xs font-bold text-slate-600 mb-1">Start Time</label>
                 <input type="time" id="sched-time" required class="w-full bg-slate-50 border border-slate-200 rounded-lg py-2 px-3 text-xs outline-none">
               </div>
             </div>
   
             <div>
-              <label data-i18n="workout_type_location" class="block text-xs font-bold text-slate-600 mb-1">Workout Type / Location</label>
+              <label class="block text-xs font-bold text-slate-600 mb-1">Workout Type / Location</label>
               <select id="sched-type" class="w-full bg-slate-50 border border-slate-200 rounded-lg py-2 px-3 text-xs outline-none">
-                <option data-i18n="free_weights_main_gym_barbell" value="Free Weights (Gym)">Free Weights (Main Gym Barbell Area)</option>
-                <option data-i18n="studio_class_floor_2" value="Studio Class">Studio Class (Floor 2)</option>
-                <option data-i18n="online_streaming_zoom" value="Online Streaming">Online Streaming (Zoom)</option>
+                <option value="Free Weights (Gym)">Free Weights (Main Gym Barbell Area)</option>
+                <option value="Studio Class">Studio Class (Floor 2)</option>
+                <option value="Online Streaming">Online Streaming (Zoom)</option>
               </select>
             </div>
   
             <div class="flex gap-3 mt-6 pt-4 border-t border-slate-100">
-              <button data-i18n="cancel" type="button" onclick="window.closeModal()" class="flex-1 border border-slate-200 text-slate-600 py-2.5 text-xs font-bold rounded-lg hover:bg-slate-50 transition-colors">Cancel</button>
-              <button data-i18n="save_slot" type="submit" class="flex-1 bg-primary text-white py-2.5 text-xs font-bold rounded-lg hover:bg-[#8f3200] transition-colors">Save Slot</button>
+              <button type="button" onclick="window.closeModal()" class="flex-1 border border-slate-200 text-slate-600 py-2.5 text-xs font-bold rounded-lg hover:bg-slate-50 transition-colors">Cancel</button>
+              <button type="submit" class="flex-1 bg-primary text-white py-2.5 text-xs font-bold rounded-lg hover:bg-[#8f3200] transition-colors">Save Slot</button>
             </div>
           </form>
         </div>

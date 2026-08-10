@@ -13,12 +13,12 @@ export function renderWorkoutView(container, client) {
   
   if (!program) {
     container.innerHTML = `
-<div class="text-center py-12 bg-white rounded-xl border border-slate-200">
-<span class="material-symbols-outlined text-[48px] text-slate-300" data-i18n="fitness_center">fitness_center</span>
-<h2 class="text-lg font-headline font-bold text-slate-800 mt-2" data-i18n="workout_no_program">No active program</h2>
-<p class="text-xs text-slate-500 mt-1" data-i18n="workout_no_program_sub">Contact your Personal Trainer to create a workout program.</p>
-</div>
-`;
+      <div class="text-center py-12 bg-white rounded-xl border border-slate-200">
+        <span class="material-symbols-outlined text-[48px] text-slate-300">fitness_center</span>
+        <h2 data-i18n="workout_no_program" class="text-lg font-headline font-bold text-slate-800 mt-2">No active program</h2>
+        <p data-i18n="workout_no_program_sub" class="text-xs text-slate-500 mt-1">Contact your Personal Trainer to create a workout program.</p>
+      </div>
+    `;
     translateDOM();
     return;
   }
@@ -106,26 +106,27 @@ export function renderWorkoutView(container, client) {
               </div>
             `;
           }).join('')}
+        </div>
         
-<button class="mt-6 w-full bg-primary text-white font-headline text-xs font-bold py-4 rounded-xl shadow-md hover:bg-primary-container transition-all flex items-center justify-center gap-2" data-i18n="btn_complete_workout" onclick="window.finishWorkout()">
-<span class="material-symbols-outlined text-[18px]" data-i18n="done_all">done_all</span> COMPLETE TODAY'S WORKOUT CHECK-IN
+        <button onclick="window.finishWorkout()" class="mt-6 w-full bg-primary text-white font-headline text-xs font-bold py-4 rounded-xl shadow-md hover:bg-primary-container transition-all flex items-center justify-center gap-2" data-i18n="btn_complete_workout">
+          <span class="material-symbols-outlined text-[18px]">done_all</span> COMPLETE TODAY'S WORKOUT CHECK-IN
         </button>
-
-`;
+      </div>
+    `;
   } else {
     // Render Workout History Log List
     const historyHTML = (client.workoutHistory && client.workoutHistory.length > 0)
       ? client.workoutHistory.map(h => `
-<div class="border border-slate-200 rounded-xl p-5 bg-white shadow-sm flex flex-col gap-3">
-<div class="flex justify-between items-center border-b border-slate-100 pb-2">
-<span class="text-xs font-bold text-slate-800 flex items-center gap-1.5">
-<span class="material-symbols-outlined text-primary text-[16px]" data-i18n="fitness_center">fitness_center</span>
+        <div class="border border-slate-200 rounded-xl p-5 bg-white shadow-sm flex flex-col gap-3">
+          <div class="flex justify-between items-center border-b border-slate-100 pb-2">
+            <span class="text-xs font-bold text-slate-800 flex items-center gap-1.5">
+              <span class="material-symbols-outlined text-primary text-[16px]">fitness_center</span>
               ${h.focus}
             </span>
-<span class="text-[10px] text-slate-400 font-bold font-headline">${h.date}</span>
-</div>
-<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
-            ${h.exercises.map(ex =&gt; </div></div>`
+            <span class="text-[10px] text-slate-400 font-bold font-headline">${h.date}</span>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
+            ${h.exercises.map(ex => `
               <div class="flex justify-between items-center bg-slate-50 border border-slate-100/60 px-3 py-2.5 rounded-lg text-xs">
                 <span class="font-bold text-slate-700 truncate max-w-[120px]">${ex.name}</span>
                 <span class="text-primary font-bold font-headline shrink-0 bg-white border border-slate-200/60 px-2 py-0.5 rounded">${ex.weight} kg x ${ex.reps} r</span>
@@ -135,12 +136,12 @@ export function renderWorkoutView(container, client) {
         </div>
       `).join('')
       : `
-<div class="text-center py-12 bg-white rounded-xl border border-slate-200">
-<span class="material-symbols-outlined text-[48px] text-slate-300" data-i18n="history">history</span>
-<h2 class="text-lg font-headline font-bold text-slate-800 mt-2" data-i18n="workout_no_history">No workout history yet</h2>
-<p class="text-xs text-slate-500 mt-1" data-i18n="workout_no_history_sub">Complete your first workout session to log your history.</p>
-</div>
-`;
+        <div class="text-center py-12 bg-white rounded-xl border border-slate-200">
+          <span class="material-symbols-outlined text-[48px] text-slate-300">history</span>
+          <h2 data-i18n="workout_no_history" class="text-lg font-headline font-bold text-slate-800 mt-2">No workout history yet</h2>
+          <p data-i18n="workout_no_history_sub" class="text-xs text-slate-500 mt-1">Complete your first workout session to log your history.</p>
+        </div>
+      `;
 
     container.innerHTML += `
       <div class="flex flex-col gap-4 mt-6">
@@ -200,11 +201,11 @@ export function setupWorkoutGlobalHandlers(renderView, showToast, closeModal) {
                   <div class="flex-grow grid grid-cols-2 gap-2">
                     <div class="flex items-center gap-1.5">
                       <input type="number" step="0.5" placeholder="Weight" value="${ex.weight}" class="w-full bg-white border border-slate-200 rounded py-1 px-1.5 text-center text-xs font-semibold focus:border-primary focus:ring-0 outline-none" required data-weight-set="${i}">
-                      <span data-i18n="kg" class="text-[10px] text-slate-400 shrink-0">kg</span>
+                      <span class="text-[10px] text-slate-400 shrink-0">kg</span>
                     </div>
                     <div class="flex items-center gap-1.5">
                       <input type="number" placeholder="Reps" value="${ex.reps}" class="w-full bg-white border border-slate-200 rounded py-1 px-1.5 text-center text-xs font-semibold focus:border-primary focus:ring-0 outline-none" required data-reps-set="${i}">
-                      <span data-i18n="reps" class="text-[10px] text-slate-400 shrink-0">reps</span>
+                      <span class="text-[10px] text-slate-400 shrink-0">reps</span>
                     </div>
                   </div>
                 </div>

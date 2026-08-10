@@ -70,7 +70,7 @@ export function renderBookingView(container, client) {
 
         <div class="bg-white rounded-xl border border-slate-200 p-6 flex flex-col gap-4 shadow-sm">
           <div class="flex justify-between items-center border-b border-slate-100 pb-3">
-            <h3 data-i18n="available_time_slots" class="font-headline font-bold text-sm text-[#0b1c30]">Available Time Slots</h3>
+            <h3 class="font-headline font-bold text-sm text-[#0b1c30]">Available Time Slots</h3>
             <span class="text-xs font-semibold text-primary font-headline" id="booking-selected-date">
               ${new Date(selectedDate).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' })}
             </span>
@@ -102,20 +102,23 @@ export function renderBookingView(container, client) {
                 </div>
               `;
             }).join('')}
-          
+          </div>
+        </div>
 
+      </div>
 
-<!-- Right Column: My Bookings Section -->
-<div class="lg:col-span-5 flex flex-col gap-6">
-<section class="bg-white rounded-xl border border-slate-200 p-6 shadow-sm flex flex-col gap-4">
-<h3 class="font-headline font-bold text-sm text-slate-800 border-b border-slate-100 pb-3 flex items-center gap-1.5" data-i18n="booking_my_sessions">
-<span class="material-symbols-outlined text-primary" data-i18n="calendar_today">calendar_today</span>
+      <!-- Right Column: My Bookings Section -->
+      <div class="lg:col-span-5 flex flex-col gap-6">
+        <section class="bg-white rounded-xl border border-slate-200 p-6 shadow-sm flex flex-col gap-4">
+          <h3 data-i18n="booking_my_sessions" class="font-headline font-bold text-sm text-slate-800 border-b border-slate-100 pb-3 flex items-center gap-1.5">
+            <span class="material-symbols-outlined text-primary">calendar_today</span>
             My Booked Sessions
           </h3>
-<div class="flex flex-col gap-4 max-h-[500px] overflow-y-auto pr-1">
-            ${schedule.length &gt; 0 ? schedule.map(s =&gt; {
+
+          <div class="flex flex-col gap-4 max-h-[500px] overflow-y-auto pr-1">
+            ${schedule.length > 0 ? schedule.map(s => {
               const isConfirmed = s.status === 'Confirmed';
-              return </div></section></div>`
+              return `
                 <div class="border border-slate-100 rounded-xl p-4 flex flex-col gap-3 bg-slate-50/50 relative">
                   <div class="flex justify-between items-start">
                     <div>
@@ -196,7 +199,7 @@ export function setupBookingGlobalHandlers(renderView, showToast, closeModal) {
               </select>
             </div>
 
-            <div class="flex justify-between border-t border-slate-200/60 pt-2.5"><span data-i18n="estimated_deduction" class="text-slate-500">Estimated Deduction:</span><span data-i18n="1_session" class="font-bold text-primary">1 Session</span></div>
+            <div class="flex justify-between border-t border-slate-200/60 pt-2.5"><span class="text-slate-500">Estimated Deduction:</span><span class="font-bold text-primary">1 Session</span></div>
           </div>
 
           <div class="flex gap-3">

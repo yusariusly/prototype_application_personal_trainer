@@ -1,30 +1,31 @@
 <!DOCTYPE html>
+
 <html class="h-full bg-background" lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <title>Elite Trainer - Practitioner Dashboard</title>
-    <!-- PWA Manifest & Meta -->
-    <link rel="manifest" href="/manifest.json">
-    <meta name="theme-color" content="#a73b00">
-    <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/2964/2964096.png">
-    <script>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title data-i18n="elite_trainer_practitioner_d">Elite Trainer - Practitioner Dashboard</title>
+<!-- PWA Manifest & Meta -->
+<link href="/manifest.json" rel="manifest"/>
+<meta content="#a73b00" name="theme-color"/>
+<link href="https://cdn-icons-png.flaticon.com/512/2964/2964096.png" rel="apple-touch-icon"/>
+<script>
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
                 navigator.serviceWorker.register('/service-worker.js');
             });
         }
     </script>
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
-    <!-- Chart.js for premium trainer metrics -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    <script id="tailwind-config">
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Chart.js for premium trainer metrics -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
         tailwind.config = {
             theme: {
                 extend: {
@@ -55,7 +56,7 @@
             }
         }
     </script>
-    <style>
+<style>
         .elevation-1 {
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
         }
@@ -76,75 +77,67 @@
     </style>
 </head>
 <body class="h-full font-body antialiased flex flex-col text-on-surface bg-background">
-
-    <header class="h-[72px] bg-white border-b border-slate-200 shrink-0 z-40 sticky top-0 px-8 flex items-center">
-        <div class="max-w-[1440px] mx-auto w-full flex justify-between items-center">
-            <div class="flex items-center gap-8">
-                <div class="text-2xl font-headline font-extrabold text-primary flex items-center gap-2">
-                    <span>Kinetic Performance</span>
-                </div>
-                
-                <nav class="flex h-[72px] items-center gap-1">
-                    <button onclick="navigateTo('dashboard')" id="nav-dashboard" data-i18n="admin_nav_dashboard" class="h-full px-4 text-sm font-headline font-semibold text-primary border-b-2 border-primary transition-all">Dashboard</button>
-                    <button onclick="navigateTo('clients')" id="nav-clients" data-i18n="admin_nav_clients" class="h-full px-4 text-sm font-headline font-semibold text-secondary hover:text-primary transition-all">Clients</button>
-                    <button onclick="navigateTo('calendar')" id="nav-calendar" data-i18n="admin_nav_schedule" class="h-full px-4 text-sm font-headline font-semibold text-secondary hover:text-primary transition-all">Schedule</button>
-                    <button onclick="navigateTo('builder')" id="nav-builder" data-i18n="admin_nav_workouts" class="h-full px-4 text-sm font-headline font-semibold text-secondary hover:text-primary transition-all">Workouts</button>
-                    <button onclick="navigateTo('packages')" id="nav-packages" data-i18n="admin_nav_sales" class="h-full px-4 text-sm font-headline font-semibold text-secondary hover:text-primary transition-all">Sales</button>
-                    <button onclick="navigateTo('messages')" id="nav-messages" data-i18n="admin_nav_messages" class="h-full px-4 text-sm font-headline font-semibold text-secondary hover:text-primary transition-all">Messages</button>
-                </nav>
-            </div>
-            
-            <div class="flex items-center gap-4">
-                <!-- Toolbar icons -->
-                <button class="text-slate-400 hover:text-slate-600">
-                    <span class="material-symbols-outlined text-[20px]">notifications</span>
-                </button>
-
-                <!-- Active User Profile Link with Dropdown -->
-                <div class="relative pl-4 border-l border-slate-200">
-                    <button onclick="window.toggleProfileDropdown()" class="flex items-center gap-2 hover:bg-slate-50 py-1.5 px-2.5 rounded-lg transition-colors focus:outline-none">
-                        <img class="w-8 h-8 rounded-full object-cover border border-slate-200" src="https://images.unsplash.com/photo-1568602471122-7832951cc4c5?auto=format&fit=crop&w=100&q=80" alt="Trainer">
-                        <span class="text-xs font-bold text-slate-700">Coach Bobby</span>
-                        <span class="material-symbols-outlined text-[16px] text-slate-400">keyboard_arrow_down</span>
-                    </button>
-
-                    <!-- Dropdown Content (Hidden by default) -->
-                    <div id="profile-dropdown" class="hidden absolute right-0 mt-2 w-48 bg-white border border-slate-200 rounded-xl shadow-xl z-50 py-1 font-body text-xs text-left">
-                        <button class="w-full flex items-center gap-2 px-4 py-2.5 hover:bg-slate-50 text-slate-700 font-semibold transition-colors text-left" data-i18n="admin_studio_settings">
-                            <span class="material-symbols-outlined text-[16px] text-slate-400">settings</span> Studio Settings
+<header class="h-[72px] bg-white border-b border-slate-200 shrink-0 z-40 sticky top-0 px-8 flex items-center">
+<div class="max-w-[1440px] mx-auto w-full flex justify-between items-center">
+<div class="flex items-center gap-8">
+<div class="text-2xl font-headline font-extrabold text-primary flex items-center gap-2">
+<span data-i18n="kinetic_performance">Kinetic Performance</span>
+</div>
+<nav class="flex h-[72px] items-center gap-1">
+<button class="h-full px-4 text-sm font-headline font-semibold text-primary border-b-2 border-primary transition-all" data-i18n="admin_nav_dashboard" id="nav-dashboard" onclick="navigateTo('dashboard')">Dashboard</button>
+<button class="h-full px-4 text-sm font-headline font-semibold text-secondary hover:text-primary transition-all" data-i18n="admin_nav_clients" id="nav-clients" onclick="navigateTo('clients')">Clients</button>
+<button class="h-full px-4 text-sm font-headline font-semibold text-secondary hover:text-primary transition-all" data-i18n="admin_nav_schedule" id="nav-calendar" onclick="navigateTo('calendar')">Schedule</button>
+<button class="h-full px-4 text-sm font-headline font-semibold text-secondary hover:text-primary transition-all" data-i18n="admin_nav_workouts" id="nav-builder" onclick="navigateTo('builder')">Workouts</button>
+<button class="h-full px-4 text-sm font-headline font-semibold text-secondary hover:text-primary transition-all" data-i18n="admin_nav_sales" id="nav-packages" onclick="navigateTo('packages')">Sales</button>
+<button class="h-full px-4 text-sm font-headline font-semibold text-secondary hover:text-primary transition-all" data-i18n="admin_nav_messages" id="nav-messages" onclick="navigateTo('messages')">Messages</button>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<!-- Toolbar icons -->
+<button class="text-slate-400 hover:text-slate-600">
+<span class="material-symbols-outlined text-[20px]" data-i18n="notifications">notifications</span>
+</button>
+<!-- Active User Profile Link with Dropdown -->
+<div class="relative pl-4 border-l border-slate-200">
+<button class="flex items-center gap-2 hover:bg-slate-50 py-1.5 px-2.5 rounded-lg transition-colors focus:outline-none" onclick="window.toggleProfileDropdown()">
+<img alt="Trainer" class="w-8 h-8 rounded-full object-cover border border-slate-200" src="https://images.unsplash.com/photo-1568602471122-7832951cc4c5?auto=format&amp;fit=crop&amp;w=100&amp;q=80"/>
+<span class="text-xs font-bold text-slate-700" data-i18n="coach_bobby">Coach Bobby</span>
+<span class="material-symbols-outlined text-[16px] text-slate-400" data-i18n="keyboard_arrow_down">keyboard_arrow_down</span>
+</button>
+<!-- Dropdown Content (Hidden by default) -->
+<div class="hidden absolute right-0 mt-2 w-48 bg-white border border-slate-200 rounded-xl shadow-xl z-50 py-1 font-body text-xs text-left" id="profile-dropdown">
+<button class="w-full flex items-center gap-2 px-4 py-2.5 hover:bg-slate-50 text-slate-700 font-semibold transition-colors text-left" data-i18n="admin_studio_settings">
+<span class="material-symbols-outlined text-[16px] text-slate-400" data-i18n="settings">settings</span> Studio Settings
                         </button>
-                        <button onclick="window.toggleLanguage()" class="w-full flex items-center justify-between px-4 py-2.5 hover:bg-slate-50 text-slate-700 font-semibold transition-colors text-left">
-                            <div class="flex items-center gap-2">
-                                <span class="material-symbols-outlined text-[16px] text-slate-400">language</span> <span data-i18n="admin_language">Language</span>
-                            </div>
-                            <span id="lang-indicator" class="bg-primary/10 text-primary px-1.5 py-0.5 rounded text-[9px] font-bold">EN</span>
+<button class="w-full flex items-center justify-between px-4 py-2.5 hover:bg-slate-50 text-slate-700 font-semibold transition-colors text-left" onclick="window.toggleLanguage()">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px] text-slate-400" data-i18n="language">language</span> <span data-i18n="admin_language">Language</span>
+</div>
+<span class="bg-primary/10 text-primary px-1.5 py-0.5 rounded text-[9px] font-bold" id="lang-indicator">EN</span>
+</button>
+<hr class="border-slate-100 my-1"/>
+<button class="w-full flex items-center gap-2 px-4 py-2.5 hover:bg-slate-50 text-red-600 font-bold transition-colors text-left" onclick="handleLogout()">
+<span class="material-symbols-outlined text-[16px]" data-i18n="logout">logout</span> Logout
                         </button>
-                        <hr class="border-slate-100 my-1">
-                        <button onclick="handleLogout()" class="w-full flex items-center gap-2 px-4 py-2.5 hover:bg-slate-50 text-red-600 font-bold transition-colors text-left">
-                            <span class="material-symbols-outlined text-[16px]">logout</span> Logout
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </header>
-
-    <!-- Main View Window -->
-    <main class="flex-grow overflow-hidden flex flex-col">
-        <!-- Scrollable Dashboard Content Canvas -->
-        <div id="admin-view-container" class="flex-grow overflow-y-auto p-8 flex flex-col gap-6 max-w-[1440px] mx-auto w-full">
-            <!-- Render admin screens dynamically -->
-        </div>
-    </main>
-
-    <!-- Global Toast Alert Container -->
-    <div id="toast-container" class="fixed top-4 right-4 z-50 flex flex-col gap-2 pointer-events-none"></div>
-
-    <!-- Modals Container -->
-    <div id="modal-root"></div>
-    <!-- Initialize Admin Application Controller -->
-    <script type="module" src="./controllers/AdminController.js"></script>
-    <script type="module">
+</div>
+</div>
+</div>
+</div>
+</header>
+<!-- Main View Window -->
+<main class="flex-grow overflow-hidden flex flex-col">
+<!-- Scrollable Dashboard Content Canvas -->
+<div class="flex-grow overflow-y-auto p-8 flex flex-col gap-6 max-w-[1440px] mx-auto w-full" id="admin-view-container">
+<!-- Render admin screens dynamically -->
+</div>
+</main>
+<!-- Global Toast Alert Container -->
+<div class="fixed top-4 right-4 z-50 flex flex-col gap-2 pointer-events-none" id="toast-container"></div>
+<!-- Modals Container -->
+<div id="modal-root"></div>
+<!-- Initialize Admin Application Controller -->
+<script src="./controllers/AdminController.js" type="module"></script>
+<script type="module">
         import { changeLanguage, translateDOM } from '../src/i18n.js';
 
         // initialize language indicator

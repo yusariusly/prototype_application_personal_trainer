@@ -5,8 +5,8 @@ export function renderChatView(container, client) {
 
   container.innerHTML = `
     <div>
-      <h1 data-i18n="coach_chat" class="text-2xl md:text-3xl font-headline font-extrabold text-[#0b1c30]">Coach Chat</h1>
-      <p data-i18n="consult_your_workout_or_daily" class="text-xs text-slate-500 mt-1">Consult your workout or daily nutrition questions directly with your trainer.</p>
+      <h1 class="text-2xl md:text-3xl font-headline font-extrabold text-[#0b1c30]">Coach Chat</h1>
+      <p class="text-xs text-slate-500 mt-1">Consult your workout or daily nutrition questions directly with your trainer.</p>
     </div>
 
     <div class="bg-white rounded-xl border border-slate-200 flex flex-col h-[500px] overflow-hidden shadow-sm">
@@ -17,8 +17,8 @@ export function renderChatView(container, client) {
             <span class="absolute bottom-0 right-0 w-2.5 h-2.5 bg-green-500 rounded-full border-2 border-white"></span>
           </div>
           <div>
-            <h4 data-i18n="coach_bobby" class="font-headline font-bold text-xs text-slate-800">Coach Bobby</h4>
-            <span data-i18n="online" class="text-[10px] text-green-500 font-medium">Online</span>
+            <h4 class="font-headline font-bold text-xs text-slate-800">Coach Bobby</h4>
+            <span class="text-[10px] text-green-500 font-medium">Online</span>
           </div>
         </div>
       </header>
@@ -37,15 +37,16 @@ export function renderChatView(container, client) {
             </div>
           `;
         }).join('')}
-      
-<form class="p-4 border-t border-slate-100 flex gap-2 shrink-0 bg-slate-50/50" id="chat-input-form">
-<input class="flex-grow bg-white border border-slate-200 rounded-xl px-4 py-2 text-xs outline-none focus:border-primary" id="chat-input-text" placeholder="Type your message to Coach..." required="" type="text"/>
-<button class="bg-primary hover:bg-[#8f3200] text-white w-10 h-10 rounded-xl flex items-center justify-center shrink-0 transition-colors shadow-sm" type="submit">
-<span class="material-symbols-outlined text-[20px]" data-i18n="send">send</span>
-</button>
-</form>
+      </div>
 
-`;
+      <form id="chat-input-form" class="p-4 border-t border-slate-100 flex gap-2 shrink-0 bg-slate-50/50">
+        <input type="text" id="chat-input-text" placeholder="Type your message to Coach..." required class="flex-grow bg-white border border-slate-200 rounded-xl px-4 py-2 text-xs outline-none focus:border-primary">
+        <button type="submit" class="bg-primary hover:bg-[#8f3200] text-white w-10 h-10 rounded-xl flex items-center justify-center shrink-0 transition-colors shadow-sm">
+          <span class="material-symbols-outlined text-[20px]">send</span>
+        </button>
+      </form>
+    </div>
+  `;
 
   const chatContainer = document.getElementById('chat-messages-container');
   chatContainer.scrollTop = chatContainer.scrollHeight;

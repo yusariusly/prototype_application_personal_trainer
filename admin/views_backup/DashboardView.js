@@ -50,11 +50,11 @@ export function renderDashboardView(container) {
       </div>
     `;
   }).join('') : `
-<div class="text-center py-12 text-slate-400 flex flex-col items-center justify-center gap-2">
-<span class="material-symbols-outlined text-[36px]" data-i18n="event_busy">event_busy</span>
-<span class="text-xs font-semibold" data-i18n="admin_no_sessions_today">No training sessions scheduled for today.</span>
-</div>
-`;
+    <div class="text-center py-12 text-slate-400 flex flex-col items-center justify-center gap-2">
+      <span class="material-symbols-outlined text-[36px]">event_busy</span>
+        <span data-i18n="admin_no_sessions_today" class="text-xs font-semibold">No training sessions scheduled for today.</span>
+    </div>
+  `;
 
   // Build client alerts dynamically
   const alertsList = [];
@@ -140,84 +140,93 @@ export function renderDashboardView(container) {
   `).join('');
 
   container.innerHTML = `
-<!-- Main Header section -->
-<div class="flex justify-between items-center mb-6">
-<div>
-<h1 class="text-3xl font-headline font-extrabold text-[#0b1c30]" data-i18n="admin_welcome_back">Welcome back, Coach!</h1>
-<p class="text-sm text-slate-500 mt-1" data-i18n="admin_daily_summary">Here is your daily performance summary.</p>
-</div>
-<button class="bg-primary text-white text-xs font-bold font-headline px-5 py-3.5 rounded-lg flex items-center gap-1.5 shadow-md hover:bg-primary-container transition-all" onclick="openCreateScheduleModal()">
-<span class="material-symbols-outlined text-[18px]" data-i18n="add">add</span> + New Session
+    <!-- Main Header section -->
+    <div class="flex justify-between items-center mb-6">
+      <div>
+        <h1 data-i18n="admin_welcome_back" class="text-3xl font-headline font-extrabold text-[#0b1c30]">Welcome back, Coach!</h1>
+      <p data-i18n="admin_daily_summary" class="text-sm text-slate-500 mt-1">Here is your daily performance summary.</p>
+      </div>
+      <button onclick="openCreateScheduleModal()" class="bg-primary text-white text-xs font-bold font-headline px-5 py-3.5 rounded-lg flex items-center gap-1.5 shadow-md hover:bg-primary-container transition-all">
+        <span class="material-symbols-outlined text-[18px]">add</span> + New Session
       </button>
-</div>
-<!-- Layout Columns -->
-<div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
-<!-- Left Column: Quick stats list -->
-<div class="lg:col-span-4 flex flex-col gap-6">
-<div class="bg-white rounded-xl p-6 border border-slate-200 shadow-sm flex items-center justify-between">
-<div>
-<span class="text-slate-400 font-bold text-[10px] tracking-wider block" data-i18n="admin_active_clients">Active Clients</span>
-<span class="text-4xl font-headline font-extrabold text-[#0b1c30] mt-1 block">${activeClientsCount}</span>
-</div>
-<div class="w-12 h-12 rounded-full bg-[#eff4ff] flex items-center justify-center text-primary">
-<span class="material-symbols-outlined" data-i18n="group">group</span>
-</div>
-</div>
-<div class="bg-white rounded-xl p-6 border border-slate-200 shadow-sm flex items-center justify-between">
-<div>
-<span class="text-slate-400 font-bold text-[10px] tracking-wider block" data-i18n="sessions_today">Sessions Today</span>
-<span class="text-4xl font-headline font-extrabold text-[#0b1c30] mt-1 block">${sessionsTodayCount}</span>
-</div>
-<div class="w-12 h-12 rounded-full bg-[#eff4ff] flex items-center justify-center text-primary">
-<span class="material-symbols-outlined" data-i18n="check_circle">check_circle</span>
-</div>
-</div>
-<div class="bg-white rounded-xl p-6 border border-slate-200 shadow-sm flex items-center justify-between border-l-4 border-l-primary">
-<div>
-<span class="text-slate-400 font-bold text-[10px] tracking-wider block" data-i18n="pending_assessments">Pending Assessments</span>
-<span class="text-4xl font-headline font-extrabold text-[#0b1c30] mt-1 block">${pendingAssessmentsCount}</span>
-</div>
-<div class="w-12 h-12 rounded-full bg-[#eff4ff] flex items-center justify-center text-primary">
-<span class="material-symbols-outlined" data-i18n="assignment_late">assignment_late</span>
-</div>
-</div>
-<div class="bg-white rounded-xl p-6 border border-slate-200 shadow-sm flex items-center justify-between">
-<div>
-<span class="text-slate-400 font-bold text-[10px] tracking-wider block" data-i18n="avg_compliance_rate">Avg Compliance Rate</span>
-<span class="text-4xl font-headline font-extrabold text-green-600 mt-1 block">82%</span>
-</div>
-<div class="w-12 h-12 rounded-full bg-green-50 flex items-center justify-center text-green-600">
-<span class="material-symbols-outlined" data-i18n="monitoring">monitoring</span>
-</div>
-</div>
-</div>
-<!-- Right Column: Today's Schedule -->
-<div class="lg:col-span-8">
-<div class="bg-white rounded-xl border border-slate-200 p-6 shadow-sm">
-<div class="flex justify-between items-center mb-6">
-<h3 class="font-headline font-bold text-lg text-[#0b1c30]" data-i18n="today_s_schedule">Today's Schedule</h3>
-<button class="text-xs font-bold text-primary hover:underline flex items-center gap-1" onclick="navigateTo('calendar')">
-              View Full Calendar <span class="material-symbols-outlined text-[16px]" data-i18n="arrow_right_alt">arrow_right_alt</span>
-</button>
-</div>
-<!-- Schedule Blocks list -->
-<div class="flex flex-col gap-4">
+    </div>
+
+    <!-- Layout Columns -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+      
+      <!-- Left Column: Quick stats list -->
+      <div class="lg:col-span-4 flex flex-col gap-6">
+        <div class="bg-white rounded-xl p-6 border border-slate-200 shadow-sm flex items-center justify-between">
+          <div>
+            <span data-i18n="admin_active_clients" class="text-slate-400 font-bold text-[10px] tracking-wider block">Active Clients</span>
+            <span class="text-4xl font-headline font-extrabold text-[#0b1c30] mt-1 block">${activeClientsCount}</span>
+          </div>
+          <div class="w-12 h-12 rounded-full bg-[#eff4ff] flex items-center justify-center text-primary">
+            <span class="material-symbols-outlined">group</span>
+          </div>
+        </div>
+
+        <div class="bg-white rounded-xl p-6 border border-slate-200 shadow-sm flex items-center justify-between">
+          <div>
+            <span class="text-slate-400 font-bold text-[10px] tracking-wider block">Sessions Today</span>
+            <span class="text-4xl font-headline font-extrabold text-[#0b1c30] mt-1 block">${sessionsTodayCount}</span>
+          </div>
+          <div class="w-12 h-12 rounded-full bg-[#eff4ff] flex items-center justify-center text-primary">
+            <span class="material-symbols-outlined">check_circle</span>
+          </div>
+        </div>
+
+        <div class="bg-white rounded-xl p-6 border border-slate-200 shadow-sm flex items-center justify-between border-l-4 border-l-primary">
+          <div>
+            <span class="text-slate-400 font-bold text-[10px] tracking-wider block">Pending Assessments</span>
+            <span class="text-4xl font-headline font-extrabold text-[#0b1c30] mt-1 block">${pendingAssessmentsCount}</span>
+          </div>
+          <div class="w-12 h-12 rounded-full bg-[#eff4ff] flex items-center justify-center text-primary">
+            <span class="material-symbols-outlined">assignment_late</span>
+          </div>
+        </div>
+
+        <div class="bg-white rounded-xl p-6 border border-slate-200 shadow-sm flex items-center justify-between">
+          <div>
+            <span class="text-slate-400 font-bold text-[10px] tracking-wider block">Avg Compliance Rate</span>
+            <span class="text-4xl font-headline font-extrabold text-green-600 mt-1 block">82%</span>
+          </div>
+          <div class="w-12 h-12 rounded-full bg-green-50 flex items-center justify-center text-green-600">
+            <span class="material-symbols-outlined">monitoring</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column: Today's Schedule -->
+      <div class="lg:col-span-8">
+        <div class="bg-white rounded-xl border border-slate-200 p-6 shadow-sm">
+          <div class="flex justify-between items-center mb-6">
+            <h3 class="font-headline font-bold text-lg text-[#0b1c30]">Today's Schedule</h3>
+            <button onclick="navigateTo('calendar')" class="text-xs font-bold text-primary hover:underline flex items-center gap-1">
+              View Full Calendar <span class="material-symbols-outlined text-[16px]">arrow_right_alt</span>
+            </button>
+          </div>
+
+          <!-- Schedule Blocks list -->
+          <div class="flex flex-col gap-4">
             ${sessionsHTML}
           </div>
-</div>
-</div>
-</div>
-<!-- Bottom: Client Alerts -->
-<div class="mt-6 bg-white rounded-xl border border-slate-200 p-6 shadow-sm">
-<h3 class="font-headline font-bold text-lg text-[#0b1c30] mb-4 flex items-center gap-2">
-<span class="material-symbols-outlined text-primary" data-i18n="campaign">campaign</span>
-        Client Alerts &amp; Updates
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom: Client Alerts -->
+    <div class="mt-6 bg-white rounded-xl border border-slate-200 p-6 shadow-sm">
+      <h3 class="font-headline font-bold text-lg text-[#0b1c30] mb-4 flex items-center gap-2">
+        <span class="material-symbols-outlined text-primary">campaign</span>
+        Client Alerts & Updates
       </h3>
-<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
         ${alertsHTML}
       </div>
-</div>
-`;
+    </div>
+  `;
   // translate dynamic content
   translateDOM();
 }

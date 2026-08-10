@@ -1,17 +1,18 @@
 <!DOCTYPE html>
+
 <html class="light h-full" lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <title data-i18n="login_title">Elite Trainer - Portal Login</title>
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    <script id="tailwind-config">
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title data-i18n="login_title">Elite Trainer - Portal Login</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
         tailwind.config = {
             theme: {
                 extend: {
@@ -32,161 +33,142 @@
     </script>
 </head>
 <body class="bg-background text-on-background font-body min-h-screen flex items-center justify-center p-4">
-
-    <!-- Card Container -->
-    <div class="bg-white max-w-md w-full rounded-2xl p-8 border border-slate-100 shadow-2xl flex flex-col items-center">
-        <!-- Logo -->
-        <div class="flex items-center gap-2 mb-6">
-            <span class="material-symbols-outlined text-primary text-4xl" style="font-variation-settings: 'FILL' 1;">fitness_center</span>
-            <div class="flex flex-col">
-                <span class="text-2xl font-headline font-extrabold tracking-tight text-primary leading-none">ELITE TRAINER</span>
-                <span class="text-[9px] uppercase tracking-widest text-[#585e6f] font-bold mt-1">Management Assistant Portal</span>
-            </div>
-        </div>
-
-        <h2 data-i18n="login_welcome" class="text-xl font-headline font-bold text-center mb-1">Welcome Back</h2>
-        <p data-i18n="login_sub" class="text-xs text-slate-500 text-center mb-6">Sign in to access your dashboard, workouts, and tools.</p>
-
-        <!-- Login Form Wrapper -->
-        <div id="login-form-wrapper" class="w-full">
-            <!-- Gateway Toggle Roles -->
-            <div class="flex bg-slate-100 rounded-lg p-1 w-full mb-6">
-                <button onclick="setRole('client')" id="btn-role-client" data-i18n="nav_client_portal" class="flex-1 text-center py-2 text-xs font-semibold rounded-md bg-white text-primary shadow-sm transition-all duration-200">
+<!-- Card Container -->
+<div class="bg-white max-w-md w-full rounded-2xl p-8 border border-slate-100 shadow-2xl flex flex-col items-center">
+<!-- Logo -->
+<div class="flex items-center gap-2 mb-6">
+<span class="material-symbols-outlined text-primary text-4xl" data-i18n="fitness_center" style="font-variation-settings: 'FILL' 1;">fitness_center</span>
+<div class="flex flex-col">
+<span class="text-2xl font-headline font-extrabold tracking-tight text-primary leading-none" data-i18n="elite_trainer">ELITE TRAINER</span>
+<span class="text-[9px] uppercase tracking-widest text-[#585e6f] font-bold mt-1" data-i18n="management_assistant_portal">Management Assistant Portal</span>
+</div>
+</div>
+<h2 class="text-xl font-headline font-bold text-center mb-1" data-i18n="login_welcome">Welcome Back</h2>
+<p class="text-xs text-slate-500 text-center mb-6" data-i18n="login_sub">Sign in to access your dashboard, workouts, and tools.</p>
+<!-- Login Form Wrapper -->
+<div class="w-full" id="login-form-wrapper">
+<!-- Gateway Toggle Roles -->
+<div class="flex bg-slate-100 rounded-lg p-1 w-full mb-6">
+<button class="flex-1 text-center py-2 text-xs font-semibold rounded-md bg-white text-primary shadow-sm transition-all duration-200" data-i18n="nav_client_portal" id="btn-role-client" onclick="setRole('client')">
                     Client Portal
                 </button>
-                <button onclick="setRole('trainer')" id="btn-role-trainer" data-i18n="nav_trainer_portal" class="flex-1 text-center py-2 text-xs font-semibold rounded-md text-slate-600 hover:text-slate-900 transition-all duration-200">
+<button class="flex-1 text-center py-2 text-xs font-semibold rounded-md text-slate-600 hover:text-slate-900 transition-all duration-200" data-i18n="nav_trainer_portal" id="btn-role-trainer" onclick="setRole('trainer')">
                     Trainer Portal
                 </button>
-            </div>
-
-            <form onsubmit="handleLogin(event)" class="w-full space-y-4">
-                <div>
-                    <label data-i18n="label_email" class="block text-xs font-bold text-slate-600 uppercase tracking-wider mb-1">Email Address</label>
-                    <input type="email" id="login-email" required placeholder="m.reid@email.com" value="m.reid@email.com" class="w-full rounded-xl border-slate-200 text-xs px-3 py-2.5 focus:border-primary focus:ring-primary bg-slate-50 outline-none transition-colors">
-                </div>
-                <div>
-                    <label data-i18n="label_password" class="block text-xs font-bold text-slate-600 uppercase tracking-wider mb-1">Password</label>
-                    <input type="password" id="login-pass" required placeholder="••••••••" value="admin123" class="w-full rounded-xl border-slate-200 text-xs px-3 py-2.5 focus:border-primary focus:ring-primary bg-slate-50 outline-none transition-colors">
-                </div>
-                
-                <div data-i18n="error_invalid_credentials" class="text-red-500 text-[10px] font-semibold hidden text-center" id="error-message">
+</div>
+<form class="w-full space-y-4" onsubmit="handleLogin(event)">
+<div>
+<label class="block text-xs font-bold text-slate-600 uppercase tracking-wider mb-1" data-i18n="label_email">Email Address</label>
+<input class="w-full rounded-xl border-slate-200 text-xs px-3 py-2.5 focus:border-primary focus:ring-primary bg-slate-50 outline-none transition-colors" id="login-email" placeholder="m.reid@email.com" required="" type="email" value="m.reid@email.com"/>
+</div>
+<div>
+<label class="block text-xs font-bold text-slate-600 uppercase tracking-wider mb-1" data-i18n="label_password">Password</label>
+<input class="w-full rounded-xl border-slate-200 text-xs px-3 py-2.5 focus:border-primary focus:ring-primary bg-slate-50 outline-none transition-colors" id="login-pass" placeholder="••••••••" required="" type="password" value="admin123"/>
+</div>
+<div class="text-red-500 text-[10px] font-semibold hidden text-center" data-i18n="error_invalid_credentials" id="error-message">
                     Invalid credentials. Please try again.
                 </div>
-
-                <!-- Demo helper credentials -->
-                <div class="bg-slate-50 rounded-xl p-3 text-[10px] text-slate-500 space-y-1 w-full border border-slate-100">
-                    <span data-i18n="demo_quick_credentials" class="font-bold text-slate-700">Quick Credentials (Demo):</span>
-                    <div id="demo-creds">
-                        <div>• Client: <span class="font-mono text-primary">m.reid@email.com</span> / <span class="font-mono">admin123</span></div>
-                        <div>• Alternative Client: <span class="font-mono text-primary">eleanor.v@example.com</span> / <span class="font-mono">admin123</span></div>
-                    </div>
-                </div>
-
-                <button type="submit" data-i18n="btn_sign_in" class="w-full bg-primary hover:bg-[#8f3200] text-white font-bold text-xs py-3 rounded-xl transition-all shadow-md mt-2 flex items-center justify-center gap-1">
-                    <span class="material-symbols-outlined text-[16px]">lock_open</span> Sign In
+<!-- Demo helper credentials -->
+<div class="bg-slate-50 rounded-xl p-3 text-[10px] text-slate-500 space-y-1 w-full border border-slate-100">
+<span class="font-bold text-slate-700" data-i18n="demo_quick_credentials">Quick Credentials (Demo):</span>
+<div id="demo-creds">
+<div>• Client: <span class="font-mono text-primary" data-i18n="m_reid_email_com">m.reid@email.com</span> / <span class="font-mono" data-i18n="admin123">admin123</span></div>
+<div>• Alternative Client: <span class="font-mono text-primary" data-i18n="eleanor_v_example_com">eleanor.v@example.com</span> / <span class="font-mono" data-i18n="admin123">admin123</span></div>
+</div>
+</div>
+<button class="w-full bg-primary hover:bg-[#8f3200] text-white font-bold text-xs py-3 rounded-xl transition-all shadow-md mt-2 flex items-center justify-center gap-1" data-i18n="btn_sign_in" type="submit">
+<span class="material-symbols-outlined text-[16px]" data-i18n="lock_open">lock_open</span> Sign In
                 </button>
-            </form>
-            
-            <div class="text-center text-xs text-slate-500 mt-5" id="register-link-container">
-                <span data-i18n="no_account">Don't have an account?</span> <a href="#" data-i18n="register_new_account" onclick="showRegisterForm(event)" class="text-primary font-bold hover:underline">Register New Account</a>
-            </div>
-        </div>
-
-        <!-- Registration Form Wrapper (PAR-Q Multi-step wizard) -->
-        <div id="register-form-wrapper" class="w-full hidden">
-            <h3 class="text-md font-headline font-bold text-slate-800 text-center mb-1" id="reg-step-title">Client Registration</h3>
-            <p class="text-[10px] text-slate-500 text-center mb-4" id="reg-step-subtitle">Step 1 of 3: Account & Personal Info</p>
-            
-            <!-- Step Indicators -->
-            <div class="flex gap-1.5 mb-6 justify-center">
-                <span class="w-8 h-1 rounded bg-primary" id="reg-indicator-1"></span>
-                <span class="w-8 h-1 rounded bg-slate-100" id="reg-indicator-2"></span>
-                <span class="w-8 h-1 rounded bg-slate-100" id="reg-indicator-3"></span>
-            </div>
-
-            <form id="register-wizard-form" class="space-y-4" onsubmit="handleRegisterSubmit(event)">
-                <!-- Step 1: Account details -->
-                <div id="reg-step-1-inputs" class="space-y-4">
-                    <div>
-                        <label class="block text-xs font-bold text-slate-600 uppercase tracking-wider mb-1">Full Name</label>
-                        <input type="text" id="reg-name" required placeholder="John Doe" class="w-full rounded-xl border-slate-200 text-xs px-3 py-2.5 focus:border-primary focus:ring-primary bg-slate-50 outline-none">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-bold text-slate-600 uppercase tracking-wider mb-1">Email Address</label>
-                        <input type="email" id="reg-email" required placeholder="johndoe@email.com" class="w-full rounded-xl border-slate-200 text-xs px-3 py-2.5 focus:border-primary focus:ring-primary bg-slate-50 outline-none">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-bold text-slate-600 uppercase tracking-wider mb-1">Phone Number</label>
-                        <input type="text" id="reg-phone" required placeholder="+62 812-xxxx-xxxx" class="w-full rounded-xl border-slate-200 text-xs px-3 py-2.5 focus:border-primary focus:ring-primary bg-slate-50 outline-none">
-                    </div>
-                    
-                    <button type="button" onclick="navigateRegStep(1)" class="w-full bg-primary hover:bg-[#8f3200] text-white font-bold text-xs py-3 rounded-xl transition-all shadow-md mt-2 flex items-center justify-center gap-1">
-                        Continue <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
-                    </button>
-                </div>
-
-                <!-- Step 2: PAR-Q Questionnaire -->
-                <div id="reg-step-2-inputs" class="space-y-4 hidden text-xs">
-                    <div class="bg-slate-50 border border-slate-100 rounded-xl p-4 space-y-4 max-h-64 overflow-y-auto">
-                        <h4 class="font-bold text-slate-800 text-[10px] uppercase border-b pb-1.5 flex items-center gap-1"><span class="material-symbols-outlined text-primary text-[14px]">medical_information</span> PAR-Q Physical Readiness Questionnaire</h4>
-                        
-                        <div class="flex justify-between items-start gap-4">
-                            <span>1. Has your doctor ever said that you have a heart condition and that you should only do physical activity recommended by a doctor?</span>
-                            <select id="reg-parq-q1" class="bg-white border rounded text-[10px] py-0.5 px-1.5 focus:border-primary outline-none"><option value="no">No</option><option value="yes">Yes</option></select>
-                        </div>
-                        <div class="flex justify-between items-start gap-4">
-                            <span>2. Do you feel pain in your chest when you do physical activity?</span>
-                            <select id="reg-parq-q2" class="bg-white border rounded text-[10px] py-0.5 px-1.5 focus:border-primary outline-none"><option value="no">No</option><option value="yes">Yes</option></select>
-                        </div>
-                        <div class="flex justify-between items-start gap-4">
-                            <span>3. In the past month, have you had chest pain when you were not doing physical activity?</span>
-                            <select id="reg-parq-q3" class="bg-white border rounded text-[10px] py-0.5 px-1.5 focus:border-primary outline-none"><option value="no">No</option><option value="yes">Yes</option></select>
-                        </div>
-                        <div class="flex justify-between items-start gap-4">
-                            <span>4. Do you lose your balance because of dizziness or do you ever lose consciousness?</span>
-                            <select id="reg-parq-q4" class="bg-white border rounded text-[10px] py-0.5 px-1.5 focus:border-primary outline-none"><option value="no">No</option><option value="yes">Yes</option></select>
-                        </div>
-                        <div class="flex justify-between items-start gap-4">
-                            <span>5. Do you have a bone or joint problem that could be made worse by a change in your physical activity?</span>
-                            <select id="reg-parq-q5" class="bg-white border rounded text-[10px] py-0.5 px-1.5 focus:border-primary outline-none"><option value="no">No</option><option value="yes">Yes</option></select>
-                        </div>
-                        
-                        <div class="pt-2 border-t border-slate-200">
-                            <label class="block font-bold text-slate-600 mb-1 text-[9px] uppercase">Other Injury Notes (If Any)</label>
-                            <textarea id="reg-injury-notes" placeholder="e.g. ACL Knee surgery 1 year ago..." class="w-full rounded border-slate-200 text-[10px] p-2 bg-white outline-none focus:border-primary"></textarea>
-                        </div>
-                    </div>
-
-                    <div class="flex gap-2">
-                        <button type="button" onclick="navigateRegStep(-1)" class="flex-1 border border-slate-200 text-slate-600 font-bold text-xs py-2.5 rounded-xl hover:bg-slate-50 transition-colors">Back</button>
-                        <button type="button" onclick="navigateRegStep(1)" class="flex-1 bg-primary hover:bg-[#8f3200] text-white font-bold text-xs py-2.5 rounded-xl transition-all shadow-md">Continue</button>
-                    </div>
-                </div>
-
-                <!-- Step 3: Exercise Goals -->
-                <div id="reg-step-3-inputs" class="space-y-4 hidden">
-                    <div>
-                        <label class="block text-xs font-bold text-slate-600 uppercase tracking-wider mb-1">Primary Training Goal</label>
-                        <select id="reg-focus" class="w-full rounded-xl border-slate-200 text-xs px-3 py-2.5 focus:border-primary focus:ring-primary bg-slate-50 outline-none font-bold text-slate-800">
-                            <option value="Hypertrophy / Muscle Building">Hypertrophy / Muscle Building</option>
-                            <option value="Fat Loss / Endurance">Fat Loss / Endurance</option>
-                            <option value="Sports Performance">Sports Performance</option>
-                            <option value="Mobility / Rehabilitation">Mobility / Rehabilitation</option>
-                        </select>
-                    </div>
-
-                    <div class="flex gap-2">
-                        <button type="button" onclick="navigateRegStep(-1)" class="flex-1 border border-slate-200 text-slate-600 font-bold text-xs py-2.5 rounded-xl hover:bg-slate-50 transition-colors">Back</button>
-                        <button type="submit" class="flex-1 bg-primary hover:bg-[#8f3200] text-white font-bold text-xs py-2.5 rounded-xl transition-all shadow-md">Register & Sign In</button>
-                    </div>
-                </div>
-            </form>
-
-            <div class="text-center text-xs text-slate-500 mt-5">
-                Already have an account? <a href="#" onclick="showLoginForm(event)" class="text-primary font-bold hover:underline">Sign In</a>
-            </div>
-        </div>
-       <script type="module">
+</form>
+<div class="text-center text-xs text-slate-500 mt-5" id="register-link-container">
+<span data-i18n="no_account">Don't have an account?</span> <a class="text-primary font-bold hover:underline" data-i18n="register_new_account" href="#" onclick="showRegisterForm(event)">Register New Account</a>
+</div>
+</div>
+<!-- Registration Form Wrapper (PAR-Q Multi-step wizard) -->
+<div class="w-full hidden" id="register-form-wrapper">
+<h3 class="text-md font-headline font-bold text-slate-800 text-center mb-1" id="reg-step-title">Client Registration</h3>
+<p class="text-[10px] text-slate-500 text-center mb-4" id="reg-step-subtitle">Step 1 of 3: Account &amp; Personal Info</p>
+<!-- Step Indicators -->
+<div class="flex gap-1.5 mb-6 justify-center">
+<span class="w-8 h-1 rounded bg-primary" id="reg-indicator-1"></span>
+<span class="w-8 h-1 rounded bg-slate-100" id="reg-indicator-2"></span>
+<span class="w-8 h-1 rounded bg-slate-100" id="reg-indicator-3"></span>
+</div>
+<form class="space-y-4" id="register-wizard-form" onsubmit="handleRegisterSubmit(event)">
+<!-- Step 1: Account details -->
+<div class="space-y-4" id="reg-step-1-inputs">
+<div>
+<label class="block text-xs font-bold text-slate-600 uppercase tracking-wider mb-1" data-i18n="full_name">Full Name</label>
+<input class="w-full rounded-xl border-slate-200 text-xs px-3 py-2.5 focus:border-primary focus:ring-primary bg-slate-50 outline-none" id="reg-name" placeholder="John Doe" required="" type="text"/>
+</div>
+<div>
+<label class="block text-xs font-bold text-slate-600 uppercase tracking-wider mb-1" data-i18n="email_address">Email Address</label>
+<input class="w-full rounded-xl border-slate-200 text-xs px-3 py-2.5 focus:border-primary focus:ring-primary bg-slate-50 outline-none" id="reg-email" placeholder="johndoe@email.com" required="" type="email"/>
+</div>
+<div>
+<label class="block text-xs font-bold text-slate-600 uppercase tracking-wider mb-1" data-i18n="phone_number">Phone Number</label>
+<input class="w-full rounded-xl border-slate-200 text-xs px-3 py-2.5 focus:border-primary focus:ring-primary bg-slate-50 outline-none" id="reg-phone" placeholder="+62 812-xxxx-xxxx" required="" type="text"/>
+</div>
+<button class="w-full bg-primary hover:bg-[#8f3200] text-white font-bold text-xs py-3 rounded-xl transition-all shadow-md mt-2 flex items-center justify-center gap-1" onclick="navigateRegStep(1)" type="button">
+                        Continue <span class="material-symbols-outlined text-[16px]" data-i18n="arrow_forward">arrow_forward</span>
+</button>
+</div>
+<!-- Step 2: PAR-Q Questionnaire -->
+<div class="space-y-4 hidden text-xs" id="reg-step-2-inputs">
+<div class="bg-slate-50 border border-slate-100 rounded-xl p-4 space-y-4 max-h-64 overflow-y-auto">
+<h4 class="font-bold text-slate-800 text-[10px] uppercase border-b pb-1.5 flex items-center gap-1"><span class="material-symbols-outlined text-primary text-[14px]" data-i18n="medical_information">medical_information</span> PAR-Q Physical Readiness Questionnaire</h4>
+<div class="flex justify-between items-start gap-4">
+<span data-i18n="1_has_your_doctor_ever_said_th">1. Has your doctor ever said that you have a heart condition and that you should only do physical activity recommended by a doctor?</span>
+<select class="bg-white border rounded text-[10px] py-0.5 px-1.5 focus:border-primary outline-none" id="reg-parq-q1"><option data-i18n="no" value="no">No</option><option data-i18n="yes" value="yes">Yes</option></select>
+</div>
+<div class="flex justify-between items-start gap-4">
+<span data-i18n="2_do_you_feel_pain_in_your_ch">2. Do you feel pain in your chest when you do physical activity?</span>
+<select class="bg-white border rounded text-[10px] py-0.5 px-1.5 focus:border-primary outline-none" id="reg-parq-q2"><option data-i18n="no" value="no">No</option><option data-i18n="yes" value="yes">Yes</option></select>
+</div>
+<div class="flex justify-between items-start gap-4">
+<span data-i18n="3_in_the_past_month_have_you_h">3. In the past month, have you had chest pain when you were not doing physical activity?</span>
+<select class="bg-white border rounded text-[10px] py-0.5 px-1.5 focus:border-primary outline-none" id="reg-parq-q3"><option data-i18n="no" value="no">No</option><option data-i18n="yes" value="yes">Yes</option></select>
+</div>
+<div class="flex justify-between items-start gap-4">
+<span data-i18n="4_do_you_lose_your_balance_bec">4. Do you lose your balance because of dizziness or do you ever lose consciousness?</span>
+<select class="bg-white border rounded text-[10px] py-0.5 px-1.5 focus:border-primary outline-none" id="reg-parq-q4"><option data-i18n="no" value="no">No</option><option data-i18n="yes" value="yes">Yes</option></select>
+</div>
+<div class="flex justify-between items-start gap-4">
+<span data-i18n="5_do_you_have_a_bone_or_joint">5. Do you have a bone or joint problem that could be made worse by a change in your physical activity?</span>
+<select class="bg-white border rounded text-[10px] py-0.5 px-1.5 focus:border-primary outline-none" id="reg-parq-q5"><option data-i18n="no" value="no">No</option><option data-i18n="yes" value="yes">Yes</option></select>
+</div>
+<div class="pt-2 border-t border-slate-200">
+<label class="block font-bold text-slate-600 mb-1 text-[9px] uppercase" data-i18n="other_injury_notes_if_any">Other Injury Notes (If Any)</label>
+<textarea class="w-full rounded border-slate-200 text-[10px] p-2 bg-white outline-none focus:border-primary" id="reg-injury-notes" placeholder="e.g. ACL Knee surgery 1 year ago..."></textarea>
+</div>
+</div>
+<div class="flex gap-2">
+<button class="flex-1 border border-slate-200 text-slate-600 font-bold text-xs py-2.5 rounded-xl hover:bg-slate-50 transition-colors" data-i18n="back" onclick="navigateRegStep(-1)" type="button">Back</button>
+<button class="flex-1 bg-primary hover:bg-[#8f3200] text-white font-bold text-xs py-2.5 rounded-xl transition-all shadow-md" data-i18n="continue" onclick="navigateRegStep(1)" type="button">Continue</button>
+</div>
+</div>
+<!-- Step 3: Exercise Goals -->
+<div class="space-y-4 hidden" id="reg-step-3-inputs">
+<div>
+<label class="block text-xs font-bold text-slate-600 uppercase tracking-wider mb-1" data-i18n="primary_training_goal_1">Primary Training Goal</label>
+<select class="w-full rounded-xl border-slate-200 text-xs px-3 py-2.5 focus:border-primary focus:ring-primary bg-slate-50 outline-none font-bold text-slate-800" id="reg-focus">
+<option data-i18n="hypertrophy_muscle_building" value="Hypertrophy / Muscle Building">Hypertrophy / Muscle Building</option>
+<option data-i18n="fat_loss_endurance" value="Fat Loss / Endurance">Fat Loss / Endurance</option>
+<option data-i18n="sports_performance" value="Sports Performance">Sports Performance</option>
+<option data-i18n="mobility_rehabilitation" value="Mobility / Rehabilitation">Mobility / Rehabilitation</option>
+</select>
+</div>
+<div class="flex gap-2">
+<button class="flex-1 border border-slate-200 text-slate-600 font-bold text-xs py-2.5 rounded-xl hover:bg-slate-50 transition-colors" data-i18n="back" onclick="navigateRegStep(-1)" type="button">Back</button>
+<button class="flex-1 bg-primary hover:bg-[#8f3200] text-white font-bold text-xs py-2.5 rounded-xl transition-all shadow-md" data-i18n="register_sign_in" type="submit">Register &amp; Sign In</button>
+</div>
+</div>
+</form>
+<div class="text-center text-xs text-slate-500 mt-5">
+                Already have an account? <a class="text-primary font-bold hover:underline" data-i18n="nav_sign_in" href="#" onclick="showLoginForm(event)">Sign In</a>
+</div>
+</div>
+<script type="module">
         import { getClients } from './src/models/ClientModel.js';
         import { getPrograms } from './src/models/ProgramModel.js';
         import { saveState } from './src/models/Store.js';
@@ -201,8 +183,7 @@
         // translate static elements on this page
         translateDOM();
     </script>
-
-    <script>
+<script>
         let currentRole = 'client';
         let regStep = 1;
 
@@ -392,5 +373,5 @@
             }
         }
     </script>
-</body>
+</div></body>
 </html>

@@ -20,75 +20,79 @@ export function renderNutritionView(container, client) {
   };
 
   container.innerHTML = `
-<!-- Header -->
-<div class="flex items-center gap-3">
-<div class="w-12 h-12 rounded-xl bg-orange-100 flex items-center justify-center text-primary shrink-0">
-<span class="material-symbols-outlined text-[28px]" data-i18n="restaurant">restaurant</span>
-</div>
-<div>
-<h1 class="text-xl md:text-3xl font-headline font-extrabold text-slate-800" data-i18n="nutrition_title">Nutrition Plan</h1>
-<p class="text-sm text-slate-500 font-medium" data-i18n="nutrition_sub">Daily Macro &amp; Calorie Tracking</p>
-</div>
-</div>
-<!-- TDEE & Calories Summary -->
-<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-<div class="bg-white rounded-2xl p-5 border border-slate-100 shadow-sm flex flex-col items-center text-center">
-<div class="text-sm font-bold text-slate-500 uppercase tracking-wide mb-2" data-i18n="label_est_tdee">Est. TDEE</div>
-<div class="text-3xl font-headline font-extrabold text-slate-800">${nutrition.tdee} <span class="text-sm font-body text-slate-400" data-i18n="kcal">kcal</span></div>
-<p class="text-xs text-slate-400 mt-2" data-i18n="tdee_sub">Maintenance calories based on activity level</p>
-</div>
-<div class="bg-white rounded-2xl p-5 border border-slate-100 shadow-sm relative overflow-hidden">
-<div class="flex justify-between items-end mb-4">
-<div>
-<div class="text-sm font-bold text-slate-500 uppercase tracking-wide" data-i18n="label_calories_consumed">Calories Consumed</div>
-<div class="text-3xl font-headline font-extrabold text-primary">${consumed.calories} <span class="text-sm font-body text-slate-400">/ ${nutrition.targets.calories} kcal</span></div>
-</div>
-</div>
-<div class="w-full bg-slate-100 h-3 rounded-full overflow-hidden">
-<div class="bg-primary h-full rounded-full transition-all duration-1000" style="width: ${progress.calories}%"></div>
-</div>
-</div>
-</div>
-<!-- Macros -->
-<div class="bg-white rounded-2xl p-5 border border-slate-100 shadow-sm">
-<h3 class="text-sm font-headline font-bold text-slate-800 mb-4" data-i18n="macros_title">Daily Macronutrients</h3>
-<div class="grid grid-cols-3 gap-4">
-<!-- Protein -->
-<div class="flex flex-col items-center">
-<div class="w-full bg-slate-100 h-2 rounded-full overflow-hidden mb-2">
-<div class="bg-red-500 h-full rounded-full" style="width: ${progress.protein}%"></div>
-</div>
-<div class="text-[10px] font-bold text-slate-500 uppercase" data-i18n="label_protein">Protein</div>
-<div class="text-sm font-bold text-slate-800">${consumed.protein}g <span class="text-[10px] text-slate-400">/ ${nutrition.targets.protein}g</span></div>
-</div>
-<!-- Carbs -->
-<div class="flex flex-col items-center">
-<div class="w-full bg-slate-100 h-2 rounded-full overflow-hidden mb-2">
-<div class="bg-blue-500 h-full rounded-full" style="width: ${progress.carbs}%"></div>
-</div>
-<div class="text-[10px] font-bold text-slate-500 uppercase" data-i18n="label_carbs">Carbs</div>
-<div class="text-sm font-bold text-slate-800">${consumed.carbs}g <span class="text-[10px] text-slate-400">/ ${nutrition.targets.carbs}g</span></div>
-</div>
-<!-- Fat -->
-<div class="flex flex-col items-center">
-<div class="w-full bg-slate-100 h-2 rounded-full overflow-hidden mb-2">
-<div class="bg-yellow-500 h-full rounded-full" style="width: ${progress.fat}%"></div>
-</div>
-<div class="text-[10px] font-bold text-slate-500 uppercase" data-i18n="label_fat">Fat</div>
-<div class="text-sm font-bold text-slate-800">${consumed.fat}g <span class="text-[10px] text-slate-400">/ ${nutrition.targets.fat}g</span></div>
-</div>
-</div>
-</div>
-<!-- Food Diary -->
-<div class="bg-white rounded-2xl p-5 border border-slate-100 shadow-sm flex flex-col h-full">
-<div class="flex justify-between items-center mb-4">
-<h3 class="text-sm font-headline font-bold text-slate-800" data-i18n="diary_title">Today's Food Diary</h3>
-<button class="text-xs font-bold text-primary bg-primary/10 px-3 py-1.5 rounded-lg hover:bg-primary hover:text-white transition-colors flex items-center gap-1" data-i18n="btn_add_meal" onclick="window.openAddMealModal()">
-<span class="material-symbols-outlined text-[14px]" data-i18n="add">add</span> Add Meal
+    <!-- Header -->
+    <div class="flex items-center gap-3">
+        <div class="w-12 h-12 rounded-xl bg-orange-100 flex items-center justify-center text-primary shrink-0">
+            <span class="material-symbols-outlined text-[28px]">restaurant</span>
+        </div>
+        <div>
+        <h1 data-i18n="nutrition_title" class="text-xl md:text-3xl font-headline font-extrabold text-slate-800">Nutrition Plan</h1>
+        <p data-i18n="nutrition_sub" class="text-sm text-slate-500 font-medium">Daily Macro & Calorie Tracking</p>
+        </div>
+    </div>
+
+    <!-- TDEE & Calories Summary -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div class="bg-white rounded-2xl p-5 border border-slate-100 shadow-sm flex flex-col items-center text-center">
+        <div data-i18n="label_est_tdee" class="text-sm font-bold text-slate-500 uppercase tracking-wide mb-2">Est. TDEE</div>
+        <div class="text-3xl font-headline font-extrabold text-slate-800">${nutrition.tdee} <span class="text-sm font-body text-slate-400">kcal</span></div>
+        <p data-i18n="tdee_sub" class="text-xs text-slate-400 mt-2">Maintenance calories based on activity level</p>
+      </div>
+
+      <div class="bg-white rounded-2xl p-5 border border-slate-100 shadow-sm relative overflow-hidden">
+            <div class="flex justify-between items-end mb-4">
+              <div>
+                <div data-i18n="label_calories_consumed" class="text-sm font-bold text-slate-500 uppercase tracking-wide">Calories Consumed</div>
+                <div class="text-3xl font-headline font-extrabold text-primary">${consumed.calories} <span class="text-sm font-body text-slate-400">/ ${nutrition.targets.calories} kcal</span></div>
+              </div>
+            </div>
+          <div class="w-full bg-slate-100 h-3 rounded-full overflow-hidden">
+              <div class="bg-primary h-full rounded-full transition-all duration-1000" style="width: ${progress.calories}%"></div>
+          </div>
+      </div>
+    </div>
+
+    <!-- Macros -->
+    <div class="bg-white rounded-2xl p-5 border border-slate-100 shadow-sm">
+      <h3 data-i18n="macros_title" class="text-sm font-headline font-bold text-slate-800 mb-4">Daily Macronutrients</h3>
+        <div class="grid grid-cols-3 gap-4">
+            <!-- Protein -->
+            <div class="flex flex-col items-center">
+                <div class="w-full bg-slate-100 h-2 rounded-full overflow-hidden mb-2">
+                    <div class="bg-red-500 h-full rounded-full" style="width: ${progress.protein}%"></div>
+                </div>
+                <div data-i18n="label_protein" class="text-[10px] font-bold text-slate-500 uppercase">Protein</div>
+          <div class="text-sm font-bold text-slate-800">${consumed.protein}g <span class="text-[10px] text-slate-400">/ ${nutrition.targets.protein}g</span></div>
+            </div>
+            <!-- Carbs -->
+            <div class="flex flex-col items-center">
+                <div class="w-full bg-slate-100 h-2 rounded-full overflow-hidden mb-2">
+                    <div class="bg-blue-500 h-full rounded-full" style="width: ${progress.carbs}%"></div>
+                </div>
+          <div data-i18n="label_carbs" class="text-[10px] font-bold text-slate-500 uppercase">Carbs</div>
+                <div class="text-sm font-bold text-slate-800">${consumed.carbs}g <span class="text-[10px] text-slate-400">/ ${nutrition.targets.carbs}g</span></div>
+            </div>
+            <!-- Fat -->
+            <div class="flex flex-col items-center">
+                <div class="w-full bg-slate-100 h-2 rounded-full overflow-hidden mb-2">
+                    <div class="bg-yellow-500 h-full rounded-full" style="width: ${progress.fat}%"></div>
+                </div>
+          <div data-i18n="label_fat" class="text-[10px] font-bold text-slate-500 uppercase">Fat</div>
+                <div class="text-sm font-bold text-slate-800">${consumed.fat}g <span class="text-[10px] text-slate-400">/ ${nutrition.targets.fat}g</span></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Food Diary -->
+    <div class="bg-white rounded-2xl p-5 border border-slate-100 shadow-sm flex flex-col h-full">
+        <div class="flex justify-between items-center mb-4">
+        <h3 data-i18n="diary_title" class="text-sm font-headline font-bold text-slate-800">Today's Food Diary</h3>
+        <button onclick="window.openAddMealModal()" data-i18n="btn_add_meal" class="text-xs font-bold text-primary bg-primary/10 px-3 py-1.5 rounded-lg hover:bg-primary hover:text-white transition-colors flex items-center gap-1">
+                <span class="material-symbols-outlined text-[14px]">add</span> Add Meal
             </button>
-</div>
-<div class="flex-grow flex flex-col gap-3">
-            ${nutrition.diary.map(meal =&gt; </div></div>`
+        </div>
+        <div class="flex-grow flex flex-col gap-3">
+            ${nutrition.diary.map(meal => `
                 <div class="p-3 border border-slate-100 rounded-xl bg-slate-50 flex items-center justify-between">
                     <div>
                         <div class="text-[10px] font-bold text-slate-400 mb-0.5">${meal.time}</div>

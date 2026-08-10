@@ -15,7 +15,7 @@ export function renderPackagesView(container) {
         <td class="py-3 px-2">${c.joinedDate || '28 Jul 2026'}</td>
         <td class="py-3 px-2 font-bold">${c.name}</td>
         <td class="py-3 px-2">${c.package.name || `${c.package.total}-Session Package`}</td>
-        <td data-i18n="paid" class="py-3 px-2 text-right text-green-600 font-bold">PAID</td>
+        <td class="py-3 px-2 text-right text-green-600 font-bold">PAID</td>
         <td class="py-3 px-2 text-right font-semibold">S$ ${price.toLocaleString('en-SG')}</td>
       </tr>
     `;
@@ -24,25 +24,25 @@ export function renderPackagesView(container) {
   container.innerHTML = `
     <div class="bg-white rounded-xl border border-slate-200 p-6 mb-6 shadow-sm">
       <div class="border-b border-slate-100 pb-3 mb-4">
-        <h2 data-i18n="package_sales_report" class="font-headline font-bold text-lg text-slate-800">Package Sales Report</h2>
-        <p data-i18n="list_of_session_package_purcha" class="text-xs text-slate-500 mt-0.5">List of session package purchase transactions by active clients.</p>
+        <h2 class="font-headline font-bold text-lg text-slate-800">Package Sales Report</h2>
+        <p class="text-xs text-slate-500 mt-0.5">List of session package purchase transactions by active clients.</p>
       </div>
 
       <div class="overflow-x-auto">
         <table class="w-full text-left text-xs border-collapse">
           <thead>
             <tr class="border-b border-slate-200 text-slate-400 font-bold uppercase">
-              <th data-i18n="joined_date" class="py-3 px-2">Joined Date</th>
-              <th data-i18n="client_name" class="py-3 px-2">Client Name</th>
-              <th data-i18n="package_name" class="py-3 px-2">Package Name</th>
-              <th data-i18n="payment_status" class="py-3 px-2 text-right">Payment Status</th>
-              <th data-i18n="total_paid" class="py-3 px-2 text-right">Total Paid</th>
+              <th class="py-3 px-2">Joined Date</th>
+              <th class="py-3 px-2">Client Name</th>
+              <th class="py-3 px-2">Package Name</th>
+              <th class="py-3 px-2 text-right">Payment Status</th>
+              <th class="py-3 px-2 text-right">Total Paid</th>
             </tr>
           </thead>
           <tbody class="divide-y divide-slate-100 font-medium">
             ${salesRows}
             <tr class="bg-slate-50/50">
-              <td data-i18n="total_sales_revenue" class="py-3.5 px-2 font-bold text-slate-800" colspan="4">Total Sales Revenue</td>
+              <td class="py-3.5 px-2 font-bold text-slate-800" colspan="4">Total Sales Revenue</td>
               <td class="py-3.5 px-2 text-right font-extrabold text-primary text-sm">S$ ${totalRevenue.toLocaleString('en-SG')}</td>
             </tr>
           </tbody>

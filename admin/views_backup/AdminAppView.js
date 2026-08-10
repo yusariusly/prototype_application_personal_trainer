@@ -137,27 +137,27 @@ function renderOnboardingModal(renderView) {
   if (currentOnboardingStep === 1) {
     stepHTML = `
       <div class="mb-4">
-        <h3 data-i18n="step_1_personal_details_sessio" class="text-sm font-headline font-bold text-slate-700 border-b border-slate-100 pb-2 mb-4">Step 1: Personal Details & Session Package</h3>
+        <h3 class="text-sm font-headline font-bold text-slate-700 border-b border-slate-100 pb-2 mb-4">Step 1: Personal Details & Session Package</h3>
         <div class="space-y-3">
           <div>
-            <label data-i18n="client_name" class="block text-xs font-semibold text-slate-500 mb-1">Client Name</label>
+            <label class="block text-xs font-semibold text-slate-500 mb-1">Client Name</label>
             <input type="text" id="wizard-name" value="${onboardingData.name}" required placeholder="Marcus Johnson" class="w-full bg-slate-50 border border-slate-200 rounded-lg py-2 px-3 text-xs outline-none focus:border-primary">
           </div>
           <div>
-            <label data-i18n="email_address" class="block text-xs font-semibold text-slate-500 mb-1">Email Address</label>
+            <label class="block text-xs font-semibold text-slate-500 mb-1">Email Address</label>
             <input type="email" id="wizard-email" value="${onboardingData.email}" required placeholder="marcus.j@example.com" class="w-full bg-slate-50 border border-slate-200 rounded-lg py-2 px-3 text-xs outline-none focus:border-primary">
           </div>
           <div>
-            <label data-i18n="phone_number" class="block text-xs font-semibold text-slate-500 mb-1">Phone Number</label>
+            <label class="block text-xs font-semibold text-slate-500 mb-1">Phone Number</label>
             <input type="text" id="wizard-phone" value="${onboardingData.phone}" required placeholder="+62 812-xxxx-xxxx" class="w-full bg-slate-50 border border-slate-200 rounded-lg py-2 px-3 text-xs outline-none focus:border-primary">
           </div>
           <div>
-            <label data-i18n="training_package_sessions" class="block text-xs font-semibold text-slate-500 mb-1">Training Package (Sessions)</label>
+            <label class="block text-xs font-semibold text-slate-500 mb-1">Training Package (Sessions)</label>
             <select id="wizard-package" class="w-full bg-slate-50 border border-slate-200 rounded-lg py-2 px-3 text-xs outline-none">
-              <option data-i18n="10_session_package" value="10" ${onboardingData.packageTotal === 10 ? 'selected' : ''}>10-Session Package</option>
-              <option data-i18n="12_session_package" value="12" ${onboardingData.packageTotal === 12 ? 'selected' : ''}>12-Session Package</option>
-              <option data-i18n="20_session_package" value="20" ${onboardingData.packageTotal === 20 ? 'selected' : ''}>20-Session Package</option>
-              <option data-i18n="30_session_package" value="30" ${onboardingData.packageTotal === 30 ? 'selected' : ''}>30-Session Package</option>
+              <option value="10" ${onboardingData.packageTotal === 10 ? 'selected' : ''}>10-Session Package</option>
+              <option value="12" ${onboardingData.packageTotal === 12 ? 'selected' : ''}>12-Session Package</option>
+              <option value="20" ${onboardingData.packageTotal === 20 ? 'selected' : ''}>20-Session Package</option>
+              <option value="30" ${onboardingData.packageTotal === 30 ? 'selected' : ''}>30-Session Package</option>
             </select>
           </div>
         </div>
@@ -165,57 +165,60 @@ function renderOnboardingModal(renderView) {
     `;
   } else if (currentOnboardingStep === 2) {
     stepHTML = `
-<div class="mb-4">
-<h3 class="text-sm font-headline font-bold text-slate-700 border-b border-slate-100 pb-2 mb-4" data-i18n="step_2_medical_questionnaire_p">Step 2: Medical Questionnaire (PAR-Q)</h3>
-<div class="bg-error-container text-error rounded-lg p-3 text-[10px] mb-4 flex gap-2 border border-red-200">
-<span class="material-symbols-outlined text-[16px] shrink-0" data-i18n="warning">warning</span>
-<p class="font-medium" data-i18n="marking_yes_triggers_a_visual">Marking "Yes" triggers a visual Red Flag warning badge on client profile.</p>
-</div>
-<div class="space-y-3 max-h-60 overflow-y-auto pr-1">
-<div class="flex items-start justify-between text-xs gap-3">
-<span data-i18n="1_has_your_doctor_ever_said_th">1. Has your doctor ever said that you have a heart condition and that you should only do physical activity recommended by a doctor?</span>
-<select class="bg-slate-50 border border-slate-200 rounded text-xs py-0.5 px-1.5" id="parq-q1"><option data-i18n="no" value="no">No</option><option data-i18n="yes" value="yes">Yes</option></select>
-</div>
-<div class="flex items-start justify-between text-xs gap-3">
-<span data-i18n="2_do_you_feel_pain_in_your_che">2. Do you feel pain in your chest when you perform physical activity?</span>
-<select class="bg-slate-50 border border-slate-200 rounded text-xs py-0.5 px-1.5" id="parq-q2"><option data-i18n="no" value="no">No</option><option data-i18n="yes" value="yes">Yes</option></select>
-</div>
-<div class="flex items-start justify-between text-xs gap-3">
-<span data-i18n="3_in_the_past_month_have_you_h">3. In the past month, have you had chest pain when you were not doing physical activity?</span>
-<select class="bg-slate-50 border border-slate-200 rounded text-xs py-0.5 px-1.5" id="parq-q3"><option data-i18n="no" value="no">No</option><option data-i18n="yes" value="yes">Yes</option></select>
-</div>
-<div class="flex items-start justify-between text-xs gap-3">
-<span data-i18n="4_do_you_lose_your_balance_bec">4. Do you lose your balance because of dizziness or do you ever lose consciousness?</span>
-<select class="bg-slate-50 border border-slate-200 rounded text-xs py-0.5 px-1.5" id="parq-q4"><option data-i18n="no" value="no">No</option><option data-i18n="yes" value="yes">Yes</option></select>
-</div>
-<div class="flex items-start justify-between text-xs gap-3">
-<span data-i18n="5_do_you_have_a_bone_or_joint">5. Do you have a bone or joint problem that could be made worse by a change in your physical activity?</span>
-<select class="bg-slate-50 border border-slate-200 rounded text-xs py-0.5 px-1.5" id="parq-q5"><option data-i18n="no" value="no">No</option><option data-i18n="yes" value="yes">Yes</option></select>
-</div>
-<div class="border-t border-slate-100 pt-3">
-<label class="block text-xs font-semibold text-slate-600 mb-1" data-i18n="medical_injury_notes_red_flag">Medical Injury Notes (Red Flag Notes)</label>
-<textarea class="w-full bg-slate-50 border border-slate-200 rounded-lg py-2 px-3 text-xs outline-none focus:border-primary h-16" id="wizard-injury-notes" placeholder="Write specific injury details here if any...">${onboardingData.injuryNotes}</textarea>
-</div>
-</div>
-</div>
-`;
+      <div class="mb-4">
+        <h3 class="text-sm font-headline font-bold text-slate-700 border-b border-slate-100 pb-2 mb-4">Step 2: Medical Questionnaire (PAR-Q)</h3>
+        
+        <div class="bg-error-container text-error rounded-lg p-3 text-[10px] mb-4 flex gap-2 border border-red-200">
+          <span class="material-symbols-outlined text-[16px] shrink-0">warning</span>
+          <p class="font-medium">Marking "Yes" triggers a visual Red Flag warning badge on client profile.</p>
+        </div>
+
+        <div class="space-y-3 max-h-60 overflow-y-auto pr-1">
+          <div class="flex items-start justify-between text-xs gap-3">
+            <span>1. Has your doctor ever said that you have a heart condition and that you should only do physical activity recommended by a doctor?</span>
+            <select id="parq-q1" class="bg-slate-50 border border-slate-200 rounded text-xs py-0.5 px-1.5"><option value="no">No</option><option value="yes">Yes</option></select>
+          </div>
+          <div class="flex items-start justify-between text-xs gap-3">
+            <span>2. Do you feel pain in your chest when you perform physical activity?</span>
+            <select id="parq-q2" class="bg-slate-50 border border-slate-200 rounded text-xs py-0.5 px-1.5"><option value="no">No</option><option value="yes">Yes</option></select>
+          </div>
+          <div class="flex items-start justify-between text-xs gap-3">
+            <span>3. In the past month, have you had chest pain when you were not doing physical activity?</span>
+            <select id="parq-q3" class="bg-slate-50 border border-slate-200 rounded text-xs py-0.5 px-1.5"><option value="no">No</option><option value="yes">Yes</option></select>
+          </div>
+          <div class="flex items-start justify-between text-xs gap-3">
+            <span>4. Do you lose your balance because of dizziness or do you ever lose consciousness?</span>
+            <select id="parq-q4" class="bg-slate-50 border border-slate-200 rounded text-xs py-0.5 px-1.5"><option value="no">No</option><option value="yes">Yes</option></select>
+          </div>
+          <div class="flex items-start justify-between text-xs gap-3">
+            <span>5. Do you have a bone or joint problem that could be made worse by a change in your physical activity?</span>
+            <select id="parq-q5" class="bg-slate-50 border border-slate-200 rounded text-xs py-0.5 px-1.5"><option value="no">No</option><option value="yes">Yes</option></select>
+          </div>
+          
+          <div class="border-t border-slate-100 pt-3">
+            <label class="block text-xs font-semibold text-slate-600 mb-1">Medical Injury Notes (Red Flag Notes)</label>
+            <textarea id="wizard-injury-notes" placeholder="Write specific injury details here if any..." class="w-full bg-slate-50 border border-slate-200 rounded-lg py-2 px-3 text-xs outline-none focus:border-primary h-16">${onboardingData.injuryNotes}</textarea>
+          </div>
+        </div>
+      </div>
+    `;
   } else if (currentOnboardingStep === 3) {
     stepHTML = `
       <div class="mb-4">
-        <h3 data-i18n="step_3_training_goals_posture" class="text-sm font-headline font-bold text-slate-700 border-b border-slate-100 pb-2 mb-4">Step 3: Training Goals & Posture</h3>
+        <h3 class="text-sm font-headline font-bold text-slate-700 border-b border-slate-100 pb-2 mb-4">Step 3: Training Goals & Posture</h3>
         <div class="space-y-3">
           <div>
-            <label data-i18n="primary_training_focus" class="block text-xs font-semibold text-slate-500 mb-1">Primary Training Focus</label>
+            <label class="block text-xs font-semibold text-slate-500 mb-1">Primary Training Focus</label>
             <select id="wizard-focus" class="w-full bg-slate-50 border border-slate-200 rounded-lg py-2 px-3 text-xs outline-none">
-              <option data-i18n="hypertrophy_muscle_building" value="Hypertrophy / Muscle Building" ${onboardingData.posturalFocus.includes('Hypertrophy') ? 'selected' : ''}>Hypertrophy / Muscle Building</option>
-              <option data-i18n="fat_loss_weight_loss" value="Fat Loss / Weight Loss" ${onboardingData.posturalFocus.includes('Fat Loss') ? 'selected' : ''}>Fat Loss / Weight Loss</option>
-              <option data-i18n="strength_maximal_power" value="Strength / Power" ${onboardingData.posturalFocus.includes('Strength') ? 'selected' : ''}>Strength / Maximal Power</option>
-              <option data-i18n="injury_rehabilitation" value="Rehabilitation" ${onboardingData.posturalFocus.includes('Rehabilitation') ? 'selected' : ''}>Injury Rehabilitation</option>
+              <option value="Hypertrophy / Muscle Building" ${onboardingData.posturalFocus.includes('Hypertrophy') ? 'selected' : ''}>Hypertrophy / Muscle Building</option>
+              <option value="Fat Loss / Weight Loss" ${onboardingData.posturalFocus.includes('Fat Loss') ? 'selected' : ''}>Fat Loss / Weight Loss</option>
+              <option value="Strength / Power" ${onboardingData.posturalFocus.includes('Strength') ? 'selected' : ''}>Strength / Maximal Power</option>
+              <option value="Rehabilitation" ${onboardingData.posturalFocus.includes('Rehabilitation') ? 'selected' : ''}>Injury Rehabilitation</option>
             </select>
           </div>
           
           <div>
-            <label data-i18n="posture_analysis_postural_anal" class="block text-xs font-semibold text-slate-500 mb-1">Posture Analysis (Postural Analysis)</label>
+            <label class="block text-xs font-semibold text-slate-500 mb-1">Posture Analysis (Postural Analysis)</label>
             <textarea id="wizard-postural" placeholder="Write initial posture screening or squat test results..." class="w-full bg-slate-50 border border-slate-200 rounded-lg py-2 px-3 text-xs outline-none focus:border-primary h-24">${onboardingData.posturalAnalysis}</textarea>
           </div>
         </div>
@@ -226,15 +229,15 @@ function renderOnboardingModal(renderView) {
   modalRoot.innerHTML = `
     <div class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
       <div class="bg-white w-full max-w-lg rounded-xl p-6 border border-slate-100 shadow-2xl relative">
-        <h2 data-i18n="new_client_onboarding" class="text-lg font-headline font-bold text-slate-800 mb-2">New Client Onboarding</h2>
-        <p data-i18n="complete_the_registration_form" class="text-xs text-slate-500 mb-6">Complete the registration form to build the client profile.</p>
+        <h2 class="text-lg font-headline font-bold text-slate-800 mb-2">New Client Onboarding</h2>
+        <p class="text-xs text-slate-500 mb-6">Complete the registration form to build the client profile.</p>
         
         <!-- Steps Stepper -->
         <div class="flex items-center justify-between mb-6 relative">
           <div class="absolute left-0 top-1/2 -translate-y-1/2 w-full h-0.5 bg-slate-200 -z-10"></div>
-          <div data-i18n="1_bg_primary_text_white_bg_sla" class="w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold ${currentOnboardingStep >= 1 ? 'bg-primary text-white' : 'bg-slate-200 text-slate-600'}">1</div>
-          <div data-i18n="2_bg_primary_text_white_bg_sla" class="w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold ${currentOnboardingStep >= 2 ? 'bg-primary text-white' : 'bg-slate-200 text-slate-600'}">2</div>
-          <div data-i18n="3_bg_primary_text_white_bg_sla" class="w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold ${currentOnboardingStep >= 3 ? 'bg-primary text-white' : 'bg-slate-200 text-slate-600'}">3</div>
+          <div class="w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold ${currentOnboardingStep >= 1 ? 'bg-primary text-white' : 'bg-slate-200 text-slate-600'}">1</div>
+          <div class="w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold ${currentOnboardingStep >= 2 ? 'bg-primary text-white' : 'bg-slate-200 text-slate-600'}">2</div>
+          <div class="w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold ${currentOnboardingStep >= 3 ? 'bg-primary text-white' : 'bg-slate-200 text-slate-600'}">3</div>
         </div>
 
         <form id="onboarding-form" class="space-y-4">
@@ -242,15 +245,15 @@ function renderOnboardingModal(renderView) {
           
           <div class="flex gap-3 pt-4 border-t border-slate-100">
             ${currentOnboardingStep > 1 ? `
-              <button data-i18n="previous" type="button" onclick="window.navigateOnboardingStep(-1)" class="flex-1 border border-slate-200 text-slate-600 py-2.5 text-xs font-bold rounded-lg hover:bg-slate-50 transition-colors">Previous</button>
+              <button type="button" onclick="window.navigateOnboardingStep(-1)" class="flex-1 border border-slate-200 text-slate-600 py-2.5 text-xs font-bold rounded-lg hover:bg-slate-50 transition-colors">Previous</button>
             ` : `
-              <button data-i18n="cancel" type="button" onclick="window.closeModal()" class="flex-1 border border-slate-200 text-slate-600 py-2.5 text-xs font-bold rounded-lg hover:bg-slate-50 transition-colors">Cancel</button>
+              <button type="button" onclick="window.closeModal()" class="flex-1 border border-slate-200 text-slate-600 py-2.5 text-xs font-bold rounded-lg hover:bg-slate-50 transition-colors">Cancel</button>
             `}
             
             ${currentOnboardingStep < 3 ? `
-              <button data-i18n="next" type="submit" class="flex-1 bg-primary text-white py-2.5 text-xs font-bold rounded-lg hover:bg-[#8f3200] transition-colors">Next</button>
+              <button type="submit" class="flex-1 bg-primary text-white py-2.5 text-xs font-bold rounded-lg hover:bg-[#8f3200] transition-colors">Next</button>
             ` : `
-              <button data-i18n="save_client" type="submit" class="flex-1 bg-primary text-white py-2.5 text-xs font-bold rounded-lg hover:bg-[#8f3200] transition-colors">Save Client</button>
+              <button type="submit" class="flex-1 bg-primary text-white py-2.5 text-xs font-bold rounded-lg hover:bg-[#8f3200] transition-colors">Save Client</button>
             `}
           </div>
         </form>

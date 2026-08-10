@@ -34,7 +34,7 @@ export function renderClientDetailView(container, activeClientDetailId) {
       <span class="text-[9px] font-bold text-slate-400 uppercase tracking-wider text-center">${p.type} (${p.date})</span>
     </div>
   `).join('') : `
-    <div data-i18n="no_progress_photos_uploaded_ye" class="col-span-2 text-center py-6 text-slate-400 bg-slate-50 border border-slate-100 rounded-lg text-[10px]">
+    <div class="col-span-2 text-center py-6 text-slate-400 bg-slate-50 border border-slate-100 rounded-lg text-[10px]">
       No progress photos uploaded yet.
     </div>
   `;
@@ -43,7 +43,7 @@ export function renderClientDetailView(container, activeClientDetailId) {
     <!-- Back Button -->
     <div class="mb-4">
       <button onclick="window.navigateTo('clients')" data-i18n="btn_back_to_clients" class="flex items-center gap-1.5 text-xs font-bold text-primary hover:text-[#8f3200] transition-colors focus:outline-none">
-        <span data-i18n="arrow_back" class="material-symbols-outlined text-[16px]">arrow_back</span> Back to Client Roster
+        <span class="material-symbols-outlined text-[16px]">arrow_back</span> Back to Client Roster
       </button>
     </div>
 
@@ -66,7 +66,7 @@ export function renderClientDetailView(container, activeClientDetailId) {
         </div>
         
         <div class="flex gap-2">
-          <button data-i18n="workout_builder" onclick="window.navigateToBuilderForClient('${client.id}')" class="bg-primary text-white text-xs font-bold font-headline py-2.5 px-4 rounded-lg hover:bg-[#8f3200] transition-colors shadow-sm">
+          <button onclick="window.navigateToBuilderForClient('${client.id}')" class="bg-primary text-white text-xs font-bold font-headline py-2.5 px-4 rounded-lg hover:bg-[#8f3200] transition-colors shadow-sm">
             Workout Builder
           </button>
         </div>
@@ -93,15 +93,15 @@ export function renderClientDetailView(container, activeClientDetailId) {
 
           <div class="bg-slate-50 border border-slate-100 p-5 rounded-xl space-y-3">
             <h4 data-i18n="parq_title" class="font-headline font-bold text-slate-800 text-[11px] flex items-center gap-1.5 border-b border-slate-200/60 pb-2">
-              <span data-i18n="medical_information" class="material-symbols-outlined text-[18px] text-primary">medical_information</span>
+              <span class="material-symbols-outlined text-[18px] text-primary">medical_information</span>
               PAR-Q Physical Readiness Questionnaire
             </h4>
             <div class="space-y-2 text-[11px] text-slate-600">
-              <div class="flex justify-between"><span data-i18n="doctor_recommended_specific_ac">Doctor Recommended Specific Activity:</span><span class="font-bold text-slate-800">${client.assessment.parq.q1 === 'yes' ? 'Yes (Restrictions)' : 'No (Cleared)'}</span></div>
-              <div class="flex justify-between"><span data-i18n="chest_pain_during_activity">Chest Pain During Activity:</span><span class="font-bold text-slate-800">${client.assessment.parq.q2 === 'yes' ? 'Yes' : 'No'}</span></div>
-              <div class="flex justify-between"><span data-i18n="chest_pain_at_rest">Chest Pain At Rest:</span><span class="font-bold text-slate-800">${client.assessment.parq.q3 === 'yes' ? 'Yes' : 'No'}</span></div>
-              <div class="flex justify-between"><span data-i18n="dizziness_loss_of_balance">Dizziness / Loss of Balance:</span><span class="font-bold text-slate-800">${client.assessment.parq.q4 === 'yes' ? 'Yes' : 'No'}</span></div>
-              <div class="flex justify-between"><span data-i18n="chronic_bone_joint_issue">Chronic Bone / Joint Issue:</span><span class="font-bold text-slate-800">${client.assessment.parq.q5 === 'yes' ? 'Yes' : 'No'}</span></div>
+              <div class="flex justify-between"><span>Doctor Recommended Specific Activity:</span><span class="font-bold text-slate-800">${client.assessment.parq.q1 === 'yes' ? 'Yes (Restrictions)' : 'No (Cleared)'}</span></div>
+              <div class="flex justify-between"><span>Chest Pain During Activity:</span><span class="font-bold text-slate-800">${client.assessment.parq.q2 === 'yes' ? 'Yes' : 'No'}</span></div>
+              <div class="flex justify-between"><span>Chest Pain At Rest:</span><span class="font-bold text-slate-800">${client.assessment.parq.q3 === 'yes' ? 'Yes' : 'No'}</span></div>
+              <div class="flex justify-between"><span>Dizziness / Loss of Balance:</span><span class="font-bold text-slate-800">${client.assessment.parq.q4 === 'yes' ? 'Yes' : 'No'}</span></div>
+              <div class="flex justify-between"><span>Chronic Bone / Joint Issue:</span><span class="font-bold text-slate-800">${client.assessment.parq.q5 === 'yes' ? 'Yes' : 'No'}</span></div>
             </div>
           </div>
 
@@ -119,8 +119,8 @@ export function renderClientDetailView(container, activeClientDetailId) {
         <div class="lg:col-span-6 space-y-6">
           <div class="bg-green-50 border border-green-100 p-4 rounded-xl flex justify-between items-center shadow-sm">
             <div>
-               <h3 data-i18n="overall_compliance_rate" class="text-xs font-bold text-slate-800 uppercase tracking-wider mb-1">Overall Compliance Rate</h3>
-               <p data-i18n="diet_workout_adherence_last_30" class="text-[10px] text-slate-500 font-medium">Diet & Workout Adherence (Last 30 Days)</p>
+               <h3 class="text-xs font-bold text-slate-800 uppercase tracking-wider mb-1">Overall Compliance Rate</h3>
+               <p class="text-[10px] text-slate-500 font-medium">Diet & Workout Adherence (Last 30 Days)</p>
             </div>
             <div class="text-3xl font-headline font-extrabold text-green-700">
                88%
@@ -131,16 +131,16 @@ export function renderClientDetailView(container, activeClientDetailId) {
             <h3 data-i18n="client_goals_posture" class="text-xs font-bold text-slate-800 uppercase tracking-wider border-b border-slate-100 pb-2 mb-3">Goals & Posture Analysis</h3>
             <form id="edit-client-posture-form" class="space-y-4" onsubmit="window.saveClientPosture(event, '${client.id}')">
               <div>
-                <label data-i18n="primary_training_goal" class="text-slate-400 font-semibold block mb-1">Primary Training Goal:</label>
+                <label class="text-slate-400 font-semibold block mb-1">Primary Training Goal:</label>
                 <select id="edit-postural-focus" class="w-full bg-slate-50 border border-slate-200 rounded-lg py-2 px-3 text-xs outline-none focus:bg-white font-bold text-slate-800">
-                  <option data-i18n="hypertrophy_muscle_building" value="Hypertrophy / Muscle Building" ${client.assessment.postural.focus.startsWith('Hypertrophy') ? 'selected' : ''}>Hypertrophy / Muscle Building</option>
-                  <option data-i18n="fat_loss_endurance" value="Fat Loss / Endurance" ${client.assessment.postural.focus.startsWith('Fat Loss') ? 'selected' : ''}>Fat Loss / Endurance</option>
-                  <option data-i18n="sports_performance" value="Sports Performance" ${client.assessment.postural.focus.startsWith('Sports') ? 'selected' : ''}>Sports Performance</option>
-                  <option data-i18n="mobility_rehabilitation" value="Mobility / Rehabilitation" ${client.assessment.postural.focus.startsWith('Mobility') ? 'selected' : ''}>Mobility / Rehabilitation</option>
+                  <option value="Hypertrophy / Muscle Building" ${client.assessment.postural.focus.startsWith('Hypertrophy') ? 'selected' : ''}>Hypertrophy / Muscle Building</option>
+                  <option value="Fat Loss / Endurance" ${client.assessment.postural.focus.startsWith('Fat Loss') ? 'selected' : ''}>Fat Loss / Endurance</option>
+                  <option value="Sports Performance" ${client.assessment.postural.focus.startsWith('Sports') ? 'selected' : ''}>Sports Performance</option>
+                  <option value="Mobility / Rehabilitation" ${client.assessment.postural.focus.startsWith('Mobility') ? 'selected' : ''}>Mobility / Rehabilitation</option>
                 </select>
               </div>
               <div>
-                <label data-i18n="client_posture_analysis" class="text-slate-400 font-semibold block mb-1">Client Posture Analysis:</label>
+                <label class="text-slate-400 font-semibold block mb-1">Client Posture Analysis:</label>
                 <textarea id="edit-postural-analysis" class="w-full bg-slate-50 border border-slate-200 rounded-lg py-2 px-3 text-xs outline-none focus:bg-white min-h-[80px] leading-relaxed text-slate-700">${client.assessment.postural.analysis || ''}</textarea>
               </div>
               <button type="submit" data-i18n="btn_save_assessment" class="bg-primary text-white text-[10px] font-bold font-headline py-2 px-4 rounded-lg hover:bg-[#8f3200] transition-colors shadow-sm focus:outline-none">
@@ -150,7 +150,7 @@ export function renderClientDetailView(container, activeClientDetailId) {
           </div>
 
           <div>
-            <h3 data-i18n="progress_photo_gallery" class="text-xs font-bold text-slate-800 uppercase tracking-wider border-b border-slate-100 pb-2 mb-3">Progress Photo Gallery</h3>
+            <h3 class="text-xs font-bold text-slate-800 uppercase tracking-wider border-b border-slate-100 pb-2 mb-3">Progress Photo Gallery</h3>
             <div class="grid grid-cols-2 gap-4">
               ${photoHTML}
             </div>
@@ -161,25 +161,25 @@ export function renderClientDetailView(container, activeClientDetailId) {
             <form id="edit-client-nutrition-form" class="space-y-4" onsubmit="window.saveClientNutrition(event, '${client.id}')">
               <div class="grid grid-cols-2 gap-4">
                   <div>
-                    <label data-i18n="target_calories_kcal" class="text-slate-400 font-semibold block mb-1">Target Calories (kcal):</label>
+                    <label class="text-slate-400 font-semibold block mb-1">Target Calories (kcal):</label>
                     <input type="number" id="edit-nut-cal" value="${nutrition.targets.calories}" class="w-full bg-slate-50 border border-slate-200 rounded-lg py-2 px-3 text-xs outline-none focus:bg-white font-bold text-slate-800">
                   </div>
                   <div>
-                    <label data-i18n="est_tdee_kcal" class="text-slate-400 font-semibold block mb-1">Est. TDEE (kcal):</label>
+                    <label class="text-slate-400 font-semibold block mb-1">Est. TDEE (kcal):</label>
                     <input type="number" id="edit-nut-tdee" value="${nutrition.tdee}" class="w-full bg-slate-50 border border-slate-200 rounded-lg py-2 px-3 text-xs outline-none focus:bg-white font-bold text-slate-800">
                   </div>
               </div>
               <div class="grid grid-cols-3 gap-4">
                   <div>
-                    <label data-i18n="protein_g" class="text-slate-400 font-semibold block mb-1">Protein (g):</label>
+                    <label class="text-slate-400 font-semibold block mb-1">Protein (g):</label>
                     <input type="number" id="edit-nut-pro" value="${nutrition.targets.protein}" class="w-full bg-slate-50 border border-slate-200 rounded-lg py-2 px-3 text-xs outline-none focus:bg-white font-bold text-slate-800">
                   </div>
                   <div>
-                    <label data-i18n="carbs_g" class="text-slate-400 font-semibold block mb-1">Carbs (g):</label>
+                    <label class="text-slate-400 font-semibold block mb-1">Carbs (g):</label>
                     <input type="number" id="edit-nut-carb" value="${nutrition.targets.carbs}" class="w-full bg-slate-50 border border-slate-200 rounded-lg py-2 px-3 text-xs outline-none focus:bg-white font-bold text-slate-800">
                   </div>
                   <div>
-                    <label data-i18n="fat_g" class="text-slate-400 font-semibold block mb-1">Fat (g):</label>
+                    <label class="text-slate-400 font-semibold block mb-1">Fat (g):</label>
                     <input type="number" id="edit-nut-fat" value="${nutrition.targets.fat}" class="w-full bg-slate-50 border border-slate-200 rounded-lg py-2 px-3 text-xs outline-none focus:bg-white font-bold text-slate-800">
                   </div>
               </div>
@@ -199,11 +199,11 @@ export function renderClientDetailView(container, activeClientDetailId) {
           <table class="w-full text-xs text-left border-collapse">
             <thead>
               <tr class="border-b border-slate-200 text-slate-400">
-                <th data-i18n="date" class="py-2.5 font-semibold">Date</th>
-                <th data-i18n="weight" class="py-2.5 font-semibold">Weight</th>
-                <th data-i18n="body_fat" class="py-2.5 font-semibold">Body Fat</th>
-                <th data-i18n="muscle_mass" class="py-2.5 font-semibold">Muscle Mass</th>
-                <th data-i18n="waist_size" class="py-2.5 font-semibold">Waist Size</th>
+                <th class="py-2.5 font-semibold">Date</th>
+                <th class="py-2.5 font-semibold">Weight</th>
+                <th class="py-2.5 font-semibold">Body Fat</th>
+                <th class="py-2.5 font-semibold">Muscle Mass</th>
+                <th class="py-2.5 font-semibold">Waist Size</th>
               </tr>
             </thead>
             <tbody>

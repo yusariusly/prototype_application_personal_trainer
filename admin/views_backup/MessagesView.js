@@ -15,7 +15,7 @@ export function renderMessagesView(container, activeChatClientId) {
       <!-- Left sidebar: Client chats -->
       <aside class="w-64 border-r border-slate-100 flex flex-col shrink-0">
         <div class="p-4 border-b border-slate-100 bg-slate-50/40">
-          <span data-i18n="client_inbox" class="text-xs font-bold text-slate-400 uppercase tracking-wider">Client Inbox</span>
+          <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Client Inbox</span>
         </div>
         <div class="flex-grow overflow-y-auto flex flex-col divide-y divide-slate-100">
           ${clients.map(c => `
@@ -37,7 +37,7 @@ export function renderMessagesView(container, activeChatClientId) {
             <img class="w-10 h-10 rounded-full object-cover border" src="${client.avatar}" alt="Avatar">
             <div>
               <h4 class="font-headline font-bold text-xs text-slate-800">${client.name}</h4>
-              <span data-i18n="personal_client" class="text-[10px] text-slate-400">Personal Client</span>
+              <span class="text-[10px] text-slate-400">Personal Client</span>
             </div>
           </div>
         </header>
@@ -57,17 +57,19 @@ export function renderMessagesView(container, activeChatClientId) {
               </div>
             `;
           }).join('')}
-        
-<!-- Footer Form -->
-<form class="p-4 border-t border-slate-100 flex gap-2 shrink-0" id="trainer-chat-form">
-<input class="flex-grow bg-slate-50 border border-slate-200 rounded-xl px-4 py-2 text-xs outline-none focus:bg-white focus:border-primary" id="trainer-chat-input" placeholder="Type your instruction or message..." required="" type="text"/>
-<button class="bg-primary hover:bg-[#8f3200] text-white w-10 h-10 rounded-xl flex items-center justify-center shrink-0 transition-colors shadow-sm" type="submit">
-<span class="material-symbols-outlined text-[20px]" data-i18n="send">send</span>
-</button>
-</form>
+        </div>
 
+        <!-- Footer Form -->
+        <form id="trainer-chat-form" class="p-4 border-t border-slate-100 flex gap-2 shrink-0">
+          <input type="text" id="trainer-chat-input" placeholder="Type your instruction or message..." required class="flex-grow bg-slate-50 border border-slate-200 rounded-xl px-4 py-2 text-xs outline-none focus:bg-white focus:border-primary">
+          <button type="submit" class="bg-primary hover:bg-[#8f3200] text-white w-10 h-10 rounded-xl flex items-center justify-center shrink-0 transition-colors shadow-sm">
+            <span class="material-symbols-outlined text-[20px]">send</span>
+          </button>
+        </form>
+      </section>
 
-`;
+    </div>
+  `;
 
   // Scroll to bottom
   const chatContainer = document.getElementById('trainer-messages-container');
