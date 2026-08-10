@@ -270,76 +270,113 @@ export function setupProgressGlobalHandlers(renderView, showToast, closeModal) {
   window.openAiScanModal = function() {
     const modalRoot = document.getElementById('modal-root');
     modalRoot.innerHTML = `
-      <div class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-        <div class="bg-white w-full max-w-lg rounded-2xl p-7 border border-slate-100 shadow-2xl relative overflow-hidden">
-          <div id="ai-scan-header">
-            <h2 data-i18n="modal_ai_scan_title" class="text-xl font-headline font-bold text-indigo-900 mb-2">AI Posture & Body Scan</h2>
-            <p data-i18n="modal_ai_scan_sub" class="text-xs text-slate-500 mb-6">Upload or capture a photo to analyze your body posture and shape using AI.</p>
-          </div>
+      <div class="fixed inset-0 bg-slate-900/75 backdrop-blur-sm z-[60] flex items-center justify-center p-4">
+        <div class="bg-white w-full max-w-xl rounded-3xl border border-slate-200 shadow-2xl relative overflow-hidden flex flex-col max-h-[90vh]">
           
-          <div id="ai-scan-content" class="space-y-5">
-            <div>
-              <label data-i18n="ai_scan_category" class="block text-xs font-bold text-slate-600 mb-2">Analysis Category</label>
-              <select id="ai-scan-category" class="w-full bg-slate-50 border border-slate-200 rounded-lg py-2.5 px-3 text-sm outline-none focus:border-indigo-500 focus:ring-0">
-                <option data-i18n="ai_cat_posture" value="posture">Posture Alignment</option>
-                <option data-i18n="ai_cat_muscle" value="muscle">Muscle Symmetry</option>
-                <option data-i18n="ai_cat_shape" value="shape">Body Shape Analysis</option>
-              </select>
-            </div>
-
-            <div id="ai-preview-container" class="relative">
-              <div class="absolute top-3 left-3 bg-red-500 text-white text-[10px] font-bold px-2 py-1 rounded-md shadow-sm animate-pulse flex items-center gap-1 z-10">
-                <span class="w-2 h-2 rounded-full bg-white block"></span> REC
-              </div>
-              <img id="ai-photo-preview" src="https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" class="w-full h-48 object-cover rounded-xl border border-slate-200 shadow-inner">
-            </div>
-
-            <div class="w-full">
-              <button type="button" class="w-full border-2 border-dashed border-indigo-200 hover:border-indigo-500 hover:bg-indigo-50 rounded-xl p-4 flex items-center justify-center gap-2 transition-colors text-indigo-700" onclick="document.getElementById('ai-photo-upload').click()">
-                <span class="material-symbols-outlined text-xl">upload_file</span>
-                <span data-i18n="ai_scan_upload" class="font-bold text-sm">Upload Photo</span>
-              </button>
-            </div>
-            <input type="file" id="ai-photo-upload" accept="image/*" class="hidden" onchange="document.getElementById('ai-photo-preview').src = URL.createObjectURL(this.files[0]); document.querySelector('#ai-preview-container .absolute')?.classList.add('hidden');">
-
-            <div class="flex gap-3 mt-6 pt-4 border-t border-slate-100">
-              <button type="button" onclick="window.closeModal()" data-i18n="btn_cancel" class="flex-1 border border-slate-200 text-slate-600 py-3 text-sm font-bold rounded-xl hover:bg-slate-50 transition-colors">Cancel</button>
-              <button type="button" onclick="window.startAiScan()" data-i18n="btn_start_ai_scan" class="flex-1 bg-indigo-600 text-white py-3 text-sm font-bold rounded-xl hover:bg-indigo-700 transition-colors shadow-md">Start AI Scan</button>
-            </div>
-          </div>
-
-          <!-- Loading State -->
-          <div id="ai-scan-loading" class="hidden flex flex-col items-center justify-center py-10">
-            <div class="w-16 h-16 border-4 border-indigo-100 border-t-indigo-600 rounded-full animate-spin mb-4"></div>
-            <h3 data-i18n="ai_analyzing" class="text-indigo-900 font-bold font-headline animate-pulse">AI is analyzing your photo...</h3>
-          </div>
-
-          <!-- Result State -->
-          <div id="ai-scan-result" class="hidden space-y-4">
-            <div class="bg-indigo-50 rounded-xl p-4 border border-indigo-100">
-              <h3 data-i18n="ai_result_title" class="font-headline font-bold text-indigo-900 mb-2 text-lg">Analysis Result</h3>
-              
-              <div class="mb-3">
-                <h4 data-i18n="ai_finding" class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">AI Finding</h4>
-                <p id="ai-result-finding" class="text-sm text-slate-700 font-medium"></p>
-              </div>
-              
+          <!-- Header -->
+          <div class="bg-primary text-white p-5 flex justify-between items-center shrink-0">
+            <div class="flex items-center gap-3">
+              <span class="material-symbols-outlined text-[28px] animate-pulse">document_scanner</span>
               <div>
-                <h4 data-i18n="ai_solution" class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">Suggested Solution</h4>
-                <p id="ai-result-solution" class="text-sm text-slate-700 font-medium"></p>
+                <h3 data-i18n="ai_posture_scanner" class="text-base font-bold font-headline">AI Posture Scanner</h3>
+                <p data-i18n="ai_scan_subtitle" class="text-[10px] text-white/80 font-medium mt-0.5 tracking-wide">Real-time AI Body Analysis</p>
+              </div>
+            </div>
+            <button onclick="window.closeModal()" class="text-white/80 hover:text-white transition-colors"><span class="material-symbols-outlined text-[24px]">close</span></button>
+          </div>
+
+          <div class="p-6 overflow-y-auto space-y-6 flex-grow bg-slate-50/50">
+            <!-- Camera Simulator -->
+            <div id="ai-preview-container" class="relative rounded-2xl overflow-hidden border border-slate-800 bg-slate-900 aspect-video flex flex-col items-center justify-center group">
+              <!-- Scanner Laser Overlay -->
+              <div id="scanner-laser" class="absolute left-0 right-0 h-1 bg-gradient-to-r from-transparent via-primary to-transparent shadow-[0_0_15px_#a73b00] z-20 hidden animate-[scan_2.5s_ease-in-out_infinite]" style="top: 0%;"></div>
+              <style>
+                  @keyframes scan {
+                      0% { top: 0%; opacity: 0; }
+                      10% { opacity: 1; }
+                      90% { opacity: 1; }
+                      100% { top: 100%; opacity: 0; }
+                  }
+              </style>
+
+              <img id="ai-photo-preview" src="" class="w-full h-full object-cover hidden z-0 absolute inset-0">
+              
+              <div id="scanner-ui-overlay" class="absolute inset-0 flex flex-col items-center justify-center p-5 text-center gap-3 bg-slate-950/80 z-10">
+                <span data-i18n="ai_camera_sim" class="text-xs font-bold text-white tracking-widest uppercase">AI Camera Simulator</span>
+                <p data-i18n="modal_ai_scan_sub" class="text-[11px] text-slate-300 max-w-xs leading-relaxed">Upload a body posture photo from your device or pick a posture sample below to scan.</p>
+                <button type="button" class="mt-2 bg-primary hover:bg-[#8f3200] text-white font-bold text-xs px-5 py-2.5 rounded-full flex items-center gap-2 shadow-lg transition-all active:scale-95" onclick="document.getElementById('ai-photo-upload').click()">
+                  <span class="material-symbols-outlined text-[18px]">add_a_photo</span> <span data-i18n="btn_upload_scan_photo">Upload & Scan Photo</span>
+                </button>
+              </div>
+              <input type="file" id="ai-photo-upload" accept="image/*" class="hidden" onchange="window.handleAiPhotoUpload(event)">
+            </div>
+
+            <!-- Samples Section -->
+            <div id="ai-samples-section" class="flex flex-col gap-3 bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
+              <h4 data-i18n="posture_samples_title" class="text-[10px] font-bold text-slate-500 uppercase tracking-wider text-left">Posture Samples (Synced from Specialist)</h4>
+              <div class="flex flex-wrap gap-2 mt-1">
+                <button type="button" onclick="window.selectPostureSample('Forward Head', 'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=400')" class="flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-slate-200 text-xs font-semibold text-slate-600 hover:bg-slate-50 hover:border-primary hover:text-primary transition-colors">
+                  <span class="material-symbols-outlined text-[16px]">accessibility_new</span> <span data-i18n="sample_forward_head">Forward Head</span>
+                </button>
+                <button type="button" onclick="window.selectPostureSample('Rounded Shoulders', 'https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=400')" class="flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-slate-200 text-xs font-semibold text-slate-600 hover:bg-slate-50 hover:border-primary hover:text-primary transition-colors">
+                  <span class="material-symbols-outlined text-[16px]">accessibility_new</span> <span data-i18n="sample_rounded_shoulders">Rounded Shoulders</span>
+                </button>
+                <button type="button" onclick="window.selectPostureSample('Anterior Pelvic Tilt', 'https://images.unsplash.com/photo-1518611012118-696072aa579a?w=400')" class="flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-slate-200 text-xs font-semibold text-slate-600 hover:bg-slate-50 hover:border-primary hover:text-primary transition-colors">
+                  <span class="material-symbols-outlined text-[16px]">accessibility_new</span> <span data-i18n="sample_apt">Anterior Pelvic Tilt</span>
+                </button>
+                <button type="button" onclick="window.selectPostureSample('Neutral Posture', 'https://images.unsplash.com/photo-1538805060514-97d9cc17730c?w=400')" class="flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-slate-200 text-xs font-semibold text-slate-600 hover:bg-slate-50 hover:border-primary hover:text-primary transition-colors">
+                  <span class="material-symbols-outlined text-[16px]">accessibility_new</span> <span data-i18n="sample_neutral">Neutral Posture</span>
+                </button>
               </div>
             </div>
 
-            <div class="bg-amber-50 rounded-xl p-4 border border-amber-200 flex items-start gap-3">
-              <span class="material-symbols-outlined text-amber-500 mt-0.5">warning</span>
-              <p data-i18n="ai_disclaimer" class="text-xs text-amber-800 font-medium leading-relaxed">
-                Disclaimer: This analysis is generated by AI and may not be 100% accurate. Please share these results with your trainer for professional validation and advice.
-              </p>
+            <!-- Analysis Category (Hidden but required for logic) -->
+            <select id="ai-scan-category" class="hidden">
+              <option value="posture">Posture Alignment</option>
+            </select>
+
+            <!-- Loading State Logs -->
+            <div id="ai-scan-loading" class="hidden bg-white border border-slate-200 rounded-xl p-5 space-y-3 shadow-inner">
+              <div id="log-step-1" class="flex items-center gap-3 text-slate-400 text-xs font-bold transition-all"><span class="material-symbols-outlined text-[18px]">document_scanner</span> <span data-i18n="log_identifying_joints">Identifying body joints...</span></div>
+              <div id="log-step-2" class="flex items-center gap-3 text-slate-400 text-xs font-bold transition-all"><span class="material-symbols-outlined text-[18px]">straighten</span> <span data-i18n="log_estimating_angles">Estimating joint angles...</span></div>
+              <div id="log-step-3" class="flex items-center gap-3 text-slate-400 text-xs font-bold transition-all"><span class="material-symbols-outlined text-[18px]">psychology</span> <span data-i18n="log_extracting_metrics">Extracting posture metrics...</span></div>
             </div>
 
-            <div class="flex pt-2">
-              <button type="button" onclick="window.closeModal()" class="w-full bg-slate-800 text-white py-3 text-sm font-bold rounded-xl hover:bg-slate-900 transition-colors shadow-md">Close</button>
+            <!-- Result State -->
+            <div id="ai-scan-result" class="hidden space-y-4">
+              <div class="bg-primary/5 rounded-2xl p-5 border border-primary/20">
+                <div class="flex justify-between items-start mb-4 border-b border-primary/10 pb-3">
+                  <div>
+                    <h3 data-i18n="ai_result_title" class="font-headline font-bold text-primary text-sm">Analysis Result</h3>
+                    <p data-i18n="ai_cat_posture" class="text-[10px] text-slate-500 mt-0.5 font-semibold">Posture Alignment</p>
+                  </div>
+                  <span data-i18n="ai_confidence" class="bg-primary/10 text-primary px-2.5 py-1 rounded-full text-[10px] font-bold border border-primary/20">89% confidence</span>
+                </div>
+                
+                <div class="mb-4">
+                  <h4 data-i18n="ai_finding" class="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">AI Finding</h4>
+                  <p id="ai-result-finding" class="text-xs text-slate-700 font-medium leading-relaxed"></p>
+                </div>
+                
+                <div>
+                  <h4 data-i18n="ai_solution" class="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Suggested Solution</h4>
+                  <p id="ai-result-solution" class="text-xs text-slate-700 font-medium leading-relaxed"></p>
+                </div>
+              </div>
+
+              <div class="bg-amber-50 rounded-xl p-4 border border-amber-200 flex items-start gap-3 shadow-sm">
+                <span class="material-symbols-outlined text-amber-500 mt-0.5 text-[20px]">warning</span>
+                <p data-i18n="ai_disclaimer" class="text-[10px] text-amber-800 font-medium leading-relaxed">
+                  Disclaimer: This analysis is generated by AI and may not be 100% accurate. Please share these results with your trainer for professional validation.
+                </p>
+              </div>
             </div>
+          </div>
+
+          <!-- Footer Buttons -->
+          <div class="bg-slate-50 px-6 py-4 border-t border-slate-200 flex justify-end gap-3 shrink-0">
+            <button type="button" onclick="window.closeModal()" data-i18n="btn_cancel" class="border border-slate-300 bg-white text-slate-600 py-2 px-5 text-xs font-bold rounded-full hover:bg-slate-100 transition-colors">Cancel</button>
+            <button id="btn-log-scanned" type="button" onclick="window.closeModal()" data-i18n="btn_log_scanned_result" class="bg-slate-300 text-slate-500 py-2 px-5 text-xs font-bold rounded-full shadow-sm cursor-not-allowed transition-colors" disabled>Log Scanned Result</button>
           </div>
         </div>
       </div>
@@ -347,42 +384,83 @@ export function setupProgressGlobalHandlers(renderView, showToast, closeModal) {
     translateDOM();
   };
 
-
-  window.startAiScan = function() {
-    const previewContainer = document.getElementById('ai-preview-container');
-    if (previewContainer.classList.contains('hidden')) {
-      showToast('Please upload or capture a photo first.', 'error');
-      return;
+  window.handleAiPhotoUpload = function(event) {
+    if (event.target.files && event.target.files[0]) {
+      const url = URL.createObjectURL(event.target.files[0]);
+      window.startAiScanSimulation(url);
     }
+  };
 
-    const category = document.getElementById('ai-scan-category').value;
+  window.selectPostureSample = function(name, url) {
+    window.startAiScanSimulation(url, name);
+  };
+
+  window.startAiScanSimulation = function(imageUrl, sampleName = "") {
+    const preview = document.getElementById('ai-photo-preview');
+    const overlay = document.getElementById('scanner-ui-overlay');
+    const laser = document.getElementById('scanner-laser');
+    const loading = document.getElementById('ai-scan-loading');
+    const result = document.getElementById('ai-scan-result');
+    const samples = document.getElementById('ai-samples-section');
+    const logBtn = document.getElementById('btn-log-scanned');
     
-    document.getElementById('ai-scan-header').classList.add('hidden');
-    document.getElementById('ai-scan-content').classList.add('hidden');
-    document.getElementById('ai-scan-loading').classList.remove('hidden');
+    // Hide UI overlay, show image and laser
+    preview.src = imageUrl;
+    preview.classList.remove('hidden');
+    overlay.classList.add('hidden');
+    laser.classList.remove('hidden');
+    samples.classList.add('hidden');
+    
+    // Show loading logs
+    loading.classList.remove('hidden');
+    result.classList.add('hidden');
+    
+    // Reset logs
+    const step1 = document.getElementById('log-step-1');
+    const step2 = document.getElementById('log-step-2');
+    const step3 = document.getElementById('log-step-3');
+    
+    step1.className = "flex items-center gap-3 text-slate-400 text-xs font-bold transition-all opacity-50";
+    step2.className = "flex items-center gap-3 text-slate-400 text-xs font-bold transition-all opacity-50";
+    step3.className = "flex items-center gap-3 text-slate-400 text-xs font-bold transition-all opacity-50";
 
-    // Simulate AI Processing Delay
+    // Simulate analysis steps
     setTimeout(() => {
-      document.getElementById('ai-scan-loading').classList.add('hidden');
-      document.getElementById('ai-scan-result').classList.remove('hidden');
+        step1.className = "flex items-center gap-3 text-primary text-xs font-bold transition-all";
+    }, 500);
+    
+    setTimeout(() => {
+        step2.className = "flex items-center gap-3 text-primary text-xs font-bold transition-all";
+    }, 1500);
+    
+    setTimeout(() => {
+        step3.className = "flex items-center gap-3 text-primary text-xs font-bold transition-all";
+    }, 2500);
 
-      // Mock AI Responses based on category
-      let finding = "";
-      let solution = "";
+    // Show result
+    setTimeout(() => {
+      laser.classList.add('hidden');
+      loading.classList.add('hidden');
+      result.classList.remove('hidden');
       
-      if (category === 'posture') {
-        finding = "Mild forward head posture and slight rounded shoulders detected. Pelvic tilt appears neutral.";
-        solution = "Incorporate chin tucks, wall angels, and chest stretches daily. Strengthen the mid and lower trapezius.";
-      } else if (category === 'muscle') {
-        finding = "Left shoulder sits slightly higher than the right. Possible overactive right latissimus dorsi or left upper trapezius.";
-        solution = "Focus on unilateral pulling exercises. Stretch the left upper trap and mobilize the thoracic spine.";
-      } else {
-        finding = "Upper body development is progressing well. Slightly disproportionate development between anterior and posterior deltoids.";
-        solution = "Increase volume on face pulls and rear delt flyes to improve posterior shoulder development.";
+      // Enable log button
+      logBtn.disabled = false;
+      logBtn.className = "bg-primary text-white py-2 px-5 text-xs font-bold rounded-full shadow-md hover:bg-[#8f3200] transition-colors";
+      
+      // Mock AI Responses based on sample name or fallback
+      let finding = t('ai_finding_1');
+      let solution = t('ai_solution_1');
+      
+      if (sampleName.includes('Anterior Pelvic Tilt')) {
+          finding = t('ai_finding_2');
+          solution = t('ai_solution_2');
+      } else if (sampleName.includes('Neutral')) {
+          finding = t('ai_finding_3');
+          solution = t('ai_solution_3');
       }
 
-      document.getElementById('ai-result-finding').innerText = finding;
-      document.getElementById('ai-result-solution').innerText = solution;
+      document.getElementById('ai-result-finding').innerHTML = finding;
+      document.getElementById('ai-result-solution').innerHTML = solution;
     }, 3500);
   };
 }

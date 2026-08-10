@@ -2,6 +2,7 @@ import { saveState } from '../../src/models/Store.js';
 import { getPrograms } from '../../src/models/ProgramModel.js';
 import { saveClient } from '../../src/models/ClientModel.js';
 import { updateProgram } from '../../src/models/ProgramModel.js';
+import { translateDOM } from '../../src/i18n.js';
 
 let currentOnboardingStep = 1;
 let onboardingData = {};
@@ -80,8 +81,10 @@ export function setupAdminAppGlobalHandlers(renderView) {
 
   window.toggleLanguage = function(e) {
     if (e) e.stopPropagation();
-    const isEn = localStorage.getItem('elite_pt_lang') !== 'id';
-    localStorage.setItem('elite_pt_lang', isEn ? 'id' : 'en');
+    const isEn = localStorage.getItem('lang') !== 'ms';
+    const nextLang = isEn ? 'ms' : 'en';
+    localStorage.setItem('lang', nextLang);
+    if (window.changeLanguage) window.changeLanguage(nextLang);
     updateLanguageIndicator();
     if(window.renderView) window.renderView();
   };
@@ -115,18 +118,18 @@ export function setupAdminAppGlobalHandlers(renderView) {
 }
 
 function updateLanguageIndicator() {
-  const isId = localStorage.getItem('elite_pt_lang') === 'id';
+  const isMs = localStorage.getItem('lang') === 'ms';
   const langEl = document.getElementById('lang-indicator');
-  if (langEl) langEl.textContent = isId ? 'ID' : 'EN';
+  if (langEl) langEl.textContent = isMs ? 'MY' : 'EN';
   
   // Basic Nav Translations
   const navKeys = ['dashboard', 'clients', 'calendar', 'builder', 'packages', 'messages'];
   const textEn = ['Dashboard', 'Clients', 'Schedule', 'Workouts', 'Sales', 'Messages'];
-  const textId = ['Dasbor', 'Klien', 'Jadwal', 'Latihan', 'Penjualan', 'Obrolan'];
+  const textId = ['Papan Pemuka', 'Pelanggan', 'Jadual', 'Latihan', 'Jualan', 'Obrolan'];
   
   navKeys.forEach((key, index) => {
     const el = document.getElementById(`nav-${key}`);
-    if (el) el.textContent = isId ? textId[index] : textEn[index];
+    if (el) el.textContent = isMs ? textId[index] : textEn[index];
   });
 }
 
@@ -257,6 +260,8 @@ function renderOnboardingModal(renderView) {
       </div>
     </div>
   `;
+  
+  translateDOM();
 
   document.getElementById('onboarding-form').addEventListener('submit', (e) => {
     e.preventDefault();

@@ -13,9 +13,9 @@ export function setupUserHeader() {
   if (userAvatarEl) userAvatarEl.src = avatar;
   if (userAvatarElMobile) userAvatarElMobile.src = avatar;
   if (userNameEl) userNameEl.textContent = name;
-  const isId = localStorage.getItem('elite_pt_lang') === 'id';
+  const isMs = localStorage.getItem('lang') === 'ms';
   const langEl = document.getElementById('lang-indicator');
-  if (langEl) langEl.textContent = isId ? 'ID' : 'EN';
+  if (langEl) langEl.textContent = isMs ? 'MY' : 'EN';
   
   // Basic Nav Translations
   const navKeys = ['home', 'workout', 'nutrition', 'progress', 'booking', 'chat'];
@@ -24,10 +24,10 @@ export function setupUserHeader() {
   
   navKeys.forEach((key, index) => {
     const el = document.getElementById(`nav-${key}`);
-    if (el) el.textContent = isId ? textId[index] : textEn[index];
+    if (el) el.textContent = isMs ? textId[index] : textEn[index];
     
     const mobEl = document.getElementById(`mobile-nav-${key}`);
-    if (mobEl && mobEl.children[1]) mobEl.children[1].textContent = isId ? textId[index] : textEn[index];
+    if (mobEl && mobEl.children[1]) mobEl.children[1].textContent = isMs ? textId[index] : textEn[index];
   });
 }
 
@@ -115,8 +115,10 @@ export function setupAppGlobalHandlers(renderView) {
 
   window.toggleLanguage = function(e) {
     if (e) e.stopPropagation();
-    const isEn = localStorage.getItem('elite_pt_lang') !== 'id';
-    localStorage.setItem('elite_pt_lang', isEn ? 'id' : 'en');
+    const isEn = localStorage.getItem('lang') !== 'ms';
+    const nextLang = isEn ? 'ms' : 'en';
+    localStorage.setItem('lang', nextLang);
+    if (window.changeLanguage) window.changeLanguage(nextLang);
     setupUserHeader();
     if(window.renderView) window.renderView();
   };

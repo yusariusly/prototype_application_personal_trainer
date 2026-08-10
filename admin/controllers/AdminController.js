@@ -6,6 +6,7 @@ import { renderCalendarView, setupCalendarGlobalHandlers } from '../views/Calend
 import { renderPackagesView } from '../views/PackagesView.js';
 import { renderMessagesView, setupMessagesGlobalHandlers } from '../views/MessagesView.js';
 import { updateHeaderSelection, setupAdminAppGlobalHandlers } from '../views/AdminAppView.js';
+import { translateDOM } from '../../src/i18n.js';
 
 // Redirect to login if not logged in as trainer
 if (localStorage.getItem('elite_pt_role') !== 'trainer') {
@@ -56,6 +57,8 @@ function renderView() {
   } else if (window.activeTab === 'messages') {
     renderMessagesView(container, activeChatClientId);
   }
+  
+  translateDOM();
 }
 
 window.renderView = renderView;

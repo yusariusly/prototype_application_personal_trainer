@@ -16,7 +16,7 @@ export function renderPackagesView(container) {
         <td class="py-3 px-2 font-bold">${c.name}</td>
         <td class="py-3 px-2">${c.package.name || `${c.package.total}-Session Package`}</td>
         <td data-i18n="paid" class="py-3 px-2 text-right text-green-600 font-bold">PAID</td>
-        <td class="py-3 px-2 text-right font-semibold">S$ ${price.toLocaleString('en-SG')}</td>
+        <td class="py-3 px-2 text-right font-semibold">RM ${price.toLocaleString('ms-MY')}</td>
       </tr>
     `;
   }).join('');
@@ -32,7 +32,7 @@ export function renderPackagesView(container) {
         </div>
         <div class="bg-gradient-to-r from-green-400 to-green-500 text-white px-5 py-2.5 rounded-xl shadow-lg shadow-green-500/30 flex items-center gap-2">
           <span class="material-symbols-outlined text-[20px]">payments</span>
-          <span class="text-xs font-bold uppercase tracking-wider">Total: S$ ${totalRevenue.toLocaleString('en-SG')}</span>
+          <span class="text-xs font-bold uppercase tracking-wider">Total: RM ${totalRevenue.toLocaleString('ms-MY')}</span>
         </div>
       </div>
 
@@ -51,7 +51,7 @@ export function renderPackagesView(container) {
             ${salesRows}
             <tr class="bg-gradient-to-r from-slate-50/50 to-white/80 border-t-2 border-white/80">
               <td data-i18n="total_sales_revenue" class="py-5 px-4 font-extrabold text-slate-800 text-sm uppercase tracking-wider" colspan="4">Total Sales Revenue</td>
-              <td class="py-5 px-4 text-right font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-primary to-primary-container text-xl">S$ ${totalRevenue.toLocaleString('en-SG')}</td>
+              <td class="py-5 px-4 text-right font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-primary to-primary-container text-xl">RM ${totalRevenue.toLocaleString('ms-MY')}</td>
             </tr>
           </tbody>
         </table>
