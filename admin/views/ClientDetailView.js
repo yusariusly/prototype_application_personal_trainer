@@ -2,6 +2,7 @@ import { getClients } from '../../src/models/ClientModel.js';
 import { saveState } from '../../src/models/Store.js';
 import { saveClient } from '../../src/models/ClientModel.js';
 import { getNutrition, updateNutrition } from '../../src/models/NutritionModel.js';
+import { t, translateDOM } from '../../src/i18n.js';
 
 export function renderClientDetailView(container, activeClientDetailId) {
   const clients = getClients();
@@ -9,8 +10,8 @@ export function renderClientDetailView(container, activeClientDetailId) {
   if (!client) {
     container.innerHTML = `
       <div class="bg-white rounded-xl border p-6 text-center text-slate-500">
-        Client not found.
-        <button onclick="window.navigateTo('clients')" class="mt-4 bg-primary text-white px-4 py-2 rounded text-xs font-bold block mx-auto">Back</button>
+        <div data-i18n="client_not_found">Client not found.</div>
+        <button onclick="window.navigateTo('clients')" data-i18n="btn_back_to_clients" class="mt-4 bg-primary text-white px-4 py-2 rounded text-xs font-bold block mx-auto">Back</button>
       </div>
     `;
     return;
@@ -41,7 +42,7 @@ export function renderClientDetailView(container, activeClientDetailId) {
   container.innerHTML = `
     <!-- Back Button -->
     <div class="mb-4">
-      <button onclick="window.navigateTo('clients')" class="flex items-center gap-1.5 text-xs font-bold text-primary hover:text-[#8f3200] transition-colors focus:outline-none">
+      <button onclick="window.navigateTo('clients')" data-i18n="btn_back_to_clients" class="flex items-center gap-1.5 text-xs font-bold text-primary hover:text-[#8f3200] transition-colors focus:outline-none">
         <span class="material-symbols-outlined text-[16px]">arrow_back</span> Back to Client Roster
       </button>
     </div>
@@ -77,21 +78,21 @@ export function renderClientDetailView(container, activeClientDetailId) {
         <!-- Left Side: Bio & Physical Readiness -->
         <div class="lg:col-span-6 space-y-6">
           <div>
-            <h3 class="text-xs font-bold text-slate-800 uppercase tracking-wider border-b border-slate-100 pb-2 mb-3">Contact Info & Profile</h3>
+            <h3 data-i18n="client_contact_info" class="text-xs font-bold text-slate-800 uppercase tracking-wider border-b border-slate-100 pb-2 mb-3">Contact Info & Profile</h3>
             <div class="grid grid-cols-2 gap-4 text-xs">
               <div>
-                <span class="text-slate-400 font-semibold block">Email Address:</span>
+                <span data-i18n="label_email" class="text-slate-400 font-semibold block">Email Address:</span>
                 <span class="font-bold text-slate-800 mt-0.5 block">${client.email}</span>
               </div>
               <div>
-                <span class="text-slate-400 font-semibold block">Phone Number:</span>
+                <span data-i18n="label_phone" class="text-slate-400 font-semibold block">Phone Number:</span>
                 <span class="font-bold text-slate-800 mt-0.5 block">${client.phone}</span>
               </div>
             </div>
           </div>
 
           <div class="bg-slate-50 border border-slate-100 p-5 rounded-xl space-y-3">
-            <h4 class="font-headline font-bold text-slate-800 text-[11px] flex items-center gap-1.5 border-b border-slate-200/60 pb-2">
+            <h4 data-i18n="parq_title" class="font-headline font-bold text-slate-800 text-[11px] flex items-center gap-1.5 border-b border-slate-200/60 pb-2">
               <span class="material-symbols-outlined text-[18px] text-primary">medical_information</span>
               PAR-Q Physical Readiness Questionnaire
             </h4>
@@ -127,7 +128,7 @@ export function renderClientDetailView(container, activeClientDetailId) {
           </div>
           
           <div>
-            <h3 class="text-xs font-bold text-slate-800 uppercase tracking-wider border-b border-slate-100 pb-2 mb-3">Goals & Posture Analysis</h3>
+            <h3 data-i18n="client_goals_posture" class="text-xs font-bold text-slate-800 uppercase tracking-wider border-b border-slate-100 pb-2 mb-3">Goals & Posture Analysis</h3>
             <form id="edit-client-posture-form" class="space-y-4" onsubmit="window.saveClientPosture(event, '${client.id}')">
               <div>
                 <label class="text-slate-400 font-semibold block mb-1">Primary Training Goal:</label>
@@ -142,7 +143,7 @@ export function renderClientDetailView(container, activeClientDetailId) {
                 <label class="text-slate-400 font-semibold block mb-1">Client Posture Analysis:</label>
                 <textarea id="edit-postural-analysis" class="w-full bg-slate-50 border border-slate-200 rounded-lg py-2 px-3 text-xs outline-none focus:bg-white min-h-[80px] leading-relaxed text-slate-700">${client.assessment.postural.analysis || ''}</textarea>
               </div>
-              <button type="submit" class="bg-primary text-white text-[10px] font-bold font-headline py-2 px-4 rounded-lg hover:bg-[#8f3200] transition-colors shadow-sm focus:outline-none">
+              <button type="submit" data-i18n="btn_save_assessment" class="bg-primary text-white text-[10px] font-bold font-headline py-2 px-4 rounded-lg hover:bg-[#8f3200] transition-colors shadow-sm focus:outline-none">
                 Save Assessment Changes
               </button>
             </form>
@@ -156,7 +157,7 @@ export function renderClientDetailView(container, activeClientDetailId) {
           </div>
           
           <div>
-            <h3 class="text-xs font-bold text-slate-800 uppercase tracking-wider border-b border-slate-100 pb-2 mb-3">Nutrition Targets</h3>
+            <h3 data-i18n="client_nutrition_targets" class="text-xs font-bold text-slate-800 uppercase tracking-wider border-b border-slate-100 pb-2 mb-3">Nutrition Targets</h3>
             <form id="edit-client-nutrition-form" class="space-y-4" onsubmit="window.saveClientNutrition(event, '${client.id}')">
               <div class="grid grid-cols-2 gap-4">
                   <div>
@@ -182,7 +183,7 @@ export function renderClientDetailView(container, activeClientDetailId) {
                     <input type="number" id="edit-nut-fat" value="${nutrition.targets.fat}" class="w-full bg-slate-50 border border-slate-200 rounded-lg py-2 px-3 text-xs outline-none focus:bg-white font-bold text-slate-800">
                   </div>
               </div>
-              <button type="submit" class="bg-primary text-white text-[10px] font-bold font-headline py-2 px-4 rounded-lg hover:bg-[#8f3200] transition-colors shadow-sm focus:outline-none">
+              <button type="submit" data-i18n="btn_save_nutrition" class="bg-primary text-white text-[10px] font-bold font-headline py-2 px-4 rounded-lg hover:bg-[#8f3200] transition-colors shadow-sm focus:outline-none">
                 Save Nutrition Targets
               </button>
             </form>
@@ -193,7 +194,7 @@ export function renderClientDetailView(container, activeClientDetailId) {
 
       <!-- Bottom Row: Body Progress History Table -->
       <div class="border-t border-slate-100 pt-6">
-        <h3 class="text-xs font-bold text-slate-800 uppercase tracking-wider border-b border-slate-100 pb-2 mb-4">Body Composition Metrics History</h3>
+        <h3 data-i18n="client_body_history" class="text-xs font-bold text-slate-800 uppercase tracking-wider border-b border-slate-100 pb-2 mb-4">Body Composition Metrics History</h3>
         <div class="overflow-x-auto">
           <table class="w-full text-xs text-left border-collapse">
             <thead>
@@ -214,6 +215,9 @@ export function renderClientDetailView(container, activeClientDetailId) {
 
     </div>
   `;
+
+  // translate DOM after render
+  translateDOM();
 }
 
 export function setupClientDetailGlobalHandlers(renderView, showToast) {
@@ -231,7 +235,7 @@ export function setupClientDetailGlobalHandlers(renderView, showToast) {
   
     saveClient(client);
     renderView();
-    if(showToast) showToast('Client posture updated', 'success');
+    if(showToast) showToast(t('client_posture_updated'), 'success');
   };
 
   window.saveClientNutrition = function(event, clientId) {
@@ -246,6 +250,6 @@ export function setupClientDetailGlobalHandlers(renderView, showToast) {
     updateNutrition(clientId, nutrition);
     
     renderView();
-    if(showToast) showToast('Nutrition targets updated', 'success');
+    if(showToast) showToast(t('nutrition_targets_updated'), 'success');
   };
 }

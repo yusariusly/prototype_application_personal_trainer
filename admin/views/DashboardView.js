@@ -1,5 +1,6 @@
 import { getClients } from '../../src/models/ClientModel.js';
 import { getSchedule } from '../../src/models/ScheduleModel.js';
+import { t, translateDOM } from '../../src/i18n.js';
 
 export function renderDashboardView(container) {
   const clients = getClients();
@@ -34,16 +35,16 @@ export function renderDashboardView(container) {
         <div class="flex-grow border border-slate-100 rounded-xl p-4 bg-slate-50/50 flex justify-between items-center relative pl-6">
           <div class="absolute left-0 top-0 bottom-0 w-1.5 ${barColorClass} rounded-tl-xl rounded-bl-xl"></div>
           <div>
-            <h4 class="font-headline font-bold text-sm text-slate-800">${s.type}</h4>
+              <h4 class="font-headline font-bold text-sm text-slate-800">${s.type}</h4>
             <p class="text-xs text-slate-500 mt-1 flex items-center gap-1.5">
               <span class="bg-[#eff4ff] text-primary w-5 h-5 rounded-full flex items-center justify-center text-[9px] font-bold">${clientInitials}</span>
               ${s.clientName}
             </p>
           </div>
           <div class="flex items-center gap-2">
-            <span class="text-[9px] font-bold px-2 py-0.5 rounded font-headline ${isConfirmed ? 'bg-green-100 text-green-700' : 'bg-amber-100 text-amber-700'}">
-              ${isConfirmed ? 'CONFIRMED' : 'PENDING'}
-            </span>
+              <span class="text-[9px] font-bold px-2 py-0.5 rounded font-headline ${isConfirmed ? 'bg-green-100 text-green-700' : 'bg-amber-100 text-amber-700'}">
+                ${isConfirmed ? t('status_confirmed') : t('status_pending')}
+              </span>
           </div>
         </div>
       </div>
@@ -51,7 +52,7 @@ export function renderDashboardView(container) {
   }).join('') : `
     <div class="text-center py-12 text-slate-400 flex flex-col items-center justify-center gap-2">
       <span class="material-symbols-outlined text-[36px]">event_busy</span>
-      <span class="text-xs font-semibold">No training sessions scheduled for today.</span>
+        <span data-i18n="admin_no_sessions_today" class="text-xs font-semibold">No training sessions scheduled for today.</span>
     </div>
   `;
 
@@ -142,8 +143,8 @@ export function renderDashboardView(container) {
     <!-- Main Header section -->
     <div class="flex justify-between items-center mb-6">
       <div>
-        <h1 class="text-3xl font-headline font-extrabold text-[#0b1c30]">Welcome back, Coach!</h1>
-        <p class="text-sm text-slate-500 mt-1">Here is your daily performance summary.</p>
+        <h1 data-i18n="admin_welcome_back" class="text-3xl font-headline font-extrabold text-[#0b1c30]">Welcome back, Coach!</h1>
+      <p data-i18n="admin_daily_summary" class="text-sm text-slate-500 mt-1">Here is your daily performance summary.</p>
       </div>
       <button onclick="openCreateScheduleModal()" class="bg-primary text-white text-xs font-bold font-headline px-5 py-3.5 rounded-lg flex items-center gap-1.5 shadow-md hover:bg-primary-container transition-all">
         <span class="material-symbols-outlined text-[18px]">add</span> + New Session
@@ -157,7 +158,7 @@ export function renderDashboardView(container) {
       <div class="lg:col-span-4 flex flex-col gap-6">
         <div class="bg-white rounded-xl p-6 border border-slate-200 shadow-sm flex items-center justify-between">
           <div>
-            <span class="text-slate-400 font-bold text-[10px] tracking-wider block">Active Clients</span>
+            <span data-i18n="admin_active_clients" class="text-slate-400 font-bold text-[10px] tracking-wider block">Active Clients</span>
             <span class="text-4xl font-headline font-extrabold text-[#0b1c30] mt-1 block">${activeClientsCount}</span>
           </div>
           <div class="w-12 h-12 rounded-full bg-[#eff4ff] flex items-center justify-center text-primary">
@@ -226,4 +227,6 @@ export function renderDashboardView(container) {
       </div>
     </div>
   `;
+  // translate dynamic content
+  translateDOM();
 }

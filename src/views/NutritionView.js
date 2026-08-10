@@ -1,5 +1,6 @@
 import { getNutrition, addMealLog } from '../models/NutritionModel.js';
 import { getActiveClient } from '../models/ClientModel.js';
+import { t, translateDOM } from '../i18n.js';
 
 export function renderNutritionView(container, client) {
   const nutrition = getNutrition(client.id);
@@ -25,26 +26,26 @@ export function renderNutritionView(container, client) {
             <span class="material-symbols-outlined text-[28px]">restaurant</span>
         </div>
         <div>
-            <h1 class="text-xl md:text-3xl font-headline font-extrabold text-slate-800">Nutrition Plan</h1>
-            <p class="text-sm text-slate-500 font-medium">Daily Macro & Calorie Tracking</p>
+        <h1 data-i18n="nutrition_title" class="text-xl md:text-3xl font-headline font-extrabold text-slate-800">Nutrition Plan</h1>
+        <p data-i18n="nutrition_sub" class="text-sm text-slate-500 font-medium">Daily Macro & Calorie Tracking</p>
         </div>
     </div>
 
     <!-- TDEE & Calories Summary -->
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
       <div class="bg-white rounded-2xl p-5 border border-slate-100 shadow-sm flex flex-col items-center text-center">
-          <div class="text-sm font-bold text-slate-500 uppercase tracking-wide mb-2">Est. TDEE</div>
-          <div class="text-3xl font-headline font-extrabold text-slate-800">${nutrition.tdee} <span class="text-sm font-body text-slate-400">kcal</span></div>
-          <p class="text-xs text-slate-400 mt-2">Maintenance calories based on activity level</p>
+        <div data-i18n="label_est_tdee" class="text-sm font-bold text-slate-500 uppercase tracking-wide mb-2">Est. TDEE</div>
+        <div class="text-3xl font-headline font-extrabold text-slate-800">${nutrition.tdee} <span class="text-sm font-body text-slate-400">kcal</span></div>
+        <p data-i18n="tdee_sub" class="text-xs text-slate-400 mt-2">Maintenance calories based on activity level</p>
       </div>
 
       <div class="bg-white rounded-2xl p-5 border border-slate-100 shadow-sm relative overflow-hidden">
-          <div class="flex justify-between items-end mb-4">
+            <div class="flex justify-between items-end mb-4">
               <div>
-                  <div class="text-sm font-bold text-slate-500 uppercase tracking-wide">Calories Consumed</div>
-                  <div class="text-3xl font-headline font-extrabold text-primary">${consumed.calories} <span class="text-sm font-body text-slate-400">/ ${nutrition.targets.calories} kcal</span></div>
+                <div data-i18n="label_calories_consumed" class="text-sm font-bold text-slate-500 uppercase tracking-wide">Calories Consumed</div>
+                <div class="text-3xl font-headline font-extrabold text-primary">${consumed.calories} <span class="text-sm font-body text-slate-400">/ ${nutrition.targets.calories} kcal</span></div>
               </div>
-          </div>
+            </div>
           <div class="w-full bg-slate-100 h-3 rounded-full overflow-hidden">
               <div class="bg-primary h-full rounded-full transition-all duration-1000" style="width: ${progress.calories}%"></div>
           </div>
@@ -53,22 +54,22 @@ export function renderNutritionView(container, client) {
 
     <!-- Macros -->
     <div class="bg-white rounded-2xl p-5 border border-slate-100 shadow-sm">
-        <h3 class="text-sm font-headline font-bold text-slate-800 mb-4">Daily Macronutrients</h3>
+      <h3 data-i18n="macros_title" class="text-sm font-headline font-bold text-slate-800 mb-4">Daily Macronutrients</h3>
         <div class="grid grid-cols-3 gap-4">
             <!-- Protein -->
             <div class="flex flex-col items-center">
                 <div class="w-full bg-slate-100 h-2 rounded-full overflow-hidden mb-2">
                     <div class="bg-red-500 h-full rounded-full" style="width: ${progress.protein}%"></div>
                 </div>
-                <div class="text-[10px] font-bold text-slate-500 uppercase">Protein</div>
-                <div class="text-sm font-bold text-slate-800">${consumed.protein}g <span class="text-[10px] text-slate-400">/ ${nutrition.targets.protein}g</span></div>
+                <div data-i18n="label_protein" class="text-[10px] font-bold text-slate-500 uppercase">Protein</div>
+          <div class="text-sm font-bold text-slate-800">${consumed.protein}g <span class="text-[10px] text-slate-400">/ ${nutrition.targets.protein}g</span></div>
             </div>
             <!-- Carbs -->
             <div class="flex flex-col items-center">
                 <div class="w-full bg-slate-100 h-2 rounded-full overflow-hidden mb-2">
                     <div class="bg-blue-500 h-full rounded-full" style="width: ${progress.carbs}%"></div>
                 </div>
-                <div class="text-[10px] font-bold text-slate-500 uppercase">Carbs</div>
+          <div data-i18n="label_carbs" class="text-[10px] font-bold text-slate-500 uppercase">Carbs</div>
                 <div class="text-sm font-bold text-slate-800">${consumed.carbs}g <span class="text-[10px] text-slate-400">/ ${nutrition.targets.carbs}g</span></div>
             </div>
             <!-- Fat -->
@@ -76,7 +77,7 @@ export function renderNutritionView(container, client) {
                 <div class="w-full bg-slate-100 h-2 rounded-full overflow-hidden mb-2">
                     <div class="bg-yellow-500 h-full rounded-full" style="width: ${progress.fat}%"></div>
                 </div>
-                <div class="text-[10px] font-bold text-slate-500 uppercase">Fat</div>
+          <div data-i18n="label_fat" class="text-[10px] font-bold text-slate-500 uppercase">Fat</div>
                 <div class="text-sm font-bold text-slate-800">${consumed.fat}g <span class="text-[10px] text-slate-400">/ ${nutrition.targets.fat}g</span></div>
             </div>
         </div>
@@ -85,8 +86,8 @@ export function renderNutritionView(container, client) {
     <!-- Food Diary -->
     <div class="bg-white rounded-2xl p-5 border border-slate-100 shadow-sm flex flex-col h-full">
         <div class="flex justify-between items-center mb-4">
-            <h3 class="text-sm font-headline font-bold text-slate-800">Today's Food Diary</h3>
-            <button onclick="window.openAddMealModal()" class="text-xs font-bold text-primary bg-primary/10 px-3 py-1.5 rounded-lg hover:bg-primary hover:text-white transition-colors flex items-center gap-1">
+        <h3 data-i18n="diary_title" class="text-sm font-headline font-bold text-slate-800">Today's Food Diary</h3>
+        <button onclick="window.openAddMealModal()" data-i18n="btn_add_meal" class="text-xs font-bold text-primary bg-primary/10 px-3 py-1.5 rounded-lg hover:bg-primary hover:text-white transition-colors flex items-center gap-1">
                 <span class="material-symbols-outlined text-[14px]">add</span> Add Meal
             </button>
         </div>
@@ -108,12 +109,14 @@ export function renderNutritionView(container, client) {
             ${nutrition.diary.length === 0 ? `
                 <div class="text-center py-8">
                     <span class="material-symbols-outlined text-4xl text-slate-200 mb-2">restaurant_menu</span>
-                    <p class="text-sm font-bold text-slate-400">No meals logged today</p>
+            <p data-i18n="no_meals_logged" class="text-sm font-bold text-slate-400">No meals logged today</p>
                 </div>
             ` : ''}
         </div>
     </div>
   `;
+  // translate DOM after render
+  translateDOM();
 }
 
 export function setupNutritionGlobalHandlers(renderView, showToast, closeModal) {
@@ -122,44 +125,46 @@ export function setupNutritionGlobalHandlers(renderView, showToast, closeModal) 
     modalRoot.innerHTML = `
       <div class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
         <div class="bg-white w-full max-w-md rounded-xl p-6 border border-slate-100 shadow-2xl relative">
-          <h2 class="text-lg font-headline font-bold text-slate-800 mb-4 font-headline">Log a Meal</h2>
+          <h2 data-i18n="modal_log_meal" class="text-lg font-headline font-bold text-slate-800 mb-4 font-headline">Log a Meal</h2>
           <form id="add-meal-form" class="space-y-4">
             <div>
-              <label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Meal Name</label>
+              <label data-i18n="label_meal_name" class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Meal Name</label>
               <input type="text" id="meal-name" required class="w-full border-slate-200 rounded-lg text-sm p-2.5 focus:border-primary focus:ring-primary outline-none" placeholder="e.g. Chicken Salad">
             </div>
             <div class="grid grid-cols-2 gap-4">
                 <div>
-                  <label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Calories (kcal)</label>
+                  <label data-i18n="label_calories" class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Calories (kcal)</label>
                   <input type="number" id="meal-cal" required class="w-full border-slate-200 rounded-lg text-sm p-2.5 focus:border-primary focus:ring-primary outline-none">
                 </div>
                 <div>
-                  <label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Time</label>
+                  <label data-i18n="label_time" class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Time</label>
                   <input type="time" id="meal-time" required value="12:00" class="w-full border-slate-200 rounded-lg text-sm p-2.5 focus:border-primary focus:ring-primary outline-none">
                 </div>
             </div>
             <div class="grid grid-cols-3 gap-3">
                 <div>
-                  <label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Protein (g)</label>
+                  <label data-i18n="label_protein" class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Protein (g)</label>
                   <input type="number" id="meal-pro" required class="w-full border-slate-200 rounded-lg text-sm p-2.5 focus:border-primary focus:ring-primary outline-none">
                 </div>
                 <div>
-                  <label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Carbs (g)</label>
+                  <label data-i18n="label_carbs" class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Carbs (g)</label>
                   <input type="number" id="meal-carb" required class="w-full border-slate-200 rounded-lg text-sm p-2.5 focus:border-primary focus:ring-primary outline-none">
                 </div>
                 <div>
-                  <label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Fat (g)</label>
+                  <label data-i18n="label_fat" class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Fat (g)</label>
                   <input type="number" id="meal-fat" required class="w-full border-slate-200 rounded-lg text-sm p-2.5 focus:border-primary focus:ring-primary outline-none">
                 </div>
             </div>
             <div class="flex gap-3 mt-6 pt-2">
-              <button type="button" onclick="window.closeModal()" class="flex-1 border border-slate-200 text-slate-600 py-2.5 text-xs font-bold rounded-lg hover:bg-slate-50 transition-colors">Cancel</button>
-              <button type="submit" class="flex-1 bg-primary text-white py-2.5 text-xs font-bold rounded-lg hover:bg-[#8f3200] transition-colors">Save Meal</button>
+              <button type="button" onclick="window.closeModal()" data-i18n="btn_cancel" class="flex-1 border border-slate-200 text-slate-600 py-2.5 text-xs font-bold rounded-lg hover:bg-slate-50 transition-colors">Cancel</button>
+              <button type="submit" data-i18n="btn_save_meal" class="flex-1 bg-primary text-white py-2.5 text-xs font-bold rounded-lg hover:bg-[#8f3200] transition-colors">Save Meal</button>
             </div>
           </form>
         </div>
       </div>
     `;
+    // translate modal content
+    translateDOM();
 
     document.getElementById('add-meal-form').addEventListener('submit', (e) => {
       e.preventDefault();
@@ -177,7 +182,7 @@ export function setupNutritionGlobalHandlers(renderView, showToast, closeModal) 
       
       closeModal();
       renderView();
-      showToast('Meal logged successfully!', 'success');
+      showToast(t('meal_logged_success'), 'success');
     });
   };
 }

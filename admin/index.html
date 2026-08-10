@@ -85,12 +85,12 @@
                 </div>
                 
                 <nav class="flex h-[72px] items-center gap-1">
-                    <button onclick="navigateTo('dashboard')" id="nav-dashboard" class="h-full px-4 text-sm font-headline font-semibold text-primary border-b-2 border-primary transition-all">Dashboard</button>
-                    <button onclick="navigateTo('clients')" id="nav-clients" class="h-full px-4 text-sm font-headline font-semibold text-secondary hover:text-primary transition-all">Clients</button>
-                    <button onclick="navigateTo('calendar')" id="nav-calendar" class="h-full px-4 text-sm font-headline font-semibold text-secondary hover:text-primary transition-all">Schedule</button>
-                    <button onclick="navigateTo('builder')" id="nav-builder" class="h-full px-4 text-sm font-headline font-semibold text-secondary hover:text-primary transition-all">Workouts</button>
-                    <button onclick="navigateTo('packages')" id="nav-packages" class="h-full px-4 text-sm font-headline font-semibold text-secondary hover:text-primary transition-all">Sales</button>
-                    <button onclick="navigateTo('messages')" id="nav-messages" class="h-full px-4 text-sm font-headline font-semibold text-secondary hover:text-primary transition-all">Messages</button>
+                    <button onclick="navigateTo('dashboard')" id="nav-dashboard" data-i18n="admin_nav_dashboard" class="h-full px-4 text-sm font-headline font-semibold text-primary border-b-2 border-primary transition-all">Dashboard</button>
+                    <button onclick="navigateTo('clients')" id="nav-clients" data-i18n="admin_nav_clients" class="h-full px-4 text-sm font-headline font-semibold text-secondary hover:text-primary transition-all">Clients</button>
+                    <button onclick="navigateTo('calendar')" id="nav-calendar" data-i18n="admin_nav_schedule" class="h-full px-4 text-sm font-headline font-semibold text-secondary hover:text-primary transition-all">Schedule</button>
+                    <button onclick="navigateTo('builder')" id="nav-builder" data-i18n="admin_nav_workouts" class="h-full px-4 text-sm font-headline font-semibold text-secondary hover:text-primary transition-all">Workouts</button>
+                    <button onclick="navigateTo('packages')" id="nav-packages" data-i18n="admin_nav_sales" class="h-full px-4 text-sm font-headline font-semibold text-secondary hover:text-primary transition-all">Sales</button>
+                    <button onclick="navigateTo('messages')" id="nav-messages" data-i18n="admin_nav_messages" class="h-full px-4 text-sm font-headline font-semibold text-secondary hover:text-primary transition-all">Messages</button>
                 </nav>
             </div>
             
@@ -110,12 +110,12 @@
 
                     <!-- Dropdown Content (Hidden by default) -->
                     <div id="profile-dropdown" class="hidden absolute right-0 mt-2 w-48 bg-white border border-slate-200 rounded-xl shadow-xl z-50 py-1 font-body text-xs text-left">
-                        <button class="w-full flex items-center gap-2 px-4 py-2.5 hover:bg-slate-50 text-slate-700 font-semibold transition-colors text-left">
+                        <button class="w-full flex items-center gap-2 px-4 py-2.5 hover:bg-slate-50 text-slate-700 font-semibold transition-colors text-left" data-i18n="admin_studio_settings">
                             <span class="material-symbols-outlined text-[16px] text-slate-400">settings</span> Studio Settings
                         </button>
                         <button onclick="window.toggleLanguage()" class="w-full flex items-center justify-between px-4 py-2.5 hover:bg-slate-50 text-slate-700 font-semibold transition-colors text-left">
                             <div class="flex items-center gap-2">
-                                <span class="material-symbols-outlined text-[16px] text-slate-400">language</span> Language
+                                <span class="material-symbols-outlined text-[16px] text-slate-400">language</span> <span data-i18n="admin_language">Language</span>
                             </div>
                             <span id="lang-indicator" class="bg-primary/10 text-primary px-1.5 py-0.5 rounded text-[9px] font-bold">EN</span>
                         </button>
@@ -144,5 +144,23 @@
     <div id="modal-root"></div>
     <!-- Initialize Admin Application Controller -->
     <script type="module" src="./controllers/AdminController.js"></script>
+    <script type="module">
+        import { changeLanguage, translateDOM } from '../src/i18n.js';
+
+        // initialize language indicator
+        const indicator = document.getElementById('lang-indicator');
+        const current = localStorage.getItem('lang') || 'en';
+        if (indicator) indicator.innerText = current.toUpperCase();
+
+        window.toggleLanguage = function() {
+            const next = (localStorage.getItem('lang') || 'en') === 'en' ? 'id' : 'en';
+            changeLanguage(next);
+            if (indicator) indicator.innerText = next.toUpperCase();
+            translateDOM();
+        };
+
+        // translate admin static UI
+        translateDOM();
+    </script>
 </body>
 </html>

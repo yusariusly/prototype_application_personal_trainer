@@ -1,4 +1,5 @@
 import { getClients } from '../../src/models/ClientModel.js';
+import { t, translateDOM } from '../../src/i18n.js';
 
 export function renderClientsView(container) {
   const clients = getClients();
@@ -11,19 +12,19 @@ export function renderClientsView(container) {
     <!-- Header Client Roster -->
     <div class="flex justify-between items-center mb-6">
       <div>
-        <h1 class="text-3xl font-headline font-extrabold text-[#0b1c30]">Client Roster</h1>
-        <p class="text-sm text-slate-500 mt-1">Manage and monitor all your active client profiles.</p>
+        <h1 data-i18n="clients_title" class="text-3xl font-headline font-extrabold text-[#0b1c30]">Client Roster</h1>
+        <p data-i18n="clients_sub" class="text-sm text-slate-500 mt-1">Manage and monitor all your active client profiles.</p>
       </div>
-      <button onclick="openOnboardingWizard()" class="bg-primary hover:bg-[#8f3200] text-white text-xs font-bold font-headline px-5 py-3.5 rounded-lg flex items-center gap-1.5 shadow-md transition-all">
+      <button onclick="openOnboardingWizard()" data-i18n="btn_new_client" class="bg-primary hover:bg-[#8f3200] text-white text-xs font-bold font-headline px-5 py-3.5 rounded-lg flex items-center gap-1.5 shadow-md transition-all">
         <span class="material-symbols-outlined text-[18px]">add</span> + New Client
       </button>
     </div>
 
     <!-- Filter chips -->
     <div class="flex gap-2.5 mb-6 overflow-x-auto pb-1.5 shrink-0">
-      <button class="bg-[#0b1c30] text-white px-4 py-2 rounded-full text-xs font-bold whitespace-nowrap">All Clients (${totalClientsCount})</button>
-      <button class="bg-white border border-slate-200 text-slate-600 hover:border-primary px-4 py-2 rounded-full text-xs font-bold whitespace-nowrap">Active (${activeCount})</button>
-      <button class="bg-white border border-slate-200 text-slate-600 hover:border-primary px-4 py-2 rounded-full text-xs font-bold whitespace-nowrap">Inactive (${inactiveCount})</button>
+      <button data-i18n="filter_all_clients" class="bg-[#0b1c30] text-white px-4 py-2 rounded-full text-xs font-bold whitespace-nowrap">All Clients (${totalClientsCount})</button>
+      <button data-i18n="filter_active_clients" class="bg-white border border-slate-200 text-slate-600 hover:border-primary px-4 py-2 rounded-full text-xs font-bold whitespace-nowrap">Active (${activeCount})</button>
+      <button data-i18n="filter_inactive_clients" class="bg-white border border-slate-200 text-slate-600 hover:border-primary px-4 py-2 rounded-full text-xs font-bold whitespace-nowrap">Inactive (${inactiveCount})</button>
     </div>
 
     <!-- Grid Client Roster -->
@@ -54,14 +55,14 @@ export function renderClientsView(container) {
               <!-- Metrics -->
               <div class="grid grid-cols-2 gap-4 mb-6 text-xs border-b border-slate-100 pb-4">
                 <div>
-                  <span class="text-slate-400 font-semibold block">Primary Goal</span>
+                  <span data-i18n="label_primary_goal" class="text-slate-400 font-semibold block">Primary Goal</span>
                   <span class="font-bold text-slate-800 flex items-center gap-1 mt-0.5">
                     <span class="material-symbols-outlined text-[14px]">trending_up</span>
                     ${c.assessment.postural.focus.split('/')[0]}
                   </span>
                 </div>
                 <div>
-                  <span class="text-slate-400 font-semibold block">Last Session</span>
+                  <span data-i18n="label_last_session" class="text-slate-400 font-semibold block">Last Session</span>
                   <span class="font-bold text-slate-800 flex items-center gap-1 mt-0.5">
                     <span class="material-symbols-outlined text-[14px]">calendar_today</span>
                     ${c.bodyProgress[c.bodyProgress.length - 1].date}
@@ -72,7 +73,7 @@ export function renderClientsView(container) {
               <!-- Package progress bar -->
               <div class="mb-4">
                 <div class="flex justify-between text-xs font-bold text-slate-700 mb-1.5">
-                  <span>Package Status</span>
+                  <span data-i18n="label_package_status">Package Status</span>
                   <span>${remaining} / ${total}</span>
                 </div>
                 <div class="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
@@ -84,8 +85,8 @@ export function renderClientsView(container) {
 
             <!-- Action buttons -->
             <div class="flex gap-2.5 mt-6 border-t border-slate-100 pt-4">
-              <button onclick="window.viewClientProfile('${c.id}')" class="flex-1 bg-slate-100 hover:bg-slate-200 text-slate-700 font-headline text-xs font-bold py-2 rounded-lg transition-colors">Profile</button>
-              <button onclick="window.navigateToBuilderForClient('${c.id}')" class="flex-1 bg-primary text-white font-headline text-xs font-bold py-2 rounded-lg hover:bg-[#8f3200] transition-colors">Workout Builder</button>
+              <button onclick="window.viewClientProfile('${c.id}')" data-i18n="btn_profile" class="flex-1 bg-slate-100 hover:bg-slate-200 text-slate-700 font-headline text-xs font-bold py-2 rounded-lg transition-colors">Profile</button>
+              <button onclick="window.navigateToBuilderForClient('${c.id}')" data-i18n="btn_workout_builder" class="flex-1 bg-primary text-white font-headline text-xs font-bold py-2 rounded-lg hover:bg-[#8f3200] transition-colors">Workout Builder</button>
             </div>
           </div>
         `;
@@ -141,4 +142,7 @@ export function renderClientsView(container) {
 
     </div>
   `;
+
+  // translate DOM after render
+  translateDOM();
 }

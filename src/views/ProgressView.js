@@ -1,5 +1,6 @@
 import { getActiveClient } from '../models/ClientModel.js';
 import { saveState } from '../models/Store.js';
+import { t, translateDOM } from '../i18n.js';
 
 let chartInstance = null;
 
@@ -9,17 +10,17 @@ export function renderProgressView(container, client) {
   container.innerHTML = `
     <div class="flex justify-between items-center">
       <div>
-        <h1 class="text-2xl md:text-3xl font-headline font-extrabold text-[#0b1c30]">Physical Progress Chart</h1>
-        <p class="text-xs text-slate-500 mt-1">Track your body composition progress week by week.</p>
+        <h1 data-i18n="progress_title" class="text-2xl md:text-3xl font-headline font-extrabold text-[#0b1c30]">Physical Progress Chart</h1>
+        <p data-i18n="progress_sub" class="text-xs text-slate-500 mt-1">Track your body composition progress week by week.</p>
       </div>
-      <button onclick="window.openAddProgressModal()" class="bg-primary text-white text-xs font-bold font-headline px-4 py-3 rounded-lg flex items-center gap-1.5 shadow-md hover:bg-primary-container transition-all">
+      <button onclick="window.openAddProgressModal()" data-i18n="btn_log_new_metrics" class="bg-primary text-white text-xs font-bold font-headline px-4 py-3 rounded-lg flex items-center gap-1.5 shadow-md hover:bg-primary-container transition-all">
         <span class="material-symbols-outlined text-[18px]">add</span> Log New Metrics
       </button>
     </div>
 
     <!-- Weight highlight card -->
-    <div class="bg-white rounded-xl border border-slate-200 p-5 shadow-sm border-l-4 border-l-primary max-w-sm">
-      <span class="text-slate-400 font-bold text-[9px] uppercase tracking-wider block">Latest Body Weight</span>
+      <div class="bg-white rounded-xl border border-slate-200 p-5 shadow-sm border-l-4 border-l-primary max-w-sm">
+      <span data-i18n="latest_body_weight" class="text-slate-400 font-bold text-[9px] uppercase tracking-wider block">Latest Body Weight</span>
       <span class="text-2xl font-headline font-extrabold text-[#0b1c30] mt-1 block">${lastProgress.weight} kg</span>
     </div>
 
@@ -28,7 +29,7 @@ export function renderProgressView(container, client) {
       <!-- Chart Card -->
       <div class="lg:col-span-8 flex flex-col gap-6">
         <div class="bg-white rounded-xl border border-slate-200 p-6 shadow-sm">
-          <h3 class="font-headline font-bold text-sm text-slate-800 mb-4 flex items-center gap-2">
+          <h3 data-i18n="trend_title" class="font-headline font-bold text-sm text-slate-800 mb-4 flex items-center gap-2">
             <span class="material-symbols-outlined text-primary text-[20px]">show_chart</span>
             Body Weight & Body Fat % Trend
           </h3>
@@ -39,16 +40,16 @@ export function renderProgressView(container, client) {
 
         <!-- Metric logs listing -->
         <div class="bg-white rounded-xl border border-slate-200 p-6 shadow-sm">
-          <h3 class="font-headline font-bold text-sm text-slate-800 mb-4">Metrics History Log</h3>
+          <h3 data-i18n="metrics_history_title" class="font-headline font-bold text-sm text-slate-800 mb-4">Metrics History Log</h3>
           <div class="overflow-x-auto">
             <table class="w-full text-left text-xs border-collapse">
               <thead>
                 <tr class="border-b border-slate-100 text-slate-400 font-bold uppercase bg-slate-50/50">
-                  <th class="py-3 px-3">Date</th>
-                  <th class="py-3 px-3 text-right">Weight</th>
-                  <th class="py-3 px-3 text-right">Body Fat %</th>
-                  <th class="py-3 px-3 text-right">Muscle Mass</th>
-                  <th class="py-3 px-3 text-right">Waist Size</th>
+                  <th class="py-3 px-3" data-i18n="table_date">Date</th>
+                  <th class="py-3 px-3 text-right" data-i18n="table_weight">Weight</th>
+                  <th class="py-3 px-3 text-right" data-i18n="table_bodyfat">Body Fat %</th>
+                  <th class="py-3 px-3 text-right" data-i18n="table_muscle">Muscle Mass</th>
+                  <th class="py-3 px-3 text-right" data-i18n="table_waist">Waist Size</th>
                 </tr>
               </thead>
               <tbody class="divide-y divide-slate-50 text-slate-700">
@@ -70,7 +71,7 @@ export function renderProgressView(container, client) {
       <!-- Right Column: Photos Gallery -->
       <div class="lg:col-span-4 flex flex-col gap-6">
         <section class="bg-white rounded-xl border border-slate-200 p-6 shadow-sm flex flex-col gap-4">
-          <h3 class="font-headline font-bold text-sm text-slate-800">Body Photo Timeline</h3>
+          <h3 data-i18n="photos_timeline" class="font-headline font-bold text-sm text-slate-800">Body Photo Timeline</h3>
           <div class="grid grid-cols-2 gap-4">
             ${client.photos.map(p => `
               <div class="flex flex-col gap-1 border border-slate-100 rounded-lg p-2 bg-slate-50">
@@ -88,12 +89,15 @@ export function renderProgressView(container, client) {
     </div>
 
     <!-- Floating Action Button for Adding Data -->
-    <div class="fixed bottom-20 right-6 md:bottom-10 md:right-10 z-40">
-      <button onclick="window.openAddProgressModal()" class="bg-primary text-white hover:bg-[#8f3200] font-headline text-xs font-bold py-3.5 px-6 rounded-full shadow-2xl flex items-center gap-1.5 transition-transform active:scale-95 duration-100">
+      <div class="fixed bottom-20 right-6 md:bottom-10 md:right-10 z-40">
+      <button onclick="window.openAddProgressModal()" data-i18n="fab_add_data" class="bg-primary text-white hover:bg-[#8f3200] font-headline text-xs font-bold py-3.5 px-6 rounded-full shadow-2xl flex items-center gap-1.5 transition-transform active:scale-95 duration-100">
         <span class="material-symbols-outlined text-[18px]">add</span> Add Data
       </button>
     </div>
   `;
+
+  // translate DOM after render
+  translateDOM();
 
   setTimeout(() => {
     drawProgressChart(client);
@@ -180,45 +184,48 @@ export function setupProgressGlobalHandlers(renderView, showToast, closeModal) {
     modalRoot.innerHTML = `
       <div class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
         <div class="bg-white w-full max-w-md rounded-xl p-6 border border-slate-100 shadow-2xl relative">
-          <h2 class="text-lg font-headline font-bold text-slate-800 mb-2 font-headline">Add Progress Log</h2>
-          <p class="text-xs text-slate-500 mb-4">Record your periodic body metrics to monitor your transformation.</p>
+          <h2 data-i18n="modal_add_progress_title" class="text-lg font-headline font-bold text-slate-800 mb-2 font-headline">Add Progress Log</h2>
+          <p data-i18n="modal_add_progress_sub" class="text-xs text-slate-500 mb-4">Record your periodic body metrics to monitor your transformation.</p>
           
           <form id="progress-log-form" class="space-y-4">
             <div class="grid grid-cols-2 gap-4">
               <div>
-                <label class="block text-xs font-bold text-slate-600 mb-1">Body Weight (kg)</label>
+                <label data-i18n="label_body_weight" class="block text-xs font-bold text-slate-600 mb-1">Body Weight (kg)</label>
                 <input type="number" step="0.1" required id="log-weight" placeholder="e.g. 82.5" class="w-full bg-slate-50 border border-slate-200 rounded-lg py-2 px-3 text-xs outline-none focus:border-primary focus:ring-0">
               </div>
               <div>
-                <label class="block text-xs font-bold text-slate-600 mb-1">Body Fat (%)</label>
+                <label data-i18n="label_body_fat" class="block text-xs font-bold text-slate-600 mb-1">Body Fat (%)</label>
                 <input type="number" step="0.1" required id="log-fat" placeholder="e.g. 19.2" class="w-full bg-slate-50 border border-slate-200 rounded-lg py-2 px-3 text-xs outline-none focus:border-primary focus:ring-0">
               </div>
             </div>
 
             <div class="grid grid-cols-2 gap-4">
               <div>
-                <label class="block text-xs font-bold text-slate-600 mb-1">Muscle Mass (kg)</label>
+                <label data-i18n="label_muscle_mass" class="block text-xs font-bold text-slate-600 mb-1">Muscle Mass (kg)</label>
                 <input type="number" step="0.1" required id="log-muscle" placeholder="e.g. 39.5" class="w-full bg-slate-50 border border-slate-200 rounded-lg py-2 px-3 text-xs outline-none focus:border-primary focus:ring-0">
               </div>
               <div>
-                <label class="block text-xs font-bold text-slate-600 mb-1">Waist Size (cm)</label>
+                <label data-i18n="label_waist_size" class="block text-xs font-bold text-slate-600 mb-1">Waist Size (cm)</label>
                 <input type="number" required id="log-waist" placeholder="e.g. 88" class="w-full bg-slate-50 border border-slate-200 rounded-lg py-2 px-3 text-xs outline-none focus:border-primary focus:ring-0">
               </div>
             </div>
 
             <div>
-              <label class="block text-xs font-bold text-slate-600 mb-1">Upload Progress Photo (Optional)</label>
+              <label data-i18n="label_upload_photo" class="block text-xs font-bold text-slate-600 mb-1">Upload Progress Photo (Optional)</label>
               <input type="file" id="log-photo-file" accept="image/*" class="w-full bg-slate-50 border border-slate-200 rounded-lg py-1.5 px-3 text-xs outline-none focus:border-primary focus:ring-0">
             </div>
 
             <div class="flex gap-3 mt-6 pt-4 border-t border-slate-100">
-              <button type="button" onclick="window.closeModal()" class="flex-1 border border-slate-200 text-slate-600 py-2.5 text-xs font-bold rounded-lg hover:bg-slate-50 transition-colors">Cancel</button>
-              <button type="submit" class="flex-1 bg-primary text-white py-2.5 text-xs font-bold rounded-lg hover:bg-[#8f3200] transition-colors">Save Progress</button>
+              <button type="button" onclick="window.closeModal()" data-i18n="btn_cancel" class="flex-1 border border-slate-200 text-slate-600 py-2.5 text-xs font-bold rounded-lg hover:bg-slate-50 transition-colors">Cancel</button>
+              <button type="submit" data-i18n="btn_save_progress" class="flex-1 bg-primary text-white py-2.5 text-xs font-bold rounded-lg hover:bg-[#8f3200] transition-colors">Save Progress</button>
             </div>
           </form>
         </div>
       </div>
     `;
+
+    // translate modal content
+    translateDOM();
 
     document.getElementById('progress-log-form').addEventListener('submit', (e) => {
       e.preventDefault();
@@ -253,7 +260,7 @@ export function setupProgressGlobalHandlers(renderView, showToast, closeModal) {
         saveState();
         closeModal();
         renderView();
-        showToast('Progress log saved successfully!', 'success');
+        showToast(t('progress_saved_success'), 'success');
       };
 
       if (file) {

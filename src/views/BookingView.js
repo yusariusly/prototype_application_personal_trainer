@@ -1,16 +1,17 @@
 import { getActiveClient } from '../models/ClientModel.js';
 import { saveState } from '../models/Store.js';
 import { getSchedule, addSchedule } from '../models/ScheduleModel.js';
+import { t, translateDOM } from '../i18n.js';
 
 export function renderBookingView(container, client) {
   const schedule = getSchedule().filter(s => s.clientId === client.id);
   
   const defaultSlots = [
-    { time: '08:00', type: 'Free Weights (Gym)' },
-    { time: '10:00', type: 'Studio Class' },
-    { time: '13:00', type: 'Free Weights (Gym)' },
-    { time: '15:30', type: 'Online Streaming' },
-    { time: '17:00', type: 'Studio Class' }
+    { time: '08:00', type: 'Free Weights (Gym)', typeKey: 'slot_free_weights' },
+    { time: '10:00', type: 'Studio Class', typeKey: 'slot_studio_class' },
+    { time: '13:00', type: 'Free Weights (Gym)', typeKey: 'slot_free_weights' },
+    { time: '15:30', type: 'Online Streaming', typeKey: 'slot_online_stream' },
+    { time: '17:00', type: 'Studio Class', typeKey: 'slot_studio_class' }
   ];
 
   if (!container.dataset.selectedDate) {
@@ -20,8 +21,8 @@ export function renderBookingView(container, client) {
 
   container.innerHTML = `
     <div>
-      <h1 class="text-2xl md:text-3xl font-headline font-extrabold text-[#0b1c30]">Schedule Booking</h1>
-      <p class="text-xs text-slate-500 mt-1">Book in-person personal training or virtual sessions.</p>
+      <h1 data-i18n="booking_title" class="text-2xl md:text-3xl font-headline font-extrabold text-[#0b1c30]">Schedule Booking</h1>
+      <p data-i18n="booking_sub" class="text-xs text-slate-500 mt-1">Book in-person personal training or virtual sessions.</p>
     </div>
 
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
@@ -31,12 +32,12 @@ export function renderBookingView(container, client) {
         
         <div class="bg-white rounded-xl border border-slate-200 p-6 shadow-sm">
           <div class="flex justify-between items-center mb-4">
-            <h3 class="font-headline font-bold text-sm text-slate-800">Select Training Date</h3>
-            <span class="text-xs font-bold text-slate-400 uppercase">July 2026</span>
+            <h3 data-i18n="booking_select_date" class="font-headline font-bold text-sm text-slate-800">Select Training Date</h3>
+            <span class="text-xs font-bold text-slate-400 uppercase">${new Date().toLocaleString(undefined, { month: 'long', year: 'numeric' })}</span>
           </div>
           
           <div class="grid grid-cols-7 gap-2 text-center text-xs font-bold border-b border-slate-100 pb-2 text-slate-400 uppercase">
-            <span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span>
+            <span data-i18n="weekday_sun">Sun</span><span data-i18n="weekday_mon">Mon</span><span data-i18n="weekday_tue">Tue</span><span data-i18n="weekday_wed">Wed</span><span data-i18n="weekday_thu">Thu</span><span data-i18n="weekday_fri">Fri</span><span data-i18n="weekday_sat">Sat</span>
           </div>
           <div class="grid grid-cols-7 gap-2 text-center text-xs mt-3">
             ${Array.from({ length: 31 }).map((_, i) => {
@@ -84,9 +85,9 @@ export function renderBookingView(container, client) {
                   <div class="border border-slate-100 rounded-xl p-4 flex justify-between items-center bg-slate-100 opacity-60">
                     <div>
                       <span class="text-xs font-bold text-slate-400 block">${slot.time}</span>
-                      <span class="text-[10px] text-slate-400 mt-0.5 block">Slot Fully Booked</span>
+                      <span data-i18n="slot_fully_booked" class="text-[10px] text-slate-400 mt-0.5 block">Slot Fully Booked</span>
                     </div>
-                    <button class="bg-slate-200 text-slate-400 text-xs font-bold font-headline py-2 px-4 rounded-lg cursor-not-allowed" disabled>Fully Booked</button>
+                    <button class="bg-slate-200 text-slate-400 text-xs font-bold font-headline py-2 px-4 rounded-lg cursor-not-allowed" disabled data-i18n="btn_fully_booked">Fully Booked</button>
                   </div>
                 `;
               }
@@ -95,9 +96,9 @@ export function renderBookingView(container, client) {
                 <div class="border border-slate-100 hover:border-primary/20 rounded-xl p-4 flex justify-between items-center bg-slate-50/50 transition-all">
                   <div>
                     <span class="text-xs font-bold text-slate-800 block">${slot.time}</span>
-                    <span class="text-[10px] text-slate-500 mt-0.5 block flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-[#00677f]"></span> ${slot.type}</span>
+                    <span class="text-[10px] text-slate-500 mt-0.5 block flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-[#00677f]"></span> ${t(slot.typeKey)}</span>
                   </div>
-                  <button onclick="window.confirmBookingSlot('${selectedDate}', '${slot.time}')" class="bg-primary hover:bg-[#8f3200] text-white text-xs font-bold font-headline py-2 px-4 rounded-lg transition-colors shadow-sm">Book Session</button>
+                  <button onclick="window.confirmBookingSlot('${selectedDate}', '${slot.time}')" class="bg-primary hover:bg-[#8f3200] text-white text-xs font-bold font-headline py-2 px-4 rounded-lg transition-colors shadow-sm" data-i18n="btn_book_session">Book Session</button>
                 </div>
               `;
             }).join('')}
@@ -109,7 +110,7 @@ export function renderBookingView(container, client) {
       <!-- Right Column: My Bookings Section -->
       <div class="lg:col-span-5 flex flex-col gap-6">
         <section class="bg-white rounded-xl border border-slate-200 p-6 shadow-sm flex flex-col gap-4">
-          <h3 class="font-headline font-bold text-sm text-slate-800 border-b border-slate-100 pb-3 flex items-center gap-1.5">
+          <h3 data-i18n="booking_my_sessions" class="font-headline font-bold text-sm text-slate-800 border-b border-slate-100 pb-3 flex items-center gap-1.5">
             <span class="material-symbols-outlined text-primary">calendar_today</span>
             My Booked Sessions
           </h3>
@@ -125,18 +126,18 @@ export function renderBookingView(container, client) {
                       <span class="text-[10px] text-slate-400 block mt-0.5">${s.date}</span>
                     </div>
                     <span class="text-[9px] font-bold px-2 py-0.5 rounded font-headline ${isConfirmed ? 'bg-green-100 text-green-700' : 'bg-amber-100 text-amber-700'}">
-                      ${isConfirmed ? 'CONFIRMED' : 'PENDING'}
+                      ${isConfirmed ? t('status_confirmed') : t('status_pending')}
                     </span>
                   </div>
                   
                   <div class="text-[10px] text-slate-500 font-medium">
-                    <div class="flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-[#00677f]"></span> Type: ${s.type}</div>
-                    <div class="flex items-center gap-1 mt-1"><span class="w-1.5 h-1.5 rounded-full bg-[#00677f]"></span> Location: ${s.location}</div>
+                    <div class="flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-[#00677f]"></span> ${t('label_type')}: ${s.type}</div>
+                    <div class="flex items-center gap-1 mt-1"><span class="w-1.5 h-1.5 rounded-full bg-[#00677f]"></span> ${t('label_location')}: ${s.location}</div>
                   </div>
 
                   ${!isConfirmed ? `
                     <button onclick="window.cancelBookingSlot('${s.id}')" class="w-full text-center border border-red-200 text-red-600 hover:bg-red-50 text-[10px] font-bold py-1.5 rounded transition-all mt-1">
-                      Cancel Booking
+                      ${t('btn_cancel_booking')}
                     </button>
                   ` : ''}
                 </div>
@@ -144,7 +145,7 @@ export function renderBookingView(container, client) {
             }).join('') : `
               <div class="text-center py-8 text-slate-400 flex flex-col items-center gap-2">
                 <span class="material-symbols-outlined text-[32px]">event_busy</span>
-                <span class="text-xs font-medium">No training sessions booked yet.</span>
+                <span data-i18n="booking_no_sessions" class="text-xs font-medium">No training sessions booked yet.</span>
               </div>
             `}
           </div>
@@ -152,6 +153,8 @@ export function renderBookingView(container, client) {
       </div>
     </div>
   `;
+  // translate newly inserted DOM
+  translateDOM();
 }
 
 export function setupBookingGlobalHandlers(renderView, showToast, closeModal) {
@@ -172,27 +175,27 @@ export function setupBookingGlobalHandlers(renderView, showToast, closeModal) {
     const pkgRemaining = client.package.remaining;
 
     if (pkgRemaining <= 0) {
-      showToast('Booking failed! Your session package quota is empty. Please buy a new package.', 'error');
+      showToast(t('booking_failed_quota'), 'error');
       return;
     }
 
     const modalRoot = document.getElementById('modal-root');
     modalRoot.innerHTML = `
       <div class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-        <div class="bg-white w-full max-w-md rounded-xl p-6 border border-slate-100 shadow-2xl relative">
-          <h2 class="text-lg font-headline font-bold text-slate-800 mb-2 font-headline">Confirm Booking</h2>
-          <p class="text-xs text-slate-500 mb-4">Your session will be deducted from your package quota after check-in.</p>
+          <div class="bg-white w-full max-w-md rounded-xl p-6 border border-slate-100 shadow-2xl relative">
+            <h2 data-i18n="modal_confirm_booking" class="text-lg font-headline font-bold text-slate-800 mb-2 font-headline">Confirm Booking</h2>
+            <p data-i18n="modal_confirm_sub" class="text-xs text-slate-500 mb-4">Your session will be deducted from your package quota after check-in.</p>
           
           <div class="bg-slate-50 border border-slate-100 rounded-xl p-4 space-y-3.5 text-xs mb-6">
-            <div class="flex justify-between"><span class="text-slate-500">Date:</span><span class="font-bold text-slate-800">${date}</span></div>
-            <div class="flex justify-between"><span class="text-slate-500">Time:</span><span class="font-bold text-slate-800">${time}</span></div>
+            <div class="flex justify-between"><span data-i18n="label_date" class="text-slate-500">Date:</span><span class="font-bold text-slate-800">${date}</span></div>
+            <div class="flex justify-between"><span data-i18n="label_time" class="text-slate-500">Time:</span><span class="font-bold text-slate-800">${time}</span></div>
             
             <div>
-              <label class="block text-xs font-bold text-slate-600 mb-1">Select Location & Session Type</label>
+              <label data-i18n="modal_select_location" class="block text-xs font-bold text-slate-600 mb-1">Select Location & Session Type</label>
               <select id="booking-type-select" class="w-full bg-white border border-slate-200 rounded-lg py-2 px-3 text-xs outline-none focus:border-primary">
-                <option value="Free Weights (Gym)|Main Gym Barbell Area">In-Person - Main Gym Area</option>
-                <option value="Studio Class|Studio Class (Floor 2)">In-Person - Studio Class (Floor 2)</option>
-                <option value="Online Streaming|Zoom Meeting">Virtual - Zoom Meeting</option>
+                <option value="Free Weights (Gym)|Main Gym Barbell Area" data-i18n="opt_inperson_main">In-Person - Main Gym Area</option>
+                <option value="Studio Class|Studio Class (Floor 2)" data-i18n="opt_inperson_studio">In-Person - Studio Class (Floor 2)</option>
+                <option value="Online Streaming|Zoom Meeting" data-i18n="opt_virtual_zoom">Virtual - Zoom Meeting</option>
               </select>
             </div>
 
@@ -200,12 +203,14 @@ export function setupBookingGlobalHandlers(renderView, showToast, closeModal) {
           </div>
 
           <div class="flex gap-3">
-            <button onclick="window.closeModal()" class="flex-1 border border-slate-200 text-slate-600 py-2.5 text-xs font-bold rounded-lg hover:bg-slate-50 transition-colors">Cancel</button>
-            <button onclick="const val = document.getElementById('booking-type-select').value.split('|'); window.bookSlotProcess('${date}', '${time}', val[0], val[1])" class="flex-1 bg-primary text-white py-2.5 text-xs font-bold rounded-lg hover:bg-[#8f3200] transition-colors">Confirm Schedule</button>
+            <button onclick="window.closeModal()" data-i18n="btn_cancel" class="flex-1 border border-slate-200 text-slate-600 py-2.5 text-xs font-bold rounded-lg hover:bg-slate-50 transition-colors">Cancel</button>
+            <button onclick="const val = document.getElementById('booking-type-select').value.split('|'); window.bookSlotProcess('${date}', '${time}', val[0], val[1])" data-i18n="btn_confirm_schedule" class="flex-1 bg-primary text-white py-2.5 text-xs font-bold rounded-lg hover:bg-[#8f3200] transition-colors">Confirm Schedule</button>
           </div>
         </div>
       </div>
     `;
+    // translate modal content
+    translateDOM();
   };
 
   window.bookSlotProcess = function(date, time, type, location) {
@@ -225,14 +230,14 @@ export function setupBookingGlobalHandlers(renderView, showToast, closeModal) {
 
       closeModal();
       renderView();
-      showToast('Session booked successfully! Awaiting PT confirmation.', 'success');
+      showToast(t('booking_success'), 'success');
     } catch (err) {
       showToast(err.message, 'error');
     }
   };
 
   window.cancelBookingSlot = function(schedId) {
-    if (!confirm('Are you sure you want to cancel this training session?')) return;
+    if (!confirm(t('cancel_confirm'))) return;
     
     const schedules = getSchedule();
     const idx = schedules.findIndex(s => s.id === schedId);
@@ -240,7 +245,7 @@ export function setupBookingGlobalHandlers(renderView, showToast, closeModal) {
       schedules.splice(idx, 1);
       saveState();
       renderView();
-      showToast('Session booking cancelled successfully.', 'info');
+      showToast(t('booking_cancelled'), 'info');
     }
   };
 }
