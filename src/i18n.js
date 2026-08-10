@@ -1,15 +1,20 @@
 import i18next from 'i18next';
 import en from './locales/en.json';
-import id from './locales/id.json';
+import ms from './locales/ms.json';
 
-const initialLang = localStorage.getItem('lang') || 'en';
+let initialLang = localStorage.getItem('lang') || 'en';
+if (initialLang === 'id') {
+  initialLang = 'ms';
+  localStorage.setItem('lang', 'ms');
+}
 
 i18next.init({
   lng: initialLang,
+  fallbackLng: 'en',
   debug: false,
   resources: {
     en: { translation: en },
-    id: { translation: id }
+    ms: { translation: ms }
   }
 });
 
