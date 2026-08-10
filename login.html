@@ -168,21 +168,7 @@
                 Already have an account? <a class="text-primary font-bold hover:underline" data-i18n="nav_sign_in" href="#" onclick="showLoginForm(event)">Sign In</a>
 </div>
 </div>
-<script type="module">
-        import { getClients } from './src/models/ClientModel.js';
-        import { getPrograms } from './src/models/ProgramModel.js';
-        import { saveState } from './src/models/Store.js';
-        import { saveClient } from './src/models/ClientModel.js';
-        import { t, translateDOM } from './src/i18n.js';
-        window.saveClient = saveClient;
-        window.getClients = getClients;
-        window.getPrograms = getPrograms;
-        window.saveState = saveState;
-        window.t = t;
-        window.translateDOM = translateDOM;
-        // translate static elements on this page
-        translateDOM();
-    </script>
+<script type="module" src="./src/login.js"></script>
 <script>
         let currentRole = 'client';
         let regStep = 1;

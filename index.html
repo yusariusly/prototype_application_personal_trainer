@@ -118,15 +118,15 @@
                     </p>
 <div class="flex flex-col sm:flex-row gap-4">
 <a class="inline-flex justify-center items-center gap-2 bg-primary hover:bg-[#8f3200] text-white px-8 py-4 rounded-xl font-bold text-base transition-all shadow-xl hover:shadow-2xl transform hover:-translate-y-1" data-i18n="cta_start_journey" href="./login.html">
-                            Start Your Journey <span class="material-symbols-outlined" data-i18n="arrow_forward">arrow_forward</span>
+                            <span data-i18n="hero_start">Start Your Journey</span> <span class="material-symbols-outlined" data-i18n="arrow_forward">arrow_forward</span>
 </a>
 <a class="inline-flex justify-center items-center gap-2 bg-white text-slate-700 hover:text-primary hover:bg-slate-50 px-8 py-4 rounded-xl font-bold text-base border-2 border-slate-200 hover:border-primary transition-all" data-i18n="cta_explore_features" href="#features">
                             Explore Features
                         </a>
 </div>
 <div class="mt-10 flex items-center gap-6 text-sm text-slate-500 font-medium">
-<div class="flex items-center gap-1.5"><span class="material-symbols-outlined text-green-500" data-i18n="check_circle">check_circle</span> Cancel Anytime</div>
-<div class="flex items-center gap-1.5"><span class="material-symbols-outlined text-green-500" data-i18n="check_circle">check_circle</span> Personal Dashboard</div>
+<div class="flex items-center gap-1.5"><span class="material-symbols-outlined text-green-500" data-i18n="check_circle">check_circle</span> <span data-i18n="hero_cancel">Cancel Anytime</span></div>
+<div class="flex items-center gap-1.5"><span class="material-symbols-outlined text-green-500" data-i18n="check_circle">check_circle</span> <span data-i18n="hero_dashboard">Personal Dashboard</span></div>
 </div>
 </div>
 <!-- Hero Image / Graphic -->
@@ -270,10 +270,10 @@
 <div>
 <h4 class="text-white font-headline font-bold mb-6 uppercase tracking-wider text-sm" data-i18n="resources">Resources</h4>
 <ul class="space-y-4">
-<li><a class="text-slate-400 hover:text-primary transition-colors text-sm font-medium" data-i18n="help_center" href="#">Help Center</a></li>
-<li><a class="text-slate-400 hover:text-primary transition-colors text-sm font-medium" data-i18n="workout_guides" href="#">Workout Guides</a></li>
-<li><a class="text-slate-400 hover:text-primary transition-colors text-sm font-medium" data-i18n="nutrition_tips" href="#">Nutrition Tips</a></li>
-<li><a class="text-slate-400 hover:text-primary transition-colors text-sm font-medium" data-i18n="community" href="#">Community</a></li>
+<li><a class="text-slate-400 hover:text-primary transition-colors text-sm font-medium" data-i18n="help_center" href="#"><span data-i18n="footer_help">Help Center</span></a></li>
+<li><a class="text-slate-400 hover:text-primary transition-colors text-sm font-medium" data-i18n="workout_guides" href="#"><span data-i18n="footer_guides">Workout Guides</span></a></li>
+<li><a class="text-slate-400 hover:text-primary transition-colors text-sm font-medium" data-i18n="nutrition_tips" href="#"><span data-i18n="footer_nutrition">Nutrition Tips</span></a></li>
+<li><a class="text-slate-400 hover:text-primary transition-colors text-sm font-medium" data-i18n="community" href="#"><span data-i18n="footer_community">Community</span></a></li>
 </ul>
 </div>
 <!-- Legal / Newsletter -->
@@ -293,8 +293,8 @@
                     © <span id="current-year"></span> Elite Trainer. All rights reserved.
                 </p>
 <div class="flex gap-6">
-<a class="text-sm text-slate-500 hover:text-slate-300 transition-colors font-medium" data-i18n="privacy_policy" href="#">Privacy Policy</a>
-<a class="text-sm text-slate-500 hover:text-slate-300 transition-colors font-medium" data-i18n="terms_of_service" href="#">Terms of Service</a>
+<a class="text-sm text-slate-500 hover:text-slate-300 transition-colors font-medium" data-i18n="privacy_policy" href="#"><span data-i18n="footer_privacy">Privacy Policy</span></a>
+<a class="text-sm text-slate-500 hover:text-slate-300 transition-colors font-medium" data-i18n="terms_of_service" href="#"><span data-i18n="footer_terms">Terms of Service</span></a>
 </div>
 </div>
 </div>
@@ -323,28 +323,6 @@
             }
         });
     </script>
-<script type="module">
-        import { changeLanguage, translateDOM } from './src/i18n.js';
-
-        const select = document.getElementById('lang-select');
-        const mobileSelect = document.getElementById('mobile-lang-select');
-
-        const current = localStorage.getItem('lang') || 'en';
-        if (select) select.value = current;
-        if (mobileSelect) mobileSelect.value = current;
-
-        function applyLang(lng) {
-            changeLanguage(lng);
-            // update selects
-            if (select) select.value = lng;
-            if (mobileSelect) mobileSelect.value = lng;
-        }
-
-        if (select) select.addEventListener('change', (e) => applyLang(e.target.value));
-        if (mobileSelect) mobileSelect.addEventListener('change', (e) => applyLang(e.target.value));
-
-        // translate current page
-        translateDOM();
-    </script>
+<script type="module" src="./src/main.js"></script>
 </body>
 </html>
