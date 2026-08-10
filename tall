@@ -1,0 +1,7 @@
+* [33m1ac2648[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m menambahkan halaman about
+* [33mcbffb30[m memperbaiki footer pada landing page
+* [33mfcfdf53[m menambahkan landing page
+* [33m05a1e88[m menambahkan fitur dukungan PWA, modul nutrisi klien, modul nutrisi trainer, gamifikasi tampilan klien, dashboard compliance, sistem multi bahasa parsial (perlu dikembangkan lebih lanjut)
+* [33m981c45a[m merubah struktur pattern menjadi MVC
+* [33m5cd83a5[m Fix Vercel 404: Add login.html and admin/login.html to Vite build inputs & add vercel.json
+* [33m29ca34a[m Initial commit: Elite Personal Trainer Web Application (Client & Admin SPA)

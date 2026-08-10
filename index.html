@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <title>Elite Trainer - Elevate Your Fitness</title>
+    <title data-i18n="site_title">Elite Trainer - Elevate Your Fitness</title>
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -54,11 +54,19 @@
 
                 <!-- Desktop Menu -->
                 <div class="hidden md:flex items-center space-x-8">
-                    <a href="#features" class="text-sm font-semibold text-slate-600 hover:text-primary transition-colors">Features</a>
-                    <a href="./about.html" class="text-sm font-semibold text-slate-600 hover:text-primary transition-colors">About</a>
+                    <a href="#features" data-i18n="nav_features" class="text-sm font-semibold text-slate-600 hover:text-primary transition-colors">Features</a>
+                    <a href="./about.html" data-i18n="nav_about" class="text-sm font-semibold text-slate-600 hover:text-primary transition-colors">About</a>
                     <div class="flex items-center gap-4">
-                        <a href="./login.html" class="text-sm font-bold text-primary hover:text-[#8f3200] transition-colors">Sign In</a>
-                        <a href="./login.html" onclick="localStorage.setItem('landing_action', 'register')" class="bg-primary hover:bg-[#8f3200] text-white px-5 py-2.5 rounded-xl font-bold text-sm transition-all shadow-md hover:shadow-lg transform hover:-translate-y-0.5">Get Started</a>
+                        <a href="./login.html" data-i18n="nav_sign_in" class="text-sm font-bold text-primary hover:text-[#8f3200] transition-colors">Sign In</a>
+                        <a href="./login.html" onclick="localStorage.setItem('landing_action', 'register')" data-i18n="nav_get_started" class="bg-primary hover:bg-[#8f3200] text-white px-5 py-2.5 rounded-xl font-bold text-sm transition-all shadow-md hover:shadow-lg transform hover:-translate-y-0.5">Get Started</a>
+                    
+                    <!-- Language Selector -->
+                    <div class="flex items-center">
+                        <select id="lang-select" aria-label="Language" class="ml-4 bg-white border rounded px-2 py-1 text-sm">
+                            <option value="en">EN</option>
+                            <option value="id">ID</option>
+                        </select>
+                    </div>
                     </div>
                 </div>
 
@@ -73,10 +81,17 @@
         <!-- Mobile Menu -->
         <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-slate-100 absolute w-full">
             <div class="px-4 pt-2 pb-6 space-y-2 flex flex-col">
-                <a href="#features" class="block px-3 py-3 text-base font-semibold text-slate-700 hover:text-primary hover:bg-slate-50 rounded-lg">Features</a>
-                <a href="./about.html" class="block px-3 py-3 text-base font-semibold text-slate-700 hover:text-primary hover:bg-slate-50 rounded-lg">About</a>
-                <a href="./login.html" class="block px-3 py-3 text-base font-bold text-primary hover:bg-slate-50 rounded-lg">Sign In</a>
-                <a href="./login.html" class="block px-3 py-3 text-base font-bold text-white bg-primary text-center rounded-lg mt-2">Get Started</a>
+                <a href="#features" data-i18n="nav_features" class="block px-3 py-3 text-base font-semibold text-slate-700 hover:text-primary hover:bg-slate-50 rounded-lg">Features</a>
+                <a href="./about.html" data-i18n="nav_about" class="block px-3 py-3 text-base font-semibold text-slate-700 hover:text-primary hover:bg-slate-50 rounded-lg">About</a>
+                <a href="./login.html" data-i18n="nav_sign_in" class="block px-3 py-3 text-base font-bold text-primary hover:bg-slate-50 rounded-lg">Sign In</a>
+                <a href="./login.html" data-i18n="nav_get_started" class="block px-3 py-3 text-base font-bold text-white bg-primary text-center rounded-lg mt-2">Get Started</a>
+                <div class="px-3 py-3">
+                    <label for="mobile-lang-select" class="sr-only">Language</label>
+                    <select id="mobile-lang-select" class="w-full bg-white border rounded px-3 py-2 text-sm">
+                        <option value="en">English (EN)</option>
+                        <option value="id">Bahasa (ID)</option>
+                    </select>
+                </div>
             </div>
         </div>
     </nav>
@@ -97,20 +112,20 @@
                           <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
                           <span class="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
                         </span>
-                        New: AI-Powered Posture Analysis
+                        <span data-i18n="new_feature_badge">New: AI-Powered Posture Analysis</span>
                     </div>
                     <h1 class="text-5xl lg:text-7xl font-headline font-extrabold text-on-background leading-[1.1] tracking-tight mb-6">
-                        Achieve Your <br/>
-                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-primary-container">Elite Form</span>
+                        <span data-i18n="hero_line1">Achieve Your</span> <br/>
+                        <span data-i18n="hero_elite" class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-primary-container">Elite Form</span>
                     </h1>
-                    <p class="text-lg text-slate-600 mb-8 leading-relaxed max-w-xl">
+                    <p data-i18n="hero_sub" class="text-lg text-slate-600 mb-8 leading-relaxed max-w-xl">
                         The ultimate management platform connecting world-class trainers with dedicated clients. Track progress, monitor habits, and achieve results.
                     </p>
                     <div class="flex flex-col sm:flex-row gap-4">
-                        <a href="./login.html" class="inline-flex justify-center items-center gap-2 bg-primary hover:bg-[#8f3200] text-white px-8 py-4 rounded-xl font-bold text-base transition-all shadow-xl hover:shadow-2xl transform hover:-translate-y-1">
+                        <a href="./login.html" data-i18n="cta_start_journey" class="inline-flex justify-center items-center gap-2 bg-primary hover:bg-[#8f3200] text-white px-8 py-4 rounded-xl font-bold text-base transition-all shadow-xl hover:shadow-2xl transform hover:-translate-y-1">
                             Start Your Journey <span class="material-symbols-outlined">arrow_forward</span>
                         </a>
-                        <a href="#features" class="inline-flex justify-center items-center gap-2 bg-white text-slate-700 hover:text-primary hover:bg-slate-50 px-8 py-4 rounded-xl font-bold text-base border-2 border-slate-200 hover:border-primary transition-all">
+                        <a href="#features" data-i18n="cta_explore_features" class="inline-flex justify-center items-center gap-2 bg-white text-slate-700 hover:text-primary hover:bg-slate-50 px-8 py-4 rounded-xl font-bold text-base border-2 border-slate-200 hover:border-primary transition-all">
                             Explore Features
                         </a>
                     </div>
@@ -174,8 +189,8 @@
     <section id="features" class="py-24 bg-white relative">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center max-w-3xl mx-auto mb-16">
-                <h2 class="text-primary font-bold tracking-widest uppercase text-sm mb-2">Platform Features</h2>
-                <h3 class="text-3xl md:text-4xl font-headline font-extrabold text-slate-900 mb-4">Everything you need to succeed</h3>
+                <h2 data-i18n="platform_features" class="text-primary font-bold tracking-widest uppercase text-sm mb-2">Platform Features</h2>
+                <h3 data-i18n="everything_you_need" class="text-3xl md:text-4xl font-headline font-extrabold text-slate-900 mb-4">Everything you need to succeed</h3>
                 <p class="text-slate-600 text-lg">A comprehensive suite of tools designed for both trainers and clients to maximize results and accountability.</p>
             </div>
 
@@ -185,7 +200,7 @@
                     <div class="w-14 h-14 bg-white rounded-2xl flex items-center justify-center shadow-sm text-primary mb-6 group-hover:scale-110 transition-transform">
                         <span class="material-symbols-outlined text-3xl">fitness_center</span>
                     </div>
-                    <h4 class="text-xl font-headline font-bold text-slate-900 mb-3">Custom Workouts</h4>
+                    <h4 data-i18n="feature_custom_workouts" class="text-xl font-headline font-bold text-slate-900 mb-3">Custom Workouts</h4>
                     <p class="text-slate-600 leading-relaxed text-sm">
                         Tailored exercise programs categorized by mesocycles. Track your sets, reps, and RPE with precision.
                     </p>
@@ -195,7 +210,7 @@
                     <div class="w-14 h-14 bg-white rounded-2xl flex items-center justify-center shadow-sm text-primary mb-6 group-hover:scale-110 transition-transform">
                         <span class="material-symbols-outlined text-3xl">query_stats</span>
                     </div>
-                    <h4 class="text-xl font-headline font-bold text-slate-900 mb-3">Progress Tracking</h4>
+                    <h4 data-i18n="feature_progress_tracking" class="text-xl font-headline font-bold text-slate-900 mb-3">Progress Tracking</h4>
                     <p class="text-slate-600 leading-relaxed text-sm">
                         Log body metrics, upload progress photos, and visualize your journey with interactive charts and data.
                     </p>
@@ -205,7 +220,7 @@
                     <div class="w-14 h-14 bg-white rounded-2xl flex items-center justify-center shadow-sm text-primary mb-6 group-hover:scale-110 transition-transform">
                         <span class="material-symbols-outlined text-3xl">vital_signs</span>
                     </div>
-                    <h4 class="text-xl font-headline font-bold text-slate-900 mb-3">Habit Monitoring</h4>
+                    <h4 data-i18n="feature_habit_monitoring" class="text-xl font-headline font-bold text-slate-900 mb-3">Habit Monitoring</h4>
                     <p class="text-slate-600 leading-relaxed text-sm">
                         Build sustainable routines by tracking daily water intake, sleep hours, and step counts seamlessly.
                     </p>
@@ -219,15 +234,15 @@
         <div class="absolute inset-0 bg-primary"></div>
         <div class="absolute inset-0 bg-gradient-to-r from-primary to-primary-container opacity-90"></div>
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
-            <h2 class="text-3xl md:text-5xl font-headline font-extrabold text-white mb-6">Ready to transform your life?</h2>
-            <p class="text-orange-100 text-lg mb-10 max-w-2xl mx-auto">
+            <h2 data-i18n="cta_ready" class="text-3xl md:text-5xl font-headline font-extrabold text-white mb-6">Ready to transform your life?</h2>
+            <p data-i18n="cta_join" class="text-orange-100 text-lg mb-10 max-w-2xl mx-auto">
                 Join the Elite Trainer platform today. Whether you are a fitness professional or a client, we provide the tools you need.
             </p>
             <div class="flex flex-col sm:flex-row justify-center gap-4">
-                <a href="./login.html" class="bg-white text-primary hover:bg-slate-50 px-8 py-4 rounded-xl font-bold text-base transition-all shadow-xl hover:shadow-2xl">
+                <a href="./login.html" data-i18n="nav_client_portal" class="bg-white text-primary hover:bg-slate-50 px-8 py-4 rounded-xl font-bold text-base transition-all shadow-xl hover:shadow-2xl">
                     Client Portal
                 </a>
-                <a href="./login.html" class="bg-transparent text-white border-2 border-white/30 hover:border-white px-8 py-4 rounded-xl font-bold text-base transition-all">
+                <a href="./login.html" data-i18n="nav_trainer_portal" class="bg-transparent text-white border-2 border-white/30 hover:border-white px-8 py-4 rounded-xl font-bold text-base transition-all">
                     Trainer Portal
                 </a>
             </div>
@@ -256,12 +271,12 @@
 
                 <!-- Quick Links -->
                 <div>
-                    <h4 class="text-white font-headline font-bold mb-6 uppercase tracking-wider text-sm">Platform</h4>
+                    <h4 data-i18n="footer_platform" class="text-white font-headline font-bold mb-6 uppercase tracking-wider text-sm">Platform</h4>
                     <ul class="space-y-4">
-                        <li><a href="#features" class="text-slate-400 hover:text-primary transition-colors text-sm font-medium">Features</a></li>
-                        <li><a href="./about.html" class="text-slate-400 hover:text-primary transition-colors text-sm font-medium">About Us</a></li>
-                        <li><a href="./login.html" class="text-slate-400 hover:text-primary transition-colors text-sm font-medium">Client Portal</a></li>
-                        <li><a href="./login.html" class="text-slate-400 hover:text-primary transition-colors text-sm font-medium">Trainer Portal</a></li>
+                        <li><a href="#features" data-i18n="nav_features" class="text-slate-400 hover:text-primary transition-colors text-sm font-medium">Features</a></li>
+                        <li><a href="./about.html" data-i18n="footer_about_us" class="text-slate-400 hover:text-primary transition-colors text-sm font-medium">About Us</a></li>
+                        <li><a href="./login.html" data-i18n="nav_client_portal" class="text-slate-400 hover:text-primary transition-colors text-sm font-medium">Client Portal</a></li>
+                        <li><a href="./login.html" data-i18n="nav_trainer_portal" class="text-slate-400 hover:text-primary transition-colors text-sm font-medium">Trainer Portal</a></li>
                     </ul>
                 </div>
 
@@ -324,6 +339,30 @@
                 navbar.classList.remove('shadow-md');
             }
         });
+    </script>
+
+    <script type="module">
+        import { changeLanguage, translateDOM } from './src/i18n.js';
+
+        const select = document.getElementById('lang-select');
+        const mobileSelect = document.getElementById('mobile-lang-select');
+
+        const current = localStorage.getItem('lang') || 'en';
+        if (select) select.value = current;
+        if (mobileSelect) mobileSelect.value = current;
+
+        function applyLang(lng) {
+            changeLanguage(lng);
+            // update selects
+            if (select) select.value = lng;
+            if (mobileSelect) mobileSelect.value = lng;
+        }
+
+        if (select) select.addEventListener('change', (e) => applyLang(e.target.value));
+        if (mobileSelect) mobileSelect.addEventListener('change', (e) => applyLang(e.target.value));
+
+        // translate current page
+        translateDOM();
     </script>
 </body>
 </html>

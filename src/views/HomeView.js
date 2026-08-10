@@ -23,7 +23,7 @@ export function renderHomeView(container, client) {
     <article class="bg-white rounded-xl border border-slate-200 p-6 flex flex-col justify-between hover:shadow-md transition-shadow relative overflow-hidden">
       <div class="absolute top-0 right-0 w-24 h-24 bg-primary/5 rounded-bl-full z-0"></div>
       <div class="z-10 relative">
-        <span class="inline-block bg-tertiary-container/10 text-[#00677f] font-headline text-[10px] px-2 py-0.5 rounded uppercase tracking-wider mb-2">Your Next Session</span>
+        <span data-i18n="your_next_session" class="inline-block bg-tertiary-container/10 text-[#00677f] font-headline text-[10px] px-2 py-0.5 rounded uppercase tracking-wider mb-2">Your Next Session</span>
         <h3 class="font-headline font-bold text-lg text-slate-800">${nextSession.type}</h3>
         <p class="text-xs text-slate-500 mt-2 flex items-center gap-1.5">
           <span class="material-symbols-outlined text-[16px]">schedule</span> ${nextSession.time} | ${nextSession.date}
@@ -32,15 +32,15 @@ export function renderHomeView(container, client) {
           <span class="material-symbols-outlined text-[16px]">location_on</span> ${nextSession.location}
         </p>
       </div>
-      <button onclick="window.openSessionDetailModal('${nextSession.id}')" class="mt-6 w-full border-2 border-primary text-primary hover:bg-primary hover:text-white font-headline text-xs font-bold py-3 rounded-lg transition-all flex items-center justify-center gap-2">
+      <button onclick="window.openSessionDetailModal('${nextSession.id}')" data-i18n="checkin_attendance" class="mt-6 w-full border-2 border-primary text-primary hover:bg-primary hover:text-white font-headline text-xs font-bold py-3 rounded-lg transition-all flex items-center justify-center gap-2">
         <span class="material-symbols-outlined text-[18px]">location_on</span> Check-in Attendance
       </button>
     </article>
   ` : `
     <article class="bg-white rounded-xl border border-slate-200 p-6 flex flex-col items-center justify-center text-center">
       <span class="material-symbols-outlined text-[48px] text-slate-300">event_busy</span>
-      <p class="text-sm font-semibold text-slate-500 mt-2">No upcoming confirmed sessions</p>
-      <button onclick="window.navigateTo('booking')" class="mt-4 bg-primary text-white text-xs font-bold font-headline px-4 py-2.5 rounded-lg">Book New Session</button>
+      <p data-i18n="no_upcoming_confirmed" class="text-sm font-semibold text-slate-500 mt-2">No upcoming confirmed sessions</p>
+      <button onclick="window.navigateTo('booking')" data-i18n="book_new_session" class="mt-4 bg-primary text-white text-xs font-bold font-headline px-4 py-2.5 rounded-lg">Book New Session</button>
     </article>
   `;
 
@@ -67,7 +67,7 @@ export function renderHomeView(container, client) {
         `).join('')}
       </div>
       
-      <button onclick="window.navigateTo('workout')" class="mt-6 w-full bg-primary text-white font-headline text-xs font-bold py-3.5 rounded-lg hover:bg-primary-container transition-all flex items-center justify-center gap-2 z-10 relative">
+      <button onclick="window.navigateTo('workout')" data-i18n="start_workout" class="mt-6 w-full bg-primary text-white font-headline text-xs font-bold py-3.5 rounded-lg hover:bg-primary-container transition-all flex items-center justify-center gap-2 z-10 relative">
         Start Workout <span class="material-symbols-outlined text-[16px]">play_arrow</span>
       </button>
     </article>
@@ -77,8 +77,8 @@ export function renderHomeView(container, client) {
     <!-- Top greeting and Red Flags -->
     <div class="flex flex-col gap-4">
       <div>
-        <h1 class="text-3xl font-headline font-extrabold text-[#0b1c30]">Welcome back, ${client.name}!</h1>
-        <p class="text-sm text-slate-500 mt-1">Ready to crush it today?</p>
+        <h1 id="welcome-heading" data-i18n="welcome_back" class="text-3xl font-headline font-extrabold text-[#0b1c30]">Welcome back, ${client.name}!</h1>
+        <p data-i18n="ready_to_crush" class="text-sm text-slate-500 mt-1">Ready to crush it today?</p>
       </div>
       
       ${client.assessment.hasInjury ? `
@@ -125,21 +125,21 @@ export function renderHomeView(container, client) {
     <!-- Package Session Quota Widget -->
     <article class="bg-white rounded-xl border border-slate-200 p-6 flex flex-col md:flex-row justify-between items-center gap-6 shadow-sm">
       <div class="flex-1 w-full">
-        <h3 class="text-xs font-headline font-bold text-slate-400 uppercase tracking-wider">ACTIVE PACKAGE</h3>
+        <h3 data-i18n="active_package" class="text-xs font-headline font-bold text-slate-400 uppercase tracking-wider">ACTIVE PACKAGE</h3>
         <h2 class="text-lg font-headline font-bold text-slate-800 mt-1">${client.package.name}</h2>
         <div class="w-full bg-slate-100 h-2.5 rounded-full mt-4 overflow-hidden relative">
           <div class="h-full bg-primary rounded-full" style="width: ${pct}%"></div>
         </div>
-        <p class="text-xs text-slate-500 mt-2 font-medium">Remaining Session Quota: <span class="text-primary font-bold">${pkgRemaining}</span> of ${pkgTotal} Sessions</p>
+        <p id="remaining-quota" class="text-xs text-slate-500 mt-2 font-medium">Remaining Session Quota: <span class="text-primary font-bold">${pkgRemaining}</span> of ${pkgTotal} Sessions</p>
       </div>
       <div class="shrink-0 flex flex-wrap gap-2.5 w-full md:w-auto">
-        <button onclick="window.openBuyPackageModal()" class="flex-1 md:flex-initial bg-primary text-white text-xs font-bold font-headline px-5 py-3.5 rounded-lg whitespace-nowrap hover:bg-[#8f3200] transition-colors shadow-sm">
+        <button onclick="window.openBuyPackageModal()" data-i18n="buy_package" class="flex-1 md:flex-initial bg-primary text-white text-xs font-bold font-headline px-5 py-3.5 rounded-lg whitespace-nowrap hover:bg-[#8f3200] transition-colors shadow-sm">
           Buy Package
         </button>
-        <button onclick="window.navigateTo('booking')" class="flex-1 md:flex-initial bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold font-headline px-5 py-3.5 rounded-lg whitespace-nowrap border border-slate-200">
+        <button onclick="window.navigateTo('booking')" data-i18n="book_schedule" class="flex-1 md:flex-initial bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold font-headline px-5 py-3.5 rounded-lg whitespace-nowrap border border-slate-200">
           Book Schedule
         </button>
-        <button onclick="window.navigateTo('chat')" class="flex-1 md:flex-initial bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold font-headline px-5 py-3.5 rounded-lg whitespace-nowrap border border-slate-200">
+        <button onclick="window.navigateTo('chat')" data-i18n="chat_trainer" class="flex-1 md:flex-initial bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold font-headline px-5 py-3.5 rounded-lg whitespace-nowrap border border-slate-200">
           Chat Trainer
         </button>
       </div>
@@ -232,8 +232,8 @@ export function renderHomeView(container, client) {
           <span class="absolute bottom-0 right-0 w-3.5 h-3.5 bg-green-500 rounded-full border-2 border-white"></span>
         </div>
         <div>
-          <h4 class="font-headline font-bold text-xs text-slate-800">Message Coach Bobby</h4>
-          <span class="text-[10px] text-slate-400">Typically replies in 1 hr</span>
+          <h4 id="message-coach" class="font-headline font-bold text-xs text-slate-800">Message Coach ${client.coach?.name || 'Coach'}</h4>
+          <span data-i18n="typically_replies" class="text-[10px] text-slate-400">Typically replies in 1 hr</span>
         </div>
       </div>
       <button class="w-10 h-10 rounded-full border border-slate-300 flex items-center justify-center text-slate-600 hover:border-primary hover:text-primary transition-colors shrink-0">
@@ -241,4 +241,18 @@ export function renderHomeView(container, client) {
       </button>
     </article>
   `;
+
+  // Apply dynamic translations for interpolated strings and translate static keys
+  if (typeof window !== 'undefined' && window.t) {
+    const welcomeEl = document.getElementById('welcome-heading');
+    if (welcomeEl) welcomeEl.innerHTML = window.t('welcome_back', { name: client.name });
+
+    const remEl = document.getElementById('remaining-quota');
+    if (remEl) remEl.innerHTML = window.t('remaining_session_quota', { remaining: pkgRemaining, total: pkgTotal });
+
+    const coachEl = document.getElementById('message-coach');
+    if (coachEl) coachEl.innerHTML = window.t('message_coach', { name: client.coach?.name || 'Coach' });
+
+    if (window.translateDOM) window.translateDOM();
+  }
 }

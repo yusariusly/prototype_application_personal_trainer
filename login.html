@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <title>Elite Trainer - Portal Login</title>
+    <title data-i18n="login_title">Elite Trainer - Portal Login</title>
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -44,51 +44,51 @@
             </div>
         </div>
 
-        <h2 class="text-xl font-headline font-bold text-center mb-1">Welcome Back</h2>
-        <p class="text-xs text-slate-500 text-center mb-6">Sign in to access your dashboard, workouts, and tools.</p>
+        <h2 data-i18n="login_welcome" class="text-xl font-headline font-bold text-center mb-1">Welcome Back</h2>
+        <p data-i18n="login_sub" class="text-xs text-slate-500 text-center mb-6">Sign in to access your dashboard, workouts, and tools.</p>
 
         <!-- Login Form Wrapper -->
         <div id="login-form-wrapper" class="w-full">
             <!-- Gateway Toggle Roles -->
             <div class="flex bg-slate-100 rounded-lg p-1 w-full mb-6">
-                <button onclick="setRole('client')" id="btn-role-client" class="flex-1 text-center py-2 text-xs font-semibold rounded-md bg-white text-primary shadow-sm transition-all duration-200">
+                <button onclick="setRole('client')" id="btn-role-client" data-i18n="nav_client_portal" class="flex-1 text-center py-2 text-xs font-semibold rounded-md bg-white text-primary shadow-sm transition-all duration-200">
                     Client Portal
                 </button>
-                <button onclick="setRole('trainer')" id="btn-role-trainer" class="flex-1 text-center py-2 text-xs font-semibold rounded-md text-slate-600 hover:text-slate-900 transition-all duration-200">
+                <button onclick="setRole('trainer')" id="btn-role-trainer" data-i18n="nav_trainer_portal" class="flex-1 text-center py-2 text-xs font-semibold rounded-md text-slate-600 hover:text-slate-900 transition-all duration-200">
                     Trainer Portal
                 </button>
             </div>
 
             <form onsubmit="handleLogin(event)" class="w-full space-y-4">
                 <div>
-                    <label class="block text-xs font-bold text-slate-600 uppercase tracking-wider mb-1">Email Address</label>
+                    <label data-i18n="label_email" class="block text-xs font-bold text-slate-600 uppercase tracking-wider mb-1">Email Address</label>
                     <input type="email" id="login-email" required placeholder="m.reid@email.com" value="m.reid@email.com" class="w-full rounded-xl border-slate-200 text-xs px-3 py-2.5 focus:border-primary focus:ring-primary bg-slate-50 outline-none transition-colors">
                 </div>
                 <div>
-                    <label class="block text-xs font-bold text-slate-600 uppercase tracking-wider mb-1">Password</label>
+                    <label data-i18n="label_password" class="block text-xs font-bold text-slate-600 uppercase tracking-wider mb-1">Password</label>
                     <input type="password" id="login-pass" required placeholder="••••••••" value="admin123" class="w-full rounded-xl border-slate-200 text-xs px-3 py-2.5 focus:border-primary focus:ring-primary bg-slate-50 outline-none transition-colors">
                 </div>
                 
-                <div class="text-red-500 text-[10px] font-semibold hidden text-center" id="error-message">
+                <div data-i18n="error_invalid_credentials" class="text-red-500 text-[10px] font-semibold hidden text-center" id="error-message">
                     Invalid credentials. Please try again.
                 </div>
 
                 <!-- Demo helper credentials -->
                 <div class="bg-slate-50 rounded-xl p-3 text-[10px] text-slate-500 space-y-1 w-full border border-slate-100">
-                    <span class="font-bold text-slate-700">Quick Credentials (Demo):</span>
+                    <span data-i18n="demo_quick_credentials" class="font-bold text-slate-700">Quick Credentials (Demo):</span>
                     <div id="demo-creds">
                         <div>• Client: <span class="font-mono text-primary">m.reid@email.com</span> / <span class="font-mono">admin123</span></div>
                         <div>• Alternative Client: <span class="font-mono text-primary">eleanor.v@example.com</span> / <span class="font-mono">admin123</span></div>
                     </div>
                 </div>
 
-                <button type="submit" class="w-full bg-primary hover:bg-[#8f3200] text-white font-bold text-xs py-3 rounded-xl transition-all shadow-md mt-2 flex items-center justify-center gap-1">
+                <button type="submit" data-i18n="btn_sign_in" class="w-full bg-primary hover:bg-[#8f3200] text-white font-bold text-xs py-3 rounded-xl transition-all shadow-md mt-2 flex items-center justify-center gap-1">
                     <span class="material-symbols-outlined text-[16px]">lock_open</span> Sign In
                 </button>
             </form>
             
             <div class="text-center text-xs text-slate-500 mt-5" id="register-link-container">
-                Don't have an account? <a href="#" onclick="showRegisterForm(event)" class="text-primary font-bold hover:underline">Register New Account</a>
+                <span data-i18n="no_account">Don't have an account?</span> <a href="#" data-i18n="register_new_account" onclick="showRegisterForm(event)" class="text-primary font-bold hover:underline">Register New Account</a>
             </div>
         </div>
 
@@ -191,10 +191,15 @@
         import { getPrograms } from './src/models/ProgramModel.js';
         import { saveState } from './src/models/Store.js';
         import { saveClient } from './src/models/ClientModel.js';
+        import { t, translateDOM } from './src/i18n.js';
         window.saveClient = saveClient;
         window.getClients = getClients;
         window.getPrograms = getPrograms;
         window.saveState = saveState;
+        window.t = t;
+        window.translateDOM = translateDOM;
+        // translate static elements on this page
+        translateDOM();
     </script>
 
     <script>
@@ -233,9 +238,9 @@
         function renderRegStep() {
             // Update Title/Subtitle
             const titles = {
-                1: 'Step 1 of 3: Account & Personal Info',
-                2: 'Step 2 of 3: Medical Questionnaire (PAR-Q)',
-                3: 'Step 3 of 3: Primary Training Goal'
+                1: (window.t ? window.t('reg_step_1') : 'Step 1 of 3: Account & Personal Info'),
+                2: (window.t ? window.t('reg_step_2') : 'Step 2 of 3: Medical Questionnaire (PAR-Q)'),
+                3: (window.t ? window.t('reg_step_3') : 'Step 3 of 3: Primary Training Goal')
             };
             document.getElementById('reg-step-subtitle').innerText = titles[regStep];
 

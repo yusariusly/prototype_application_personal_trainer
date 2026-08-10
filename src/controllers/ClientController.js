@@ -6,6 +6,7 @@ import { renderProgressView, setupProgressGlobalHandlers } from '../views/Progre
 import { renderBookingView, setupBookingGlobalHandlers } from '../views/BookingView.js';
 import { renderChatView } from '../views/ChatView.js';
 import { setupUserHeader, updateNavIndicators, setupAppGlobalHandlers } from '../views/ClientAppView.js';
+import { t, changeLanguage, translateDOM } from '../i18n.js';
 
 window.activeTab = 'home';
 
@@ -54,6 +55,10 @@ document.addEventListener('DOMContentLoaded', () => {
   setupProgressGlobalHandlers(renderView, window.showToast, window.closeModal);
   setupBookingGlobalHandlers(renderView, window.showToast, window.closeModal);
   
+  // expose translation helpers globally
+  window.t = t;
+  window.changeLanguage = changeLanguage;
+
   // Initialize Routing
   const handleHash = () => {
     const hash = window.location.hash.replace('#', '') || 'home';
@@ -61,4 +66,21 @@ document.addEventListener('DOMContentLoaded', () => {
   };
   window.addEventListener('hashchange', handleHash);
   handleHash();
+
+  // Inject simple language selector into navbar
+  const nav = document.getElementById('navbar');
+  if (nav) {
+    const sel = document.createElement('select');
+    sel.className = 'ml-4 rounded px-2 py-1 text-sm';
+    sel.innerHTML = `<option value=\"en\">EN</option><option value=\"id\">ID</option>`;
+    sel.value = localStorage.getItem('lang') || 'en';
+    sel.addEventListener('change', (e) => { changeLanguage(e.target.value); renderView(); });
+    const container = document.createElement('div');
+    container.className = 'hidden md:flex items-center';
+    container.appendChild(sel);
+    nav.querySelector('.max-w-7xl')?.appendChild(container);
+  }
+
+  // translate any static DOM after initial render
+  translateDOM();
 });
