@@ -102,8 +102,9 @@ export function renderBookingView(container, client) {
                 </div>
               `;
             }).join('')}
-          
-
+          </div>
+        </div>
+      </div>
 
 <!-- Right Column: My Bookings Section -->
 <div class="lg:col-span-5 flex flex-col gap-6">
@@ -113,9 +114,9 @@ export function renderBookingView(container, client) {
             My Booked Sessions
           </h3>
 <div class="flex flex-col gap-4 max-h-[500px] overflow-y-auto pr-1">
-            ${schedule.length &gt; 0 ? schedule.map(s =&gt; {
+            ${schedule.length > 0 ? schedule.map(s => {
               const isConfirmed = s.status === 'Confirmed';
-              return </div></section></div>`
+              return `
                 <div class="border border-slate-100 rounded-xl p-4 flex flex-col gap-3 bg-slate-50/50 relative">
                   <div class="flex justify-between items-start">
                     <div>

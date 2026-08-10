@@ -28,7 +28,7 @@ export function renderProgressView(container, client) {
 <div class="bg-white rounded-xl border border-slate-200 p-6 shadow-sm">
 <h3 class="font-headline font-bold text-sm text-slate-800 mb-4 flex items-center gap-2" data-i18n="trend_title">
 <span class="material-symbols-outlined text-primary text-[20px]" data-i18n="show_chart">show_chart</span>
-            Body Weight &amp; Body Fat % Trend
+            Body Weight & Body Fat % Trend
           </h3>
 <div class="h-64 md:h-80 w-full relative">
 <canvas class="w-full h-full" id="progress-chart"></canvas>
@@ -49,7 +49,7 @@ export function renderProgressView(container, client) {
 </tr>
 </thead>
 <tbody class="divide-y divide-slate-50 text-slate-700">
-                ${[...client.bodyProgress].reverse().map(log =&gt; </tbody></table></div></div></div></div>`
+                ${[...client.bodyProgress].reverse().map(log => `
                   <tr>
                     <td class="py-3 px-3 font-medium">${log.date}</td>
                     <td class="py-3 px-3 text-right font-semibold font-headline text-slate-800">${log.weight} kg</td>

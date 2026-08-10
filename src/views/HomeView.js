@@ -58,7 +58,7 @@ export function renderHomeView(container, client) {
 </div>
 </div>
 <div class="flex flex-col gap-2 z-10 relative">
-        ${program.exercises.slice(0, 3).map(ex =&gt; </div></article>`
+        ${program.exercises.slice(0, 3).map(ex => `
           <div class="flex justify-between items-center py-2 border-b border-slate-50 last:border-0 text-xs">
             <span class="font-medium text-slate-800">${ex.name}</span>
             <span class="text-slate-400 font-semibold">${ex.sets} sets x ${ex.reps} reps</span>
@@ -190,7 +190,7 @@ export function renderHomeView(container, client) {
 <!-- Basic Nutrition Target Calculator -->
 <div class="lg:col-span-6 bg-white rounded-xl border border-slate-200 p-6 shadow-sm flex flex-col gap-4">
 <div class="flex justify-between items-center">
-<h3 class="font-headline font-bold text-xs text-slate-400 uppercase tracking-wider" data-i18n="daily_nutrition_calorie_calcul">Daily Nutrition &amp; Calorie Calculator (TDEE)</h3>
+<h3 class="font-headline font-bold text-xs text-slate-400 uppercase tracking-wider" data-i18n="daily_nutrition_calorie_calcul">Daily Nutrition & Calorie Calculator (TDEE)</h3>
 <span class="text-[9px] font-bold text-primary bg-primary/10 px-2 py-0.5 rounded uppercase font-headline">${client.assessment.postural.focus.includes('Fat Loss') ? 'Calorie Deficit' : 'Calorie Surplus'}</span>
 </div>
 <div class="grid grid-cols-2 gap-4 text-xs">
@@ -215,7 +215,7 @@ export function renderHomeView(container, client) {
 <article class="bg-white rounded-xl border border-slate-200 p-4 flex items-center justify-between hover:shadow-md transition-shadow cursor-pointer shadow-sm mt-6" onclick="window.navigateTo('chat')">
 <div class="flex items-center gap-4">
 <div class="relative">
-<img alt="Trainer" class="w-12 h-12 rounded-full object-cover border" src="https://images.unsplash.com/photo-1568602471122-7832951cc4c5?auto=format&amp;fit=crop&amp;w=100&amp;q=80"/>
+<img alt="Trainer" class="w-12 h-12 rounded-full object-cover border" src="https://images.unsplash.com/photo-1568602471122-7832951cc4c5?auto=format&fit=crop&w=100&q=80"/>
 <span class="absolute bottom-0 right-0 w-3.5 h-3.5 bg-green-500 rounded-full border-2 border-white"></span>
 </div>
 <div>

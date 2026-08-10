@@ -4,52 +4,52 @@ export function renderCalendarView(container) {
   const schedule = getSchedule();
 
   container.innerHTML = `
-<div class="flex justify-between items-center mb-6">
+<div class="flex justify-between items-center mb-8">
 <div>
-<h1 class="text-3xl font-headline font-extrabold text-[#0b1c30]" data-i18n="training_schedule">Training Schedule</h1>
-<p class="text-sm text-slate-500 mt-1" data-i18n="manage_weekly_slots_and_valida">Manage weekly slots and validate client session attendance.</p>
+<h1 class="text-4xl font-headline font-extrabold text-slate-800 tracking-tight" data-i18n="training_schedule">Training Schedule</h1>
+<p class="text-base text-slate-500 mt-2 font-medium" data-i18n="manage_weekly_slots_and_valida">Manage weekly slots and validate client session attendance.</p>
 </div>
-<button class="bg-primary hover:bg-[#8f3200] text-white text-xs font-bold font-headline px-5 py-3.5 rounded-lg flex items-center gap-1.5 shadow-md transition-all" onclick="window.openCreateScheduleModal()">
-<span class="material-symbols-outlined text-[18px]" data-i18n="add">add</span> + Add New Schedule
+<button class="bg-gradient-to-r from-primary to-primary-container text-white text-sm font-bold font-headline px-6 py-4 rounded-xl flex items-center gap-2 shadow-lg shadow-primary/30 hover:shadow-primary/50 hover:-translate-y-0.5 transition-all duration-300" onclick="window.openCreateScheduleModal()">
+<span class="material-symbols-outlined text-[20px]" data-i18n="add">add</span> Add New Schedule
       </button>
 </div>
-<div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
 <!-- Calendar Matrix Grid -->
 <div class="lg:col-span-8">
-<div class="bg-white rounded-xl border border-slate-200 p-6 shadow-sm">
-<div class="flex justify-between items-center mb-4 pb-2 border-b border-slate-100">
-<h3 class="font-headline font-bold text-sm text-slate-800" data-i18n="monthly_calendar">Monthly Calendar</h3>
-<span class="text-xs font-bold text-slate-400 uppercase tracking-wider" data-i18n="july_2026">July 2026</span>
+<div class="bg-white/80 backdrop-blur-xl rounded-3xl border border-white p-8 shadow-sm">
+<div class="flex justify-between items-center mb-6 pb-4 border-b border-white">
+<h3 class="font-headline font-bold text-lg text-slate-800" data-i18n="monthly_calendar">Monthly Calendar</h3>
+<span class="text-sm font-bold text-primary bg-primary/10 px-4 py-1.5 rounded-lg uppercase tracking-wider" data-i18n="july_2026">July 2026</span>
 </div>
-<div class="grid grid-cols-7 gap-2 text-center text-xs font-bold border-b border-slate-100 pb-2 text-slate-400 uppercase">
+<div class="grid grid-cols-7 gap-2 text-center text-xs font-extrabold border-b border-white pb-3 text-slate-500 uppercase tracking-widest">
 <span data-i18n="sun">Sun</span><span data-i18n="mon">Mon</span><span data-i18n="tue">Tue</span><span data-i18n="wed">Wed</span><span data-i18n="thu">Thu</span><span data-i18n="fri">Fri</span><span data-i18n="sat">Sat</span>
 </div>
-<div class="grid grid-cols-7 gap-2 text-center text-xs mt-3">
-            ${Array.from({ length: 31 }).map((_, i) =&gt; {
+<div class="grid grid-cols-7 gap-3 text-center text-xs mt-4">
+            ${Array.from({ length: 31 }).map((_, i) => {
               const dayNum = i + 1;
               const dateStr = new Date();
               dateStr.setDate(dayNum);
               const dateIso = dateStr.toISOString().split('T')[0];
               
-              const daySessions = schedule.filter(s =&gt; s.date === dateIso);
-              return </div></div></div></div>`
-                <div class="min-h-24 p-1.5 border border-slate-100 hover:bg-slate-50/50 rounded-lg flex flex-col justify-between">
-                  <span class="font-bold text-slate-400 self-start text-[10px]">${dayNum}</span>
-                  <div class="flex flex-col gap-1.5 w-full mt-1.5">
+              const daySessions = schedule.filter(s => s.date === dateIso);
+              return `
+                <div class="min-h-[100px] p-2 bg-white/50 border border-white hover:border-primary/30 hover:bg-white shadow-sm hover:shadow-md transition-all rounded-2xl flex flex-col justify-between group cursor-default">
+                  <span class="font-bold text-slate-400 group-hover:text-primary transition-colors self-start text-xs bg-slate-100/50 group-hover:bg-primary/10 w-6 h-6 flex items-center justify-center rounded-full">${dayNum}</span>
+                  <div class="flex flex-col gap-2 w-full mt-2">
                     ${daySessions.map(s => {
-                      let pillColor = 'bg-slate-50 text-slate-700 border border-slate-200 hover:bg-slate-100';
+                      let pillColor = 'bg-white text-slate-700 border-white hover:border-slate-200';
                       if (s.type && s.type.includes('Streaming')) {
-                        pillColor = 'bg-cyan-50 text-cyan-700 border border-cyan-200 hover:bg-cyan-100';
+                        pillColor = 'bg-cyan-50/80 text-cyan-700 border-cyan-100 hover:border-cyan-300';
                       } else if (s.type && s.type.includes('Studio')) {
-                        pillColor = 'bg-purple-50 text-purple-700 border border-purple-200 hover:bg-purple-100';
+                        pillColor = 'bg-purple-50/80 text-purple-700 border-purple-100 hover:border-purple-300';
                       } else if (s.type && (s.type.includes('Beban') || s.type.includes('Weights'))) {
-                        pillColor = 'bg-orange-50 text-orange-700 border border-orange-200 hover:bg-orange-100';
+                        pillColor = 'bg-orange-50/80 text-orange-700 border-orange-100 hover:border-orange-300';
                       }
                       
-                      const dotColor = s.status === 'Confirmed' ? 'bg-green-500' : 'bg-amber-500';
+                      const dotColor = s.status === 'Confirmed' ? 'bg-green-500 shadow-[0_0_5px_rgba(34,197,94,0.6)]' : 'bg-amber-500';
                       return `
-                        <button onclick="window.openSessionValidationModal('${s.id}')" class="${pillColor} text-[8px] font-bold p-1 rounded text-left truncate w-full transition-colors flex items-center gap-1.5 focus:outline-none">
-                          <span class="w-1.5 h-1.5 rounded-full ${dotColor} shrink-0"></span>
+                        <button onclick="window.openSessionValidationModal('${s.id}')" class="${pillColor} shadow-sm border border-transparent text-[9px] font-bold p-1.5 rounded-lg text-left truncate w-full transition-all flex items-center gap-1.5 hover:-translate-y-0.5 focus:outline-none">
+                          <span class="w-2 h-2 rounded-full ${dotColor} shrink-0"></span>
                           <span class="truncate">${s.time} - ${s.clientName}</span>
                         </button>
                       `;
@@ -63,17 +63,20 @@ export function renderCalendarView(container) {
       </div>
 
       <!-- Legend sidebar -->
-      <div class="lg:col-span-4 flex flex-col gap-6">
-        <section class="bg-white rounded-xl border border-slate-200 p-6 shadow-sm flex flex-col gap-4">
-          <h3 data-i18n="session_status_legend" class="font-headline font-bold text-sm text-slate-800 border-b border-slate-100 pb-2">Session Status Legend</h3>
-          <div class="space-y-3 text-xs">
-            <div class="flex items-center gap-2">
-              <span class="w-3.5 h-3.5 rounded bg-green-100 border border-green-300 block"></span> 
-              <span data-i18n="confirmed_attended_deducted" class="font-medium text-slate-700">Confirmed (Attended & Deducted)</span>
-            </div>
-            <div class="flex items-center gap-2">
-              <span class="w-3.5 h-3.5 rounded bg-amber-100 border border-amber-300 block"></span> 
-              <span data-i18n="pending_trainer_validation" class="font-medium text-slate-700">Pending Trainer Validation</span>
+      <div class="lg:col-span-4 flex flex-col gap-8">
+        <section class="bg-white/80 backdrop-blur-xl rounded-3xl border border-white p-8 shadow-sm flex flex-col gap-6 relative overflow-hidden group">
+          <div class="absolute -right-4 -top-4 w-24 h-24 bg-gradient-to-br from-primary/10 to-transparent rounded-full blur-xl group-hover:scale-150 transition-transform duration-500 pointer-events-none"></div>
+          <div class="relative z-10">
+            <h3 data-i18n="session_status_legend" class="font-headline font-bold text-lg text-slate-800 border-b border-white pb-3 mb-4">Session Status Legend</h3>
+            <div class="space-y-4 text-sm">
+              <div class="flex items-center gap-3 bg-white/60 p-3 rounded-xl border border-white shadow-sm">
+                <span class="w-4 h-4 rounded-full bg-green-100 border-2 border-green-400 block shadow-[0_0_8px_rgba(34,197,94,0.3)]"></span> 
+                <span data-i18n="confirmed_attended_deducted" class="font-bold text-slate-700">Confirmed (Attended & Deducted)</span>
+              </div>
+              <div class="flex items-center gap-3 bg-white/60 p-3 rounded-xl border border-white shadow-sm">
+                <span class="w-4 h-4 rounded-full bg-amber-100 border-2 border-amber-400 block"></span> 
+                <span data-i18n="pending_trainer_validation" class="font-bold text-slate-700">Pending Trainer Validation</span>
+              </div>
             </div>
           </div>
         </section>

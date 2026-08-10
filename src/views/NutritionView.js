@@ -27,7 +27,7 @@ export function renderNutritionView(container, client) {
 </div>
 <div>
 <h1 class="text-xl md:text-3xl font-headline font-extrabold text-slate-800" data-i18n="nutrition_title">Nutrition Plan</h1>
-<p class="text-sm text-slate-500 font-medium" data-i18n="nutrition_sub">Daily Macro &amp; Calorie Tracking</p>
+<p class="text-sm text-slate-500 font-medium" data-i18n="nutrition_sub">Daily Macro & Calorie Tracking</p>
 </div>
 </div>
 <!-- TDEE & Calories Summary -->
@@ -88,7 +88,7 @@ export function renderNutritionView(container, client) {
             </button>
 </div>
 <div class="flex-grow flex flex-col gap-3">
-            ${nutrition.diary.map(meal =&gt; </div></div>`
+            ${nutrition.diary.map(meal => `
                 <div class="p-3 border border-slate-100 rounded-xl bg-slate-50 flex items-center justify-between">
                     <div>
                         <div class="text-[10px] font-bold text-slate-400 mb-0.5">${meal.time}</div>

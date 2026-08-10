@@ -20,7 +20,7 @@ export function renderBuilderView(container, activeBuilderClientId) {
 
   container.innerHTML = `
     <!-- Subtitle Client Name -->
-    <div class="mb-4">
+    <div class="mb-6">
       <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">CLIENT: ${client.name.toUpperCase()}</span>
       
       <!-- Layout Title + Action buttons -->
@@ -32,135 +32,145 @@ export function renderBuilderView(container, activeBuilderClientId) {
           <div class="relative w-full sm:w-48">
             <select id="builder-client-select" onchange="window.switchBuilderClient(this.value)" class="w-full appearance-none bg-white border border-slate-200 rounded-lg py-2 px-3 text-xs outline-none font-bold text-slate-800 pr-8">
               ${clients.map(c => `<option value="${c.id}" ${c.id === client.id ? 'selected' : ''}>${c.name}</option>`).join('')}
-            
-<span class="material-symbols-outlined absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" data-i18n="expand_more">expand_more</span>
+            </select>
+            <span class="material-symbols-outlined absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" data-i18n="expand_more">expand_more</span>
+          </div>
 
-<button class="bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold font-headline px-4 py-2.5 rounded-lg border border-slate-200 whitespace-nowrap" data-i18n="save_draft" onclick="window.saveActiveProgram()">Save Draft</button>
-<button class="bg-primary text-white text-xs font-bold font-headline px-4 py-2.5 rounded-lg hover:bg-primary-container transition-all whitespace-nowrap shadow-sm" data-i18n="assign_workout" onclick="window.saveActiveProgram()">Assign Workout</button>
+          <button class="bg-white/80 backdrop-blur-md hover:bg-slate-50 text-slate-700 text-xs font-bold font-headline px-5 py-2.5 rounded-xl border border-white hover:border-primary/30 whitespace-nowrap shadow-sm hover:shadow-md transition-all" data-i18n="save_draft" onclick="window.saveActiveProgram()">Save Draft</button>
+          <button class="bg-gradient-to-r from-primary to-primary-container text-white text-xs font-bold font-headline px-5 py-2.5 rounded-xl hover:shadow-lg hover:shadow-primary/30 hover:-translate-y-0.5 transition-all whitespace-nowrap shadow-sm" data-i18n="assign_workout" onclick="window.saveActiveProgram()">Assign Workout</button>
+        </div>
+      </div>
+    </div>
 
-
-
-<!-- Workspace columns layout -->
-<div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+    <!-- Workspace columns layout -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
 <!-- Main Builder list -->
 <div class="lg:col-span-8 flex flex-col gap-4">
 <!-- Search bar inside builder -->
-<div class="relative bg-white border border-slate-200 rounded-xl p-3 shadow-sm flex items-center gap-2">
-<span class="material-symbols-outlined text-slate-400 text-sm pl-2" data-i18n="add">add</span>
-<input class="w-full bg-transparent border-0 text-xs outline-none focus:ring-0 p-0 placeholder-slate-400" onclick="window.openExerciseLibraryModal()" placeholder="Type to add exercise (e.g., Barbell Squat)..." type="text"/>
-<button class="w-8 h-8 rounded bg-slate-50 border border-slate-200 flex items-center justify-center text-slate-500 hover:bg-slate-100 transition-colors shrink-0" onclick="window.openExerciseLibraryModal()">
-<span class="material-symbols-outlined text-sm" data-i18n="filter_list">filter_list</span>
+<div class="relative bg-white/70 backdrop-blur-md border border-white rounded-2xl p-4 shadow-sm flex items-center gap-3 group hover:shadow-md transition-all">
+<span class="material-symbols-outlined text-primary/70 text-lg pl-2 group-hover:scale-110 transition-transform" data-i18n="add">add</span>
+<input class="w-full bg-transparent border-0 text-sm outline-none focus:ring-0 p-0 placeholder-slate-400 font-medium" onclick="window.openExerciseLibraryModal()" placeholder="Type to add exercise (e.g., Barbell Squat)..." type="text"/>
+<button class="w-10 h-10 rounded-xl bg-white/80 border border-white flex items-center justify-center text-slate-500 hover:text-primary hover:bg-primary/5 transition-colors shrink-0 shadow-sm" onclick="window.openExerciseLibraryModal()">
+<span class="material-symbols-outlined text-base" data-i18n="filter_list">filter_list</span>
 </button>
 </div>
 <div class="flex flex-col gap-4" id="builder-exercises-list">
-          ${program &amp;&amp; program.exercises.length &gt; 0 ? program.exercises.map((ex, idx) =&gt; </div></div></div>`
-            <div class="border border-slate-200 rounded-xl p-6 bg-white flex items-center gap-4 relative shadow-sm" data-builder-index="${idx}">
+          ${program && program.exercises.length > 0 ? program.exercises.map((ex, idx) => `
+            <div class="border border-white rounded-2xl p-6 bg-white/60 backdrop-blur-sm flex items-center gap-5 relative shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 group" data-builder-index="${idx}">
+              <div class="absolute left-0 top-0 bottom-0 w-1.5 ${idx === 0 ? 'bg-primary' : 'bg-blue-400'} rounded-l-2xl opacity-80 group-hover:opacity-100 transition-opacity"></div>
+              
               <!-- Drag handles -->
-              <div class="flex flex-col gap-0.5 text-slate-300 cursor-move shrink-0">
-                <span data-i18n="drag_indicator" class="material-symbols-outlined text-[16px]">drag_indicator</span>
+              <div class="flex flex-col gap-0.5 text-slate-300 cursor-move shrink-0 pl-2 hover:text-primary transition-colors">
+                <span data-i18n="drag_indicator" class="material-symbols-outlined text-[20px]">drag_indicator</span>
               </div>
               
               <!-- Exercise Info fields -->
-              <div class="flex-grow grid grid-cols-1 md:grid-cols-12 gap-4 items-center">
+              <div class="flex-grow grid grid-cols-1 md:grid-cols-12 gap-5 items-center">
                 <div class="md:col-span-4 min-w-0">
-                  <span class="inline-block bg-[#e5eeff] text-[#00677f] font-headline text-[9px] font-bold px-2 py-0.5 rounded uppercase tracking-wider mb-1">${idx === 0 ? 'COMPOUND' : 'ACCESSORY'}</span>
-                  <h4 class="font-headline font-bold text-sm text-slate-800 truncate">${ex.name}</h4>
-                  <span data-i18n="quads_glutes" class="text-[10px] text-slate-400">Quads, Glutes</span>
+                  <span class="inline-block ${idx === 0 ? 'bg-primary/10 text-primary' : 'bg-blue-500/10 text-blue-600'} font-headline text-[10px] font-bold px-2.5 py-1 rounded-md uppercase tracking-wider mb-2 shadow-sm">${idx === 0 ? 'COMPOUND' : 'ACCESSORY'}</span>
+                  <h4 class="font-headline font-bold text-base text-slate-800 truncate tracking-tight">${ex.name}</h4>
+                  <span data-i18n="quads_glutes" class="text-xs font-medium text-slate-400 mt-0.5 block">Quads, Glutes</span>
                 </div>
                 
-                <div class="md:col-span-8 grid grid-cols-4 gap-2 items-end">
+                <div class="md:col-span-8 grid grid-cols-4 gap-3 items-end">
                   <div>
-                    <label data-i18n="sets" class="block text-[9px] font-bold text-slate-400 uppercase mb-1">Sets</label>
-                    <input type="number" value="${ex.sets}" class="w-full bg-slate-50 border border-slate-200 rounded-lg py-1 px-2 text-center text-xs font-semibold outline-none focus:bg-white focus:border-primary" data-ex-sets="${idx}">
+                    <label data-i18n="sets" class="block text-[10px] font-bold text-slate-500 uppercase mb-1.5">Sets</label>
+                    <input type="number" value="${ex.sets}" class="w-full bg-white/50 border border-white/80 rounded-xl py-2 px-2 text-center text-sm font-semibold outline-none focus:bg-white focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all shadow-inner" data-ex-sets="${idx}">
                   </div>
                   <div>
-                    <label data-i18n="reps" class="block text-[9px] font-bold text-slate-400 uppercase mb-1">Reps</label>
-                    <input type="text" value="${ex.reps}" class="w-full bg-slate-50 border border-slate-200 rounded-lg py-1 px-2 text-center text-xs font-semibold outline-none focus:bg-white focus:border-primary" data-ex-reps="${idx}">
+                    <label data-i18n="reps" class="block text-[10px] font-bold text-slate-500 uppercase mb-1.5">Reps</label>
+                    <input type="text" value="${ex.reps}" class="w-full bg-white/50 border border-white/80 rounded-xl py-2 px-2 text-center text-sm font-semibold outline-none focus:bg-white focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all shadow-inner" data-ex-reps="${idx}">
                   </div>
                   <div>
-                    <label data-i18n="target_wt_kg" class="block text-[9px] font-bold text-slate-400 uppercase mb-1">Target Wt (kg)</label>
-                    <input type="number" step="0.5" value="${ex.weight}" class="w-full bg-slate-50 border border-slate-200 rounded-lg py-1 px-2 text-center text-xs font-semibold outline-none focus:bg-white focus:border-primary" data-ex-weight="${idx}">
+                    <label data-i18n="target_wt_kg" class="block text-[10px] font-bold text-slate-500 uppercase mb-1.5">Wt (kg)</label>
+                    <input type="number" step="0.5" value="${ex.weight}" class="w-full bg-white/50 border border-white/80 rounded-xl py-2 px-2 text-center text-sm font-semibold outline-none focus:bg-white focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all shadow-inner" data-ex-weight="${idx}">
                   </div>
                   <div>
-                    <label data-i18n="rest_s" class="block text-[9px] font-bold text-slate-400 uppercase mb-1">Rest (s)</label>
-                    <input type="number" value="${ex.rest}" class="w-full bg-slate-50 border border-slate-200 rounded-lg py-1 px-2 text-center text-xs font-semibold outline-none focus:bg-white focus:border-primary" data-ex-rest="${idx}">
+                    <label data-i18n="rest_s" class="block text-[10px] font-bold text-slate-500 uppercase mb-1.5">Rest (s)</label>
+                    <input type="number" value="${ex.rest}" class="w-full bg-white/50 border border-white/80 rounded-xl py-2 px-2 text-center text-sm font-semibold outline-none focus:bg-white focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all shadow-inner" data-ex-rest="${idx}">
                   </div>
                 </div>
               </div>
 
               <!-- Actions on right side -->
-              <div class="flex items-center gap-1.5 shrink-0 border-l border-slate-100 pl-4 ml-2">
-                <button onclick="window.openEditMediaModal(${idx})" title="Edit Panduan Video/Foto" class="px-2 py-1 rounded bg-slate-50 hover:bg-primary/10 text-slate-600 hover:text-primary text-[10px] font-bold flex items-center gap-1 border border-slate-200"><span data-i18n="movie" class="material-symbols-outlined text-[14px]">movie</span> Media</button>
-                <button onclick="window.copyBuilderExercise(${idx})" title="Duplikasi Gerakan" class="w-8 h-8 rounded hover:bg-slate-50 text-slate-400 hover:text-slate-600 flex items-center justify-center"><span data-i18n="content_copy" class="material-symbols-outlined text-[18px]">content_copy</span></button>
-                <button onclick="window.removeBuilderExercise(${idx})" title="Hapus Gerakan" class="w-8 h-8 rounded hover:bg-red-50 text-slate-400 hover:text-red-500 flex items-center justify-center"><span data-i18n="delete" class="material-symbols-outlined text-[18px]">delete</span></button>
+              <div class="flex items-center gap-2 shrink-0 border-l border-white/50 pl-5 ml-2">
+                <button onclick="window.openEditMediaModal(${idx})" title="Edit Panduan Video/Foto" class="px-3 py-2 rounded-xl bg-white border border-white hover:border-primary/30 text-slate-500 hover:text-primary text-[11px] font-bold flex items-center gap-1.5 shadow-sm hover:shadow-md transition-all"><span data-i18n="movie" class="material-symbols-outlined text-[16px]">movie</span> Media</button>
+                <button onclick="window.copyBuilderExercise(${idx})" title="Duplikasi Gerakan" class="w-9 h-9 rounded-xl bg-white border border-transparent hover:border-slate-200 text-slate-400 hover:text-slate-600 flex items-center justify-center shadow-sm transition-all"><span data-i18n="content_copy" class="material-symbols-outlined text-[18px]">content_copy</span></button>
+                <button onclick="window.removeBuilderExercise(${idx})" title="Hapus Gerakan" class="w-9 h-9 rounded-xl bg-white border border-transparent hover:border-red-200 text-slate-400 hover:text-red-500 hover:bg-red-50 flex items-center justify-center shadow-sm transition-all"><span data-i18n="delete" class="material-symbols-outlined text-[18px]">delete</span></button>
               </div>
             </div>
           `).join('') : ''}
         
-<button class="w-full border-2 border-dashed border-slate-200 hover:border-primary text-slate-500 hover:text-primary font-headline text-xs font-bold py-4 rounded-xl transition-all flex items-center justify-center gap-1.5 bg-white" onclick="window.openExerciseLibraryModal()">
-<span class="material-symbols-outlined text-[18px]" data-i18n="add">add</span> Add Custom Block (Superset / Circuit)
+        <button class="w-full border-2 border-dashed border-white/60 bg-white/30 backdrop-blur-sm hover:border-primary hover:bg-white/60 text-slate-500 hover:text-primary font-headline text-sm font-bold py-5 rounded-2xl transition-all duration-300 flex items-center justify-center gap-2 shadow-sm" onclick="window.openExerciseLibraryModal()">
+          <span class="material-symbols-outlined text-[20px]" data-i18n="add">add</span> Add Custom Block (Superset / Circuit)
         </button>
+      </div>
 
 <!-- Right Column: Volume Overview & Client Info Card -->
 <div class="lg:col-span-4 flex flex-col gap-6">
 <!-- Volume Overview -->
-<section class="bg-white rounded-xl border border-slate-200 p-6 shadow-sm flex flex-col gap-4">
-<h3 class="font-headline font-bold text-sm text-[#0b1c30]" data-i18n="volume_overview">Volume Overview</h3>
-<div>
-<div class="flex justify-between text-xs font-bold text-slate-700 mb-1.5">
-<span data-i18n="total_sets">Total Sets</span>
-<span>${totalSets} / 20</span>
-</div>
-<div class="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
-<div class="bg-primary h-full rounded-full" style="width: ${(totalSets / 20) * 100}%"></div>
-</div>
-</div>
-<div class="grid grid-cols-2 gap-4 mt-2">
-<div class="bg-slate-50 p-4 border border-slate-100 rounded-lg">
-<span class="text-[9px] text-slate-400 font-bold block uppercase" data-i18n="est_time">Est. Time</span>
-<span class="text-lg font-headline font-extrabold text-[#0b1c30] mt-1 block">${totalSets * 6} <span class="text-xs font-body font-normal text-slate-500" data-i18n="min">min</span></span>
-</div>
-<div class="bg-slate-50 p-4 border border-slate-100 rounded-lg">
-<span class="text-[9px] text-slate-400 font-bold block uppercase" data-i18n="volume_load">Volume Load</span>
-<span class="text-lg font-headline font-extrabold text-[#00677f] mt-1 block">~${(volLoad / 1000).toFixed(1)}k <span class="text-xs font-body font-normal text-slate-500" data-i18n="kg">kg</span></span>
-</div>
-</div>
+<section class="bg-white/80 backdrop-blur-xl rounded-3xl border border-white p-7 shadow-sm flex flex-col gap-5 relative overflow-hidden group">
+  <div class="absolute -right-4 -top-4 w-24 h-24 bg-gradient-to-br from-primary/10 to-transparent rounded-full blur-xl group-hover:scale-150 transition-transform duration-500"></div>
+  <div class="relative z-10">
+    <h3 class="font-headline font-bold text-lg text-slate-800 mb-4" data-i18n="volume_overview">Volume Overview</h3>
+    <div>
+    <div class="flex justify-between text-xs font-bold text-slate-600 mb-2">
+    <span data-i18n="total_sets" class="uppercase tracking-wide">Total Sets</span>
+    <span class="bg-slate-100 px-2 py-0.5 rounded">${totalSets} / 20</span>
+    </div>
+    <div class="w-full bg-slate-200/50 h-2.5 rounded-full overflow-hidden shadow-inner">
+    <div class="bg-gradient-to-r from-primary to-primary-container h-full rounded-full relative" style="width: ${(totalSets / 20) * 100}%">
+      <div class="absolute inset-0 bg-white/20 w-full h-full rounded-full"></div>
+    </div>
+    </div>
+    </div>
+    <div class="grid grid-cols-2 gap-4 mt-6">
+    <div class="bg-white/60 p-5 border border-white rounded-2xl shadow-sm">
+    <span class="text-[10px] text-slate-500 font-bold block uppercase tracking-wider" data-i18n="est_time">Est. Time</span>
+    <span class="text-2xl font-headline font-extrabold text-slate-800 mt-2 block">${totalSets * 6} <span class="text-xs font-body font-normal text-slate-500" data-i18n="min">min</span></span>
+    </div>
+    <div class="bg-white/60 p-5 border border-white rounded-2xl shadow-sm">
+    <span class="text-[10px] text-slate-500 font-bold block uppercase tracking-wider" data-i18n="volume_load">Volume Load</span>
+    <span class="text-2xl font-headline font-extrabold text-blue-600 mt-2 block">~${(volLoad / 1000).toFixed(1)}k <span class="text-xs font-body font-normal text-slate-500" data-i18n="kg">kg</span></span>
+    </div>
+    </div>
+  </div>
 </section>
 <!-- Client Highlight Card -->
-<section class="bg-white rounded-xl border border-slate-200 overflow-hidden shadow-sm flex flex-col relative">
-<div class="h-16 bg-slate-50 border-b border-slate-100 relative shrink-0">
+<section class="bg-white/80 backdrop-blur-xl rounded-3xl border border-white overflow-hidden shadow-sm flex flex-col relative group">
+<div class="h-20 bg-gradient-to-r from-primary/10 to-primary-container/10 border-b border-white relative shrink-0">
 <!-- Overlap Avatar -->
-<img alt="Avatar" class="w-14 h-14 rounded-full object-cover border-2 border-white absolute bottom-[-20px] left-6 shadow-md" src="${client.avatar}"/>
+<img alt="Avatar" class="w-20 h-20 rounded-2xl object-cover border-4 border-white absolute bottom-[-24px] left-6 shadow-lg group-hover:scale-105 transition-transform duration-500" src="${client.avatar}"/>
 </div>
-<div class="p-6 pt-8 flex flex-col gap-4">
+<div class="p-7 pt-10 flex flex-col gap-4">
 <div>
-<h4 class="font-headline font-bold text-lg text-slate-800">${client.name}</h4>
-              ${client.assessment.hasInjury ? </div></div></section></div>`
-                <span class="inline-flex items-center gap-1 bg-red-100 text-red-700 font-bold text-[9px] px-2 py-0.5 rounded uppercase tracking-wider mt-1">
-                  <span class="material-symbols-outlined text-[10px]">warning</span> RIGHT SHOULDER MOD
+<h4 class="font-headline font-extrabold text-2xl text-slate-800 tracking-tight">${client.name}</h4>
+              ${client.assessment.hasInjury ? `
+                <span class="inline-flex items-center gap-1.5 bg-red-100/80 text-red-700 font-bold text-[10px] px-2.5 py-1 rounded-md uppercase tracking-wider mt-2 shadow-sm border border-red-200/50">
+                  <span class="material-symbols-outlined text-[14px]">warning</span> RIGHT SHOULDER MOD
                 </span>
               ` : ''}
             </div>
 
-            <div class="border-t border-slate-100 pt-4 text-xs">
-              <span data-i18n="current_goal" class="text-slate-400 font-bold block text-[9px] uppercase tracking-wider">CURRENT GOAL</span>
-              <p class="text-slate-600 mt-1 leading-relaxed">${client.assessment.postural.analysis || 'Lower body hypertrophy with upper body maintenance. Avoid overhead pressing.'}</p>
+            <div class="border-t border-white pt-5 mt-2 text-sm">
+              <span data-i18n="current_goal" class="text-slate-400 font-bold block text-[10px] uppercase tracking-wider mb-2">CURRENT GOAL</span>
+              <p class="text-slate-600 font-medium leading-relaxed bg-white/60 p-4 rounded-xl border border-white shadow-sm">${client.assessment.postural.analysis || 'Lower body hypertrophy with upper body maintenance. Avoid overhead pressing.'}</p>
             </div>
           </div>
         </section>
 
         <!-- Historical Lift Comparison Card -->
-        <section class="bg-white rounded-xl border border-slate-200 p-6 shadow-sm flex flex-col gap-4">
-          <h3 data-i18n="previous_lift_comparison" class="font-headline font-bold text-sm text-[#0b1c30] border-b border-slate-100 pb-2">Previous Lift Comparison</h3>
-          <div class="space-y-3 text-xs text-slate-600">
+        <section class="bg-white/80 backdrop-blur-xl rounded-3xl border border-white p-7 shadow-sm flex flex-col gap-5">
+          <h3 data-i18n="previous_lift_comparison" class="font-headline font-bold text-lg text-slate-800 border-b border-white pb-3">Previous Lift Comparison</h3>
+          <div class="space-y-4 text-sm text-slate-600">
             ${program && program.exercises.length > 0 ? program.exercises.map(ex => `
-              <div class="flex justify-between items-center border-b border-slate-50 pb-2 last:border-0 last:pb-0 gap-2">
-                <span class="font-bold text-slate-800 truncate">${ex.name}</span>
-                <span class="text-slate-500 font-semibold bg-slate-50 px-2 py-0.5 rounded border shrink-0">
-                  Last Session: <span class="text-primary font-extrabold">${ex.history ? `${ex.history.weight} kg x ${ex.history.reps}` : '10 kg x 10'}</span>
+              <div class="flex justify-between items-center border-b border-white pb-3 last:border-0 last:pb-0 gap-3 group/item">
+                <span class="font-bold text-slate-700 truncate group-hover/item:text-primary transition-colors">${ex.name}</span>
+                <span class="text-slate-600 font-semibold bg-white px-3 py-1.5 rounded-lg border border-white shadow-sm shrink-0">
+                  Last Session: <span class="text-primary font-extrabold ml-1">${ex.history ? `${ex.history.weight} kg x ${ex.history.reps}` : '10 kg x 10'}</span>
                 </span>
               </div>
-            `).join('') : '<span data-i18n="no_exercises_added_yet" class="text-slate-400 block text-center py-2">No exercises added yet.</span>'}
+            `).join('') : '<span data-i18n="no_exercises_added_yet" class="text-slate-400 font-medium block text-center py-4 bg-white/50 rounded-xl border border-white">No exercises added yet.</span>'}
           </div>
         </section>
       </div>

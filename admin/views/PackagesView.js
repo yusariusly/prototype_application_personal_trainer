@@ -22,28 +22,36 @@ export function renderPackagesView(container) {
   }).join('');
 
   container.innerHTML = `
-    <div class="bg-white rounded-xl border border-slate-200 p-6 mb-6 shadow-sm">
-      <div class="border-b border-slate-100 pb-3 mb-4">
-        <h2 data-i18n="package_sales_report" class="font-headline font-bold text-lg text-slate-800">Package Sales Report</h2>
-        <p data-i18n="list_of_session_package_purcha" class="text-xs text-slate-500 mt-0.5">List of session package purchase transactions by active clients.</p>
+    <div class="bg-white/80 backdrop-blur-xl rounded-3xl border border-white p-8 shadow-sm relative overflow-hidden">
+      <div class="absolute -right-12 -top-12 w-48 h-48 bg-gradient-to-br from-green-400/20 to-primary/10 rounded-full blur-2xl pointer-events-none"></div>
+      
+      <div class="border-b border-white pb-5 mb-6 relative z-10 flex justify-between items-end">
+        <div>
+          <h2 data-i18n="package_sales_report" class="font-headline font-extrabold text-2xl text-slate-800 tracking-tight">Package Sales Report</h2>
+          <p data-i18n="list_of_session_package_purcha" class="text-sm text-slate-500 mt-2 font-medium">List of session package purchase transactions by active clients.</p>
+        </div>
+        <div class="bg-gradient-to-r from-green-400 to-green-500 text-white px-5 py-2.5 rounded-xl shadow-lg shadow-green-500/30 flex items-center gap-2">
+          <span class="material-symbols-outlined text-[20px]">payments</span>
+          <span class="text-xs font-bold uppercase tracking-wider">Total: S$ ${totalRevenue.toLocaleString('en-SG')}</span>
+        </div>
       </div>
 
-      <div class="overflow-x-auto">
-        <table class="w-full text-left text-xs border-collapse">
+      <div class="overflow-x-auto relative z-10">
+        <table class="w-full text-left text-sm border-collapse">
           <thead>
-            <tr class="border-b border-slate-200 text-slate-400 font-bold uppercase">
-              <th data-i18n="joined_date" class="py-3 px-2">Joined Date</th>
-              <th data-i18n="client_name" class="py-3 px-2">Client Name</th>
-              <th data-i18n="package_name" class="py-3 px-2">Package Name</th>
-              <th data-i18n="payment_status" class="py-3 px-2 text-right">Payment Status</th>
-              <th data-i18n="total_paid" class="py-3 px-2 text-right">Total Paid</th>
+            <tr class="border-b-2 border-white text-slate-400 font-extrabold uppercase tracking-widest text-[11px]">
+              <th data-i18n="joined_date" class="py-4 px-4">Joined Date</th>
+              <th data-i18n="client_name" class="py-4 px-4">Client Name</th>
+              <th data-i18n="package_name" class="py-4 px-4">Package Name</th>
+              <th data-i18n="payment_status" class="py-4 px-4 text-right">Payment Status</th>
+              <th data-i18n="total_paid" class="py-4 px-4 text-right">Total Paid</th>
             </tr>
           </thead>
-          <tbody class="divide-y divide-slate-100 font-medium">
+          <tbody class="divide-y divide-white/50 font-medium text-slate-600">
             ${salesRows}
-            <tr class="bg-slate-50/50">
-              <td data-i18n="total_sales_revenue" class="py-3.5 px-2 font-bold text-slate-800" colspan="4">Total Sales Revenue</td>
-              <td class="py-3.5 px-2 text-right font-extrabold text-primary text-sm">S$ ${totalRevenue.toLocaleString('en-SG')}</td>
+            <tr class="bg-gradient-to-r from-slate-50/50 to-white/80 border-t-2 border-white/80">
+              <td data-i18n="total_sales_revenue" class="py-5 px-4 font-extrabold text-slate-800 text-sm uppercase tracking-wider" colspan="4">Total Sales Revenue</td>
+              <td class="py-5 px-4 text-right font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-primary to-primary-container text-xl">S$ ${totalRevenue.toLocaleString('en-SG')}</td>
             </tr>
           </tbody>
         </table>
