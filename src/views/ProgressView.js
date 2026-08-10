@@ -13,9 +13,14 @@ export function renderProgressView(container, client) {
 <h1 class="text-2xl md:text-3xl font-headline font-extrabold text-[#0b1c30]" data-i18n="progress_title">Physical Progress Chart</h1>
 <p class="text-xs text-slate-500 mt-1" data-i18n="progress_sub">Track your body composition progress week by week.</p>
 </div>
+<div class="flex gap-2">
+<button class="bg-indigo-600 text-white text-xs font-bold font-headline px-4 py-3 rounded-lg flex items-center gap-1.5 shadow-md hover:bg-indigo-700 transition-all" data-i18n="btn_ai_scan" onclick="window.openAiScanModal()">
+<span class="material-symbols-outlined text-[18px]">document_scanner</span> AI Scan
+      </button>
 <button class="bg-primary text-white text-xs font-bold font-headline px-4 py-3 rounded-lg flex items-center gap-1.5 shadow-md hover:bg-primary-container transition-all" data-i18n="btn_log_new_metrics" onclick="window.openAddProgressModal()">
 <span class="material-symbols-outlined text-[18px]" data-i18n="add">add</span> Log New Metrics
       </button>
+</div>
 </div>
 <!-- Weight highlight card -->
 <div class="bg-white rounded-xl border border-slate-200 p-5 shadow-sm border-l-4 border-l-primary max-w-sm">
@@ -81,13 +86,6 @@ export function renderProgressView(container, client) {
           
 
 
-
-<!-- Floating Action Button for Adding Data -->
-<div class="fixed bottom-20 right-6 md:bottom-10 md:right-10 z-40">
-<button class="bg-primary text-white hover:bg-[#8f3200] font-headline text-xs font-bold py-3.5 px-6 rounded-full shadow-2xl flex items-center gap-1.5 transition-transform active:scale-95 duration-100" data-i18n="fab_add_data" onclick="window.openAddProgressModal()">
-<span class="material-symbols-outlined text-[18px]" data-i18n="add">add</span> Add Data
-      </button>
-</div>
 `;
 
   // translate DOM after render
@@ -267,5 +265,124 @@ export function setupProgressGlobalHandlers(renderView, showToast, closeModal) {
         saveProgressData(null);
       }
     });
+  };
+
+  window.openAiScanModal = function() {
+    const modalRoot = document.getElementById('modal-root');
+    modalRoot.innerHTML = `
+      <div class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+        <div class="bg-white w-full max-w-lg rounded-2xl p-7 border border-slate-100 shadow-2xl relative overflow-hidden">
+          <div id="ai-scan-header">
+            <h2 data-i18n="modal_ai_scan_title" class="text-xl font-headline font-bold text-indigo-900 mb-2">AI Posture & Body Scan</h2>
+            <p data-i18n="modal_ai_scan_sub" class="text-xs text-slate-500 mb-6">Upload or capture a photo to analyze your body posture and shape using AI.</p>
+          </div>
+          
+          <div id="ai-scan-content" class="space-y-5">
+            <div>
+              <label data-i18n="ai_scan_category" class="block text-xs font-bold text-slate-600 mb-2">Analysis Category</label>
+              <select id="ai-scan-category" class="w-full bg-slate-50 border border-slate-200 rounded-lg py-2.5 px-3 text-sm outline-none focus:border-indigo-500 focus:ring-0">
+                <option data-i18n="ai_cat_posture" value="posture">Posture Alignment</option>
+                <option data-i18n="ai_cat_muscle" value="muscle">Muscle Symmetry</option>
+                <option data-i18n="ai_cat_shape" value="shape">Body Shape Analysis</option>
+              </select>
+            </div>
+
+            <div id="ai-preview-container" class="relative">
+              <div class="absolute top-3 left-3 bg-red-500 text-white text-[10px] font-bold px-2 py-1 rounded-md shadow-sm animate-pulse flex items-center gap-1 z-10">
+                <span class="w-2 h-2 rounded-full bg-white block"></span> REC
+              </div>
+              <img id="ai-photo-preview" src="https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" class="w-full h-48 object-cover rounded-xl border border-slate-200 shadow-inner">
+            </div>
+
+            <div class="w-full">
+              <button type="button" class="w-full border-2 border-dashed border-indigo-200 hover:border-indigo-500 hover:bg-indigo-50 rounded-xl p-4 flex items-center justify-center gap-2 transition-colors text-indigo-700" onclick="document.getElementById('ai-photo-upload').click()">
+                <span class="material-symbols-outlined text-xl">upload_file</span>
+                <span data-i18n="ai_scan_upload" class="font-bold text-sm">Upload Photo</span>
+              </button>
+            </div>
+            <input type="file" id="ai-photo-upload" accept="image/*" class="hidden" onchange="document.getElementById('ai-photo-preview').src = URL.createObjectURL(this.files[0]); document.querySelector('#ai-preview-container .absolute')?.classList.add('hidden');">
+
+            <div class="flex gap-3 mt-6 pt-4 border-t border-slate-100">
+              <button type="button" onclick="window.closeModal()" data-i18n="btn_cancel" class="flex-1 border border-slate-200 text-slate-600 py-3 text-sm font-bold rounded-xl hover:bg-slate-50 transition-colors">Cancel</button>
+              <button type="button" onclick="window.startAiScan()" data-i18n="btn_start_ai_scan" class="flex-1 bg-indigo-600 text-white py-3 text-sm font-bold rounded-xl hover:bg-indigo-700 transition-colors shadow-md">Start AI Scan</button>
+            </div>
+          </div>
+
+          <!-- Loading State -->
+          <div id="ai-scan-loading" class="hidden flex flex-col items-center justify-center py-10">
+            <div class="w-16 h-16 border-4 border-indigo-100 border-t-indigo-600 rounded-full animate-spin mb-4"></div>
+            <h3 data-i18n="ai_analyzing" class="text-indigo-900 font-bold font-headline animate-pulse">AI is analyzing your photo...</h3>
+          </div>
+
+          <!-- Result State -->
+          <div id="ai-scan-result" class="hidden space-y-4">
+            <div class="bg-indigo-50 rounded-xl p-4 border border-indigo-100">
+              <h3 data-i18n="ai_result_title" class="font-headline font-bold text-indigo-900 mb-2 text-lg">Analysis Result</h3>
+              
+              <div class="mb-3">
+                <h4 data-i18n="ai_finding" class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">AI Finding</h4>
+                <p id="ai-result-finding" class="text-sm text-slate-700 font-medium"></p>
+              </div>
+              
+              <div>
+                <h4 data-i18n="ai_solution" class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">Suggested Solution</h4>
+                <p id="ai-result-solution" class="text-sm text-slate-700 font-medium"></p>
+              </div>
+            </div>
+
+            <div class="bg-amber-50 rounded-xl p-4 border border-amber-200 flex items-start gap-3">
+              <span class="material-symbols-outlined text-amber-500 mt-0.5">warning</span>
+              <p data-i18n="ai_disclaimer" class="text-xs text-amber-800 font-medium leading-relaxed">
+                Disclaimer: This analysis is generated by AI and may not be 100% accurate. Please share these results with your trainer for professional validation and advice.
+              </p>
+            </div>
+
+            <div class="flex pt-2">
+              <button type="button" onclick="window.closeModal()" class="w-full bg-slate-800 text-white py-3 text-sm font-bold rounded-xl hover:bg-slate-900 transition-colors shadow-md">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
+    translateDOM();
+  };
+
+
+  window.startAiScan = function() {
+    const previewContainer = document.getElementById('ai-preview-container');
+    if (previewContainer.classList.contains('hidden')) {
+      showToast('Please upload or capture a photo first.', 'error');
+      return;
+    }
+
+    const category = document.getElementById('ai-scan-category').value;
+    
+    document.getElementById('ai-scan-header').classList.add('hidden');
+    document.getElementById('ai-scan-content').classList.add('hidden');
+    document.getElementById('ai-scan-loading').classList.remove('hidden');
+
+    // Simulate AI Processing Delay
+    setTimeout(() => {
+      document.getElementById('ai-scan-loading').classList.add('hidden');
+      document.getElementById('ai-scan-result').classList.remove('hidden');
+
+      // Mock AI Responses based on category
+      let finding = "";
+      let solution = "";
+      
+      if (category === 'posture') {
+        finding = "Mild forward head posture and slight rounded shoulders detected. Pelvic tilt appears neutral.";
+        solution = "Incorporate chin tucks, wall angels, and chest stretches daily. Strengthen the mid and lower trapezius.";
+      } else if (category === 'muscle') {
+        finding = "Left shoulder sits slightly higher than the right. Possible overactive right latissimus dorsi or left upper trapezius.";
+        solution = "Focus on unilateral pulling exercises. Stretch the left upper trap and mobilize the thoracic spine.";
+      } else {
+        finding = "Upper body development is progressing well. Slightly disproportionate development between anterior and posterior deltoids.";
+        solution = "Increase volume on face pulls and rear delt flyes to improve posterior shoulder development.";
+      }
+
+      document.getElementById('ai-result-finding').innerText = finding;
+      document.getElementById('ai-result-solution').innerText = solution;
+    }, 3500);
   };
 }

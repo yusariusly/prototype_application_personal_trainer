@@ -491,5 +491,20 @@
   "footer_stay_updated": "Tetap Terkini",
   "footer_newsletter_desc": "Berlangganan buletin kami untuk tips kebugaran terbaru dan pembaruan platform.",
   "footer_privacy": "Kebijakan Privasi",
-  "footer_terms": "Ketentuan Layanan"
+  "footer_terms": "Ketentuan Layanan",
+  "btn_ai_scan": "Imbasan Postur AI",
+  "modal_ai_scan_title": "Imbasan Postur & Badan AI",
+  "modal_ai_scan_sub": "Muat naik atau ambil gambar untuk menganalisis postur dan bentuk badan anda menggunakan AI.",
+  "ai_scan_camera": "Gunakan Kamera",
+  "ai_scan_upload": "Muat Naik Gambar",
+  "ai_scan_category": "Kategori Analisis",
+  "ai_cat_posture": "Penjajaran Postur",
+  "ai_cat_muscle": "Simetri Otot",
+  "ai_cat_shape": "Analisis Bentuk Badan",
+  "btn_start_ai_scan": "Mulakan Imbasan AI",
+  "ai_analyzing": "AI sedang menganalisis gambar anda...",
+  "ai_result_title": "Hasil Analisis",
+  "ai_finding": "Penemuan AI",
+  "ai_solution": "Cadangan Penyelesaian",
+  "ai_disclaimer": "Penafian: Analisis ini dijana oleh AI dan mungkin tidak 100% tepat. Sila kongsikan hasil ini dengan jurulatih anda untuk pengesahan dan nasihat profesional."
 }
