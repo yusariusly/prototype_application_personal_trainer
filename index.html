@@ -93,7 +93,7 @@
 </div>
 </nav>
 <!-- Hero Section -->
-<section class="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden flex-grow flex items-center bg-cover bg-no-repeat" style="background-image: linear-gradient(rgba(16, 16, 16, 0.58), rgba(16, 16, 16, 0.68)), url('./assets/images/screen.png'); background-position: center 38%;">
+<section id="hero-section" class="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden flex-grow flex items-center bg-cover bg-no-repeat" style="background-image: linear-gradient(rgba(16, 16, 16, 0.58), rgba(16, 16, 16, 0.68)), url('./assets/images/screen1.png'); background-position: center 38%; transition: background-image 1s ease-in-out;">
 <!-- Background Decoration -->
 <div class="absolute inset-0 z-0 opacity-10 pointer-events-none">
 <div class="absolute -top-24 -right-24 w-96 h-96 bg-primary rounded-full blur-3xl"></div>
@@ -320,6 +320,22 @@
                 navbar.classList.remove('shadow-md');
             }
         });
+
+        // Hero Section Background Transition
+        const heroSection = document.getElementById('hero-section');
+        if (heroSection) {
+            const heroImages = [
+                './assets/images/screen1.png',
+                './assets/images/screen2.png',
+                './assets/images/screen3.png'
+            ];
+            let currentHeroImageIndex = 0;
+
+            setInterval(() => {
+                currentHeroImageIndex = (currentHeroImageIndex + 1) % heroImages.length;
+                heroSection.style.backgroundImage = `linear-gradient(rgba(16, 16, 16, 0.58), rgba(16, 16, 16, 0.68)), url('${heroImages[currentHeroImageIndex]}')`;
+            }, 5000); // Change image every 5 seconds
+        }
     </script>
 <script type="module" src="./src/main.js"></script>
 </body>
