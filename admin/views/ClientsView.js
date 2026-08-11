@@ -28,14 +28,14 @@ export function renderClientsView(container) {
 <!-- Grid Client Roster -->
 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
 <!-- Render dynamic clients from state -->
-      ${clients.map(c => {
+      ${clients.map((c, index) => {
         const isFlagged = c.assessment.hasInjury;
         const remaining = c.package.remaining;
         const total = c.package.total;
         const pct = (remaining / total) * 100;
         
         return `
-          <div class="bg-white/60 backdrop-blur-xl rounded-3xl border border-white p-7 flex flex-col justify-between shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-500 relative group overflow-hidden">
+          <div class="bg-white/60 backdrop-blur-xl rounded-3xl border border-white p-7 flex flex-col justify-between shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-500 relative group overflow-hidden opacity-0 animate-slide-up" style="animation-delay: ${index * 0.1}s;">
             ${isFlagged ? `<div class="absolute left-0 top-0 bottom-0 w-1.5 bg-error rounded-l-3xl shadow-[0_0_10px_rgba(239,68,68,0.5)]"></div>` : ''}
             
             <!-- Soft glow effect behind card -->
@@ -99,7 +99,7 @@ export function renderClientsView(container) {
       }).join('')}
 
       <!-- Static Mock Client 3 (Elena Woods - Inactive) -->
-      <div class="bg-white/40 backdrop-blur-md rounded-3xl border border-white p-7 flex flex-col justify-between shadow-sm relative group overflow-hidden opacity-80 hover:opacity-100 transition-opacity">
+      <div class="bg-white/40 backdrop-blur-md rounded-3xl border border-white p-7 flex flex-col justify-between shadow-sm relative group overflow-hidden opacity-0 hover:opacity-100 transition-all animate-slide-up" style="animation-delay: ${clients.length * 0.1}s;">
         <div class="absolute left-0 top-0 bottom-0 w-1.5 bg-slate-300 rounded-l-3xl"></div>
         <div class="relative z-10">
           <div class="flex items-center gap-4 mb-6">

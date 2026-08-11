@@ -20,7 +20,7 @@ export function renderHomeView(container, client) {
   const estimatedTDEE = Math.round(estimatedBMR * 1.55);
 
   const upcomingHTML = nextSession ? `
-<article class="bg-white rounded-xl border border-slate-200 p-6 flex flex-col justify-between hover:shadow-md transition-shadow relative overflow-hidden">
+<article class="bg-white rounded-xl border border-slate-200 p-6 flex flex-col justify-between hover:shadow-lg hover:-translate-y-1 transition-all duration-300 relative overflow-hidden animate-pop-in">
 <div class="absolute top-0 right-0 w-24 h-24 bg-primary/5 rounded-bl-full z-0"></div>
 <div class="z-10 relative">
 <span class="inline-block bg-tertiary-container/10 text-[#00677f] font-headline text-[10px] px-2 py-0.5 rounded uppercase tracking-wider mb-2" data-i18n="your_next_session">Your Next Session</span>
@@ -45,7 +45,7 @@ export function renderHomeView(container, client) {
 `;
 
   const workoutPreviewHTML = program ? `
-<article class="bg-white rounded-xl border border-slate-200 p-6 flex flex-col hover:shadow-md transition-shadow relative overflow-hidden">
+<article class="bg-white rounded-xl border border-slate-200 p-6 flex flex-col hover:shadow-lg hover:-translate-y-1 transition-all duration-300 relative overflow-hidden animate-pop-in" style="animation-delay: 0.1s;">
 <div class="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-bl-full -mr-8 -mt-8 z-0"></div>
 <div class="flex justify-between items-start z-10 relative mb-4">
 <div>
@@ -90,7 +90,7 @@ export function renderHomeView(container, client) {
       ` : ''}
     
 <!-- Gamification Widget -->
-<article class="bg-gradient-to-r from-[#00677f] to-primary rounded-xl p-5 flex flex-col md:flex-row justify-between items-center gap-4 text-white shadow-md">
+<article class="bg-gradient-to-r from-[#00677f] to-primary rounded-xl p-5 flex flex-col md:flex-row justify-between items-center gap-4 text-white shadow-md hover:shadow-lg hover:-translate-y-1 transition-all duration-300 animate-pop-in" style="animation-delay: 0.2s;">
 <div class="flex items-center gap-4">
 <div class="w-14 h-14 bg-white/20 rounded-full flex items-center justify-center backdrop-blur-sm border border-white/30 shrink-0">
 <span class="material-symbols-outlined text-[32px] text-yellow-300" data-i18n="military_tech" style="font-variation-settings: 'FILL' 1;">military_tech</span>
@@ -120,12 +120,12 @@ export function renderHomeView(container, client) {
 </div>
 </article>
 <!-- Package Session Quota Widget -->
-<article class="bg-white rounded-xl border border-slate-200 p-6 flex flex-col md:flex-row justify-between items-center gap-6 shadow-sm">
+<article class="bg-white rounded-xl border border-slate-200 p-6 flex flex-col md:flex-row justify-between items-center gap-6 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 animate-slide-up" style="animation-delay: 0.3s;">
 <div class="flex-1 w-full">
 <h3 class="text-xs font-headline font-bold text-slate-400 uppercase tracking-wider" data-i18n="active_package">ACTIVE PACKAGE</h3>
 <h2 class="text-lg font-headline font-bold text-slate-800 mt-1">${client.package.name}</h2>
 <div class="w-full bg-slate-100 h-2.5 rounded-full mt-4 overflow-hidden relative">
-<div class="h-full bg-primary rounded-full" style="width: ${pct}%"></div>
+<div class="h-full bg-primary rounded-full transition-all duration-1000 ease-out" style="width: ${pct}%"></div>
 </div>
 <p class="text-xs text-slate-500 mt-2 font-medium" id="remaining-quota">Remaining Session Quota: <span class="text-primary font-bold">${pkgRemaining}</span> of ${pkgTotal} Sessions</p>
 </div>
@@ -149,7 +149,7 @@ export function renderHomeView(container, client) {
 <!-- Bento Grid section for Habits & Nutrition calculator -->
 <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
 <!-- Habits Tracker Widget -->
-<div class="lg:col-span-6 bg-white rounded-xl border border-slate-200 p-6 shadow-sm flex flex-col gap-4">
+<div class="lg:col-span-6 bg-white rounded-xl border border-slate-200 p-6 shadow-sm hover:shadow-lg transition-all duration-300 flex flex-col gap-4 animate-slide-up" style="animation-delay: 0.4s;">
 <h3 class="font-headline font-bold text-xs text-slate-400 uppercase tracking-wider" data-i18n="daily_habits">Daily Habits</h3>
 <div class="flex flex-col gap-3">
 <!-- Water -->
@@ -188,7 +188,7 @@ export function renderHomeView(container, client) {
 </div>
 </div>
 <!-- Basic Nutrition Target Calculator -->
-<div class="lg:col-span-6 bg-white rounded-xl border border-slate-200 p-6 shadow-sm flex flex-col gap-4">
+<div class="lg:col-span-6 bg-white rounded-xl border border-slate-200 p-6 shadow-sm hover:shadow-lg transition-all duration-300 flex flex-col gap-4 animate-slide-up" style="animation-delay: 0.5s;">
 <div class="flex justify-between items-center">
 <h3 class="font-headline font-bold text-xs text-slate-400 uppercase tracking-wider" data-i18n="daily_nutrition_calorie_calcul">Daily Nutrition & Calorie Calculator (TDEE)</h3>
 <span class="text-[9px] font-bold text-primary bg-primary/10 px-2 py-0.5 rounded uppercase font-headline">${client.assessment.postural.focus.includes('Fat Loss') ? 'Calorie Deficit' : 'Calorie Surplus'}</span>

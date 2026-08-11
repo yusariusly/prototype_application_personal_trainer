@@ -33,7 +33,7 @@ export function renderCalendarView(container) {
               
               const daySessions = schedule.filter(s => s.date === dateIso);
               return `
-                <div class="min-h-[100px] p-2 bg-white/50 border border-white hover:border-primary/30 hover:bg-white shadow-sm hover:shadow-md transition-all rounded-2xl flex flex-col justify-between group cursor-default">
+                <div class="min-h-[100px] p-2 bg-white/50 border border-white hover:border-primary/30 hover:bg-white shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 rounded-2xl flex flex-col justify-between group cursor-default">
                   <span class="font-bold text-slate-400 group-hover:text-primary transition-colors self-start text-xs bg-slate-100/50 group-hover:bg-primary/10 w-6 h-6 flex items-center justify-center rounded-full">${dayNum}</span>
                   <div class="flex flex-col gap-2 w-full mt-2">
                     ${daySessions.map(s => {
@@ -94,7 +94,7 @@ export function setupCalendarGlobalHandlers(renderView, showToast, closeModal) {
     const modalRoot = document.getElementById('modal-root');
     modalRoot.innerHTML = `
       <div class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-        <div class="bg-white w-full max-w-md rounded-xl p-6 border border-slate-100 shadow-2xl relative">
+        <div class="bg-white w-full max-w-md rounded-xl p-6 border border-slate-100 shadow-2xl relative animate-pop-in">
           <h2 data-i18n="attendance_validation_details" class="text-lg font-headline font-bold text-slate-800 mb-2">Attendance Validation Details</h2>
           <p data-i18n="validate_attendance_to_deduct" class="text-xs text-slate-500 mb-4">Validate attendance to deduct 1 session from client package.</p>
           
@@ -131,7 +131,7 @@ export function setupCalendarGlobalHandlers(renderView, showToast, closeModal) {
     
     modalRoot.innerHTML = `
       <div class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-        <div class="bg-white w-full max-w-md rounded-xl p-6 border border-slate-100 shadow-2xl relative">
+        <div class="bg-white w-full max-w-md rounded-xl p-6 border border-slate-100 shadow-2xl relative animate-pop-in">
           <h2 data-i18n="create_schedule_slot" class="text-lg font-headline font-bold text-slate-800 mb-2">Create Schedule Slot</h2>
           <p data-i18n="create_a_scheduled_training_sl" class="text-xs text-slate-500 mb-4">Create a scheduled training slot for your active clients.</p>
   
